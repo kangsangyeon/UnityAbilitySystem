@@ -13,8 +13,8 @@ namespace StatSystem
 
         public Dictionary<string, Stat> stats => m_Stats;
         public bool IsInitialized() => m_IsInitialized;
-        public UnityAction initialized;
-        public UnityAction willUninitialize;
+        public UnityEvent initialized = new UnityEvent();
+        public UnityEvent willUninitialize = new UnityEvent();
 
         private void Awake()
         {

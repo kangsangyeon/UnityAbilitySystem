@@ -22,11 +22,13 @@ namespace StatSystem
         public void AddModifier(StatModifier _modifier)
         {
             m_Modifiers.Add(_modifier);
+            CalculateValue();
         }
 
         public void RemoveModifierFromSource(Object _source)
         {
             m_Modifiers.RemoveAll(m => m.source.GetInstanceID() == _source.GetInstanceID());
+            CalculateValue();
         }
 
         protected void CalculateValue()
