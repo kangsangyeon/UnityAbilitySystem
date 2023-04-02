@@ -17,6 +17,7 @@ namespace StatSystem
         public Stat(StatDefinition _definition)
         {
             m_Definition = _definition;
+            m_Value = _definition.baseValue;
         }
 
         public void AddModifier(StatModifier _modifier)

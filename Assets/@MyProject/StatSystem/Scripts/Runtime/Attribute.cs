@@ -9,12 +9,12 @@ namespace StatSystem
         protected int m_CurrentValue;
 
         public int currentValue => m_CurrentValue;
-        public UnityEvent currentValueChanged;
-        public UnityEvent<StatModifier> appliedModifier;
+        public UnityEvent currentValueChanged = new UnityEvent();
+        public UnityEvent<StatModifier> appliedModifier = new UnityEvent<StatModifier>();
 
         public Attribute(StatDefinition _definition) : base(_definition)
         {
-            m_CurrentValue = value;
+            m_CurrentValue = m_Value;
         }
 
         public virtual void ApplyModifier(StatModifier _modifier)
@@ -34,6 +34,8 @@ namespace StatSystem
                     break;
             }
 
+            // Attribute의 값의 범위는 [0-m_Value] 입니다.
+            // m_Value는 Attribute ScriptableObject 애셋에서 정의한 base value 입니다.
             _newValue = Mathf.Clamp(_newValue, 0, m_Value);
 
             if (_newValue != m_CurrentValue)
