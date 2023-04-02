@@ -1,4 +1,8 @@
-﻿namespace StatSystem
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("StatSystem.Tests")]
+
+namespace StatSystem
 {
     public class PrimaryStat : Stat
     {
