@@ -58,11 +58,11 @@ namespace Core.Editor
             Type[] _types
                 = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
                     .Where(t => typeof(NodeView).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToArray();
-            
+
             foreach (var _type in _types)
             {
-                if (_type.GetCustomAttributes(typeof(NodeType), false) is NodeType[] attributes &&
-                    attributes.Length > 0)
+                if (_type.GetCustomAttributes(typeof(NodeType), false) is NodeType[] attributes
+                    && attributes.Length > 0)
                 {
                     if (attributes[0].type == _node.GetType())
                     {

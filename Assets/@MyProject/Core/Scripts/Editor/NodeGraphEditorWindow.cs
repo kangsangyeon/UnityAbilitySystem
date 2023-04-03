@@ -93,16 +93,19 @@ namespace Core.Editor
         {
             var nodeEntries = new List<NodeEntry>();
 
-            Type[] types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(
-                assembly => assembly.GetTypes()).Where(type =>
-                typeof(NodeView).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract &&
-                type != typeof(NodeView) && type != typeof(ResultNodeView)).ToArray();
+            Type[] types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes())
+                .Where(type => typeof(NodeView).IsAssignableFrom(type)
+                               && type.IsClass
+                               && !type.IsAbstract
+                               && type != typeof(NodeView)
+                               && type != typeof(ResultNodeView)).ToArray();
+
             foreach (Type type in types)
             {
-                if (type.GetCustomAttributes(typeof(TitleAttribute), false) is TitleAttribute[] attrs &&
-                    attrs.Length > 0)
+                if (type.GetCustomAttributes(typeof(TitleAttribute), false) is TitleAttribute[] attrs
+                    && attrs.Length > 0)
                 {
-                    var node = (NodeView)Activator.CreateInstance(type);
+                    var node = Activator.CreateInstance(type) as NodeView;
                     nodeEntries.Add(new NodeEntry
                     {
                         nodeView = node,
