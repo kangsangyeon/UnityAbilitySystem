@@ -12,6 +12,7 @@ Assets/*
 
 # Rider
 .idea/
+*.DotSettings
 
 # Visual Studio cache directory
 .vs/
