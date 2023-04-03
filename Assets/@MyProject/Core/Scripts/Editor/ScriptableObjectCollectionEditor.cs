@@ -141,7 +141,7 @@ namespace Core.Editor
                 ScriptableObject.DestroyImmediate(_item, true);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
-                m_Items.Add(_item);
+                m_Items.Remove(_item);
                 m_ListView.Rebuild();
                 EditorUtility.SetDirty(m_Target);
             }
