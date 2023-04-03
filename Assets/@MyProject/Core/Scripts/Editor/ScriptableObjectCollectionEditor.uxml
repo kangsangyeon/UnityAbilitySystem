@@ -3,7 +3,7 @@
         <ui:VisualElement name="left-panel">
             <uie:Toolbar style="justify-content: space-around;">
                 <uie:ToolbarSearchField focusable="true" style="width: 60%;" />
-                <ui:Button text="Create" display-tooltip-when-elided="true" />
+                <ui:Button text="Create" display-tooltip-when-elided="true" name="create-button" />
             </uie:Toolbar>
             <ui:ListView focusable="true" name="ListView" style="flex-grow: 1;" />
         </ui:VisualElement>
