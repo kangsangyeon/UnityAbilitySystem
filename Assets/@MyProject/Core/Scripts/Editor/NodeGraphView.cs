@@ -71,6 +71,7 @@ namespace Core.Editor
                         _nodeView.viewDataKey = _node.guid;
                         _nodeView.style.left = _node.position.x;
                         _nodeView.style.top = _node.position.y;
+                        AddElement(_nodeView);
                     }
                 }
             }

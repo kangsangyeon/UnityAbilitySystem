@@ -12,10 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5760a7dd8c34a9ba90d40e8cfb4a352, type: 3}
   m_Name: NodeGraph
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 333419941287895068}
+  rootNode: {fileID: 5138680278792303149}
   nodes:
-  - {fileID: 333419941287895068}
---- !u!114 &333419941287895068
+  - {fileID: 5138680278792303149}
+  - {fileID: 3429798861464348262}
+--- !u!114 &3429798861464348262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
+  m_Name: Scalar
+  m_EditorClassIdentifier: 
+  position: {x: 178, y: 167}
+  guid: ab1dff6d5ac018446bf2555592289aa8
+  m_Value: 0
+--- !u!114 &5138680278792303149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28,5 +44,5 @@ MonoBehaviour:
   m_Name: ResultNode
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
-  guid: 60eca00964e317d43a66d7e01ca25249
+  guid: 6f73f03a4691e2a4e951cef0195a804d
   child: {fileID: 0}
