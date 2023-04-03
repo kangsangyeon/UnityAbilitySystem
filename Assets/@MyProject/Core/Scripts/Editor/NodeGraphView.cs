@@ -43,7 +43,7 @@ namespace Core.Editor
             if (m_NodeGraph.rootNode == null)
             {
                 var _rootNode = ScriptableObject.CreateInstance<ResultNode>();
-                _rootNode.name = _nodeGraph.rootNode.GetType().Name;
+                _rootNode.name = _rootNode.GetType().Name;
                 _rootNode.guid = GUID.Generate().ToString();
 
                 _nodeGraph.rootNode = _rootNode;
@@ -58,7 +58,7 @@ namespace Core.Editor
             Type[] _types
                 = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
                     .Where(t => typeof(NodeView).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToArray();
-
+            
             foreach (var _type in _types)
             {
                 if (_type.GetCustomAttributes(typeof(NodeType), false) is NodeType[] attributes &&
