@@ -9,6 +9,8 @@ namespace Core.Editor
     public class NodeGraphEditorWindow : EditorWindow
     {
         private NodeGraph m_NodeGraph;
+        private NodeGraphView m_NodeGraphView;
+        private VisualElement m_LeftPanel;
         
         public static void ShowWindow(NodeGraph _nodeGraph)
         {
@@ -43,6 +45,9 @@ namespace Core.Editor
                 AssetDatabase.LoadAssetAtPath<StyleSheet>(
                     "Assets/@MyProject/Core/Scripts/Editor/NodeGraphEditorWindow.uss");
             root.styleSheets.Add(styleSheet);
+
+            m_NodeGraphView = root.Q<NodeGraphView>();
+            m_LeftPanel = root.Q<VisualElement>("left-panel");
         }
 
         private void OnSelectionChange()
@@ -56,6 +61,7 @@ namespace Core.Editor
         private void SelectNodeGraph(NodeGraph _nodeGraph)
         {
             m_NodeGraph = _nodeGraph;
+            m_NodeGraphView.PopulateView(_nodeGraph);
         }
     }
 }

@@ -1,5 +1,10 @@
-﻿using UnityEditor;
+﻿using System;
+using System.Linq;
+using Core.Editor.Nodes;
+using Core.Nodes;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Core.Editor
@@ -29,6 +34,46 @@ namespace Core.Editor
                 AssetDatabase.LoadAssetAtPath<StyleSheet>(
                     "Assets/@MyProject/Core/Scripts/Editor/NodeGraphEditorWindow.uss");
             styleSheets.Add(_styleSheet);
+        }
+
+        internal void PopulateView(NodeGraph _nodeGraph)
+        {
+            m_NodeGraph = _nodeGraph;
+
+            if (m_NodeGraph.rootNode == null)
+            {
+                var _rootNode = ScriptableObject.CreateInstance<ResultNode>();
+                _rootNode.name = _nodeGraph.rootNode.GetType().Name;
+                _rootNode.guid = GUID.Generate().ToString();
+
+                _nodeGraph.rootNode = _rootNode;
+                _nodeGraph.AddNode(m_NodeGraph.rootNode);
+            }
+
+            m_NodeGraph.nodes.ForEach(n => CreateAndAddNodeView(n));
+        }
+
+        private void CreateAndAddNodeView(CodeFunctionNode _node)
+        {
+            Type[] _types
+                = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
+                    .Where(t => typeof(NodeView).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToArray();
+
+            foreach (var _type in _types)
+            {
+                if (_type.GetCustomAttributes(typeof(NodeType), false) is NodeType[] attributes &&
+                    attributes.Length > 0)
+                {
+                    if (attributes[0].type == _node.GetType())
+                    {
+                        NodeView _nodeView = Activator.CreateInstance(_type) as NodeView;
+                        _nodeView.node = _node;
+                        _nodeView.viewDataKey = _node.guid;
+                        _nodeView.style.left = _node.position.x;
+                        _nodeView.style.top = _node.position.y;
+                    }
+                }
+            }
         }
     }
 }
