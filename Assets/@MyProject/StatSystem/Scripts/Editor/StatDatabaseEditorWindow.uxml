@@ -1,2 +1,16 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:Toolbar>
+        <uie:ToolbarButton text="Stats" display-tooltip-when-elided="true" name="stats-tab" style="flex-grow: 1; -unity-text-align: middle-center;" />
+        <uie:ToolbarButton text="Primary Stats" display-tooltip-when-elided="true" name="primary-stats-tab" style="flex-grow: 1; -unity-text-align: middle-center;" />
+        <uie:ToolbarButton text="Atrributes" display-tooltip-when-elided="true" name="attributes-tab" style="flex-grow: 1; -unity-text-align: middle-center;" />
+    </uie:Toolbar>
+    <StatSystem.Editor.StatCollectionEditor name="stats" style="flex-grow: 1; display: flex;">
+        <ui:Label text="stats" display-tooltip-when-elided="true" />
+    </StatSystem.Editor.StatCollectionEditor>
+    <StatSystem.Editor.StatCollectionEditor name="primary-stats" style="flex-grow: 1; display: none;">
+        <ui:Label text="primary stats" display-tooltip-when-elided="true" />
+    </StatSystem.Editor.StatCollectionEditor>
+    <StatSystem.Editor.StatCollectionEditor name="attributes" style="flex-grow: 1; display: none;">
+        <ui:Label text="attributes" display-tooltip-when-elided="true" />
+    </StatSystem.Editor.StatCollectionEditor>
 </ui:UXML>

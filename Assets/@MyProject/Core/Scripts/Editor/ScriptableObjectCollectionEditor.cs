@@ -42,7 +42,6 @@ namespace Core.Editor
 
         private void InitializeInternal()
         {
-            Func<VisualElement> _makeItem = () => new Label();
             m_ListView.makeItem = () => new Label();
             m_ListView.onSelectionChange += objects =>
             {
@@ -87,6 +86,7 @@ namespace Core.Editor
                 {
                     _menu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(_type.Name)), false,
                         () => { CreateItem(_type); });
+                    _menu.ShowAsContext();
                 }
             }
             else

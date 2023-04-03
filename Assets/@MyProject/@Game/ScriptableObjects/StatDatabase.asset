@@ -12,6 +12,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d46e02409834e9290b40d5eac042656, type: 3}
   m_Name: StatDatabase
   m_EditorClassIdentifier: 
-  stats: []
-  attributes: []
-  primaryStats: []
+  stats:
+  - {fileID: 1350330085167257052}
+  attributes:
+  - {fileID: 905274478988822593}
+  - {fileID: 905274478988822593}
+  primaryStats:
+  - {fileID: 4185080684102052681}
+  - {fileID: 0}
+--- !u!114 &905274478988822593
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Mana
+  m_EditorClassIdentifier: 
+  m_BaseValue: 100
+  m_Cap: -1
+--- !u!114 &1350330085167257052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: PhysicalAttack
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+--- !u!114 &4185080684102052681
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Strength
+  m_EditorClassIdentifier: 
+  m_BaseValue: 1
+  m_Cap: -1
+--- !u!114 &6204022935702352951
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Health(Clone)
+  m_EditorClassIdentifier: 
+  m_BaseValue: 100
+  m_Cap: -1
