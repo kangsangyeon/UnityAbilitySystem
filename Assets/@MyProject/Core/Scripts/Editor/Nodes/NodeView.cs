@@ -23,7 +23,7 @@ namespace Core.Editor.Nodes
 
         protected Port CreateInputPort(string _portName = "", Port.Capacity _capacity = Port.Capacity.Single)
         {
-            Port _inputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, _capacity, typeof(float));
+            Port _inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, _capacity, typeof(float));
             _inputPort.portName = _portName;
             inputContainer.Add(_inputPort);
             RefreshPorts();
