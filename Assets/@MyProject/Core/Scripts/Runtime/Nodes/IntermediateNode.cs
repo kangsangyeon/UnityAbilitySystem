@@ -4,8 +4,8 @@ namespace Core.Nodes
 {
     public abstract class IntermediateNode : CodeFunctionNode
     {
-        public abstract void RemoveChild(CodeFunctionNode child, string portName);
-        public abstract void AddChild(CodeFunctionNode child, string portName);
+        public abstract void RemoveChild(CodeFunctionNode _child, string _portName);
+        public abstract void AddChild(CodeFunctionNode _child, string _portName);
         public abstract ReadOnlyCollection<CodeFunctionNode> children { get; }
     }
 }
