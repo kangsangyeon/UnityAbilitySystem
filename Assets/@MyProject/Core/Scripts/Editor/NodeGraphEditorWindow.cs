@@ -16,6 +16,7 @@ namespace Core.Editor
         private NodeGraphView m_NodeGraphView;
         private VisualElement m_LeftPanel;
         private Texture2D m_Icon;
+        private UnityEditor.Editor m_Editor;
 
         public static void ShowWindow(NodeGraph _nodeGraph)
         {
@@ -54,11 +55,25 @@ namespace Core.Editor
             m_LeftPanel = root.Q<VisualElement>("left-panel");
             m_NodeGraphView = root.Q<NodeGraphView>();
             m_NodeGraphView.nodeCreationRequest += OnRequestNodeCreation;
+            m_NodeGraphView.nodeSelected = OnNodeSelected;
         }
 
         private void OnRequestNodeCreation(NodeCreationContext _context)
         {
             SearchWindow.Open(new SearchWindowContext(_context.screenMousePosition), this);
+        }
+
+        private void OnNodeSelected(NodeView _nodeView)
+        {
+            m_LeftPanel.Clear();
+            DestroyImmediate(m_Editor);
+            m_Editor = UnityEditor.Editor.CreateEditor(_nodeView.node);
+            IMGUIContainer _container = new IMGUIContainer(() =>
+            {
+                if (m_Editor && m_Editor.target)
+                    m_Editor.OnInspectorGUI();
+            });
+            m_LeftPanel.Add(_container);
         }
 
         private void OnEnable()
@@ -183,7 +198,7 @@ namespace Core.Editor
             nodeView.style.left = mousePosition.x;
             nodeView.style.top = mousePosition.y;
             m_NodeGraph.AddNode(nodeView.node);
-            m_NodeGraphView.AddElement(nodeView);
+            m_NodeGraphView.AddNodeView(nodeView);
             return true;
         }
     }

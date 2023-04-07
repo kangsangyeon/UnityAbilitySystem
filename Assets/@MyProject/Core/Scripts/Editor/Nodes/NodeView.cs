@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Nodes;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.Events;
 
 namespace Core.Editor.Nodes
 {
@@ -9,6 +10,7 @@ namespace Core.Editor.Nodes
         public CodeFunctionNode node;
         public List<Port> inputs = new List<Port>();
         public Port output;
+        public UnityAction<NodeView> nodeSelected;
 
         protected Port CreateOutputPort(string _portName = "", Port.Capacity _capacity = Port.Capacity.Single)
         {
@@ -26,6 +28,12 @@ namespace Core.Editor.Nodes
             inputContainer.Add(_inputPort);
             RefreshPorts();
             return _inputPort;
+        }
+
+        public override void OnSelected()
+        {
+            base.OnSelected();
+            nodeSelected.Invoke(this);
         }
     }
 }

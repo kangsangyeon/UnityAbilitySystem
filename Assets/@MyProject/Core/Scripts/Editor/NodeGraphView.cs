@@ -5,6 +5,7 @@ using Core.Nodes;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Core.Editor
@@ -16,6 +17,7 @@ namespace Core.Editor
         }
 
         private NodeGraph m_NodeGraph;
+        public UnityAction<NodeView> nodeSelected;
 
         public NodeGraphView()
         {
@@ -71,10 +73,16 @@ namespace Core.Editor
                         _nodeView.viewDataKey = _node.guid;
                         _nodeView.style.left = _node.position.x;
                         _nodeView.style.top = _node.position.y;
-                        AddElement(_nodeView);
+                        AddNodeView(_nodeView);
                     }
                 }
             }
+        }
+
+        internal void AddNodeView(NodeView _nodeView)
+        {
+            _nodeView.nodeSelected = nodeSelected;
+            AddElement(_nodeView);
         }
     }
 }
