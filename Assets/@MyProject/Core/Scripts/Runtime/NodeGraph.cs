@@ -11,6 +11,19 @@ namespace Core
         public CodeFunctionNode rootNode;
         public List<CodeFunctionNode> nodes = new List<CodeFunctionNode>();
 
+        public List<T> FindNodesOfType<T>()
+            where T : CodeFunctionNode
+        {
+            List<T> _outNodes = new List<T>();
+            nodes.ForEach(n =>
+            {
+                if (n is T _nodeOfType)
+                    _outNodes.Add(_nodeOfType);
+            });
+
+            return _outNodes;
+        }
+
         public void AddNode(CodeFunctionNode _node)
         {
             nodes.Add(_node);

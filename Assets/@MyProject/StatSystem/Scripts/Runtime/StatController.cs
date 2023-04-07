@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using StatSystem.Nodes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,15 +38,49 @@ namespace StatSystem
             {
                 m_Stats.Add(_definition.name, new Stat(_definition));
             }
-            
+
             foreach (var _definition in m_StatDatabase.attributes)
             {
                 m_Stats.Add(_definition.name, new Attribute(_definition));
             }
-            
+
             foreach (var _definition in m_StatDatabase.primaryStats)
             {
                 m_Stats.Add(_definition.name, new PrimaryStat(_definition));
+            }
+            
+            InitializeStatFormulas();
+
+            foreach (Stat _stat in m_Stats.Values)
+            {
+                _stat.Initialize();
+            }
+            
+            initialized.Invoke();
+
+            m_IsInitialized = true;
+        }
+
+        protected virtual void InitializeStatFormulas()
+        {
+            foreach (Stat _currentStat in m_Stats.Values)
+            {
+                if (_currentStat.definition.formula != null && _currentStat.definition.formula.rootNode != null)
+                {
+                    List<StatNode> _statNodes = _currentStat.definition.formula.FindNodesOfType<StatNode>();
+                    _statNodes.ForEach(n =>
+                    {
+                        if (m_Stats.TryGetValue(n.statName.Trim(), out Stat _stat))
+                        {
+                            n.stat = _stat;
+                            _stat.valueChanged.AddListener(_currentStat.CalculateValue);
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"Stat {n.statName.Trim()} does not exist!");
+                        }
+                    });
+                }
             }
         }
     }

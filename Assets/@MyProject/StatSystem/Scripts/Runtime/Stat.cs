@@ -10,6 +10,7 @@ namespace StatSystem
         protected int m_Value;
         protected List<StatModifier> m_Modifiers = new List<StatModifier>();
 
+        public StatDefinition definition => m_Definition;
         public int value => m_Value;
         public virtual int baseValue => m_Definition.baseValue;
         public UnityEvent valueChanged = new UnityEvent();
@@ -17,7 +18,12 @@ namespace StatSystem
         public Stat(StatDefinition _definition)
         {
             m_Definition = _definition;
-            m_Value = _definition.baseValue;
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            CalculateValue();
         }
 
         public void AddModifier(StatModifier _modifier)
@@ -32,9 +38,14 @@ namespace StatSystem
             CalculateValue();
         }
 
-        protected void CalculateValue()
+        internal void CalculateValue()
         {
             int _finalValue = baseValue;
+
+            if (m_Definition.formula != null && m_Definition.formula.rootNode != null)
+            {
+                _finalValue += Mathf.RoundToInt(m_Definition.formula.rootNode.value);
+            }
 
             m_Modifiers.Sort((x, y) => x.type.CompareTo(y.type));
 
