@@ -18,5 +18,41 @@ namespace Core
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
         }
+
+        public void DeleteNode(CodeFunctionNode _node)
+        {
+            nodes.Remove(_node);
+            AssetDatabase.RemoveObjectFromAsset(_node);
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+        }
+
+        public void AddChild(CodeFunctionNode _parent, CodeFunctionNode _child, string _portName)
+        {
+            if (_parent is IntermediateNode _intermediateNode)
+            {
+                _intermediateNode.AddChild(_child, _portName);
+                EditorUtility.SetDirty(_intermediateNode);
+            }
+            else if (_parent is ResultNode _resultNode)
+            {
+                _resultNode.child = _child;
+                EditorUtility.SetDirty(_resultNode);
+            }
+        }
+
+        public void RemoveChild(CodeFunctionNode _parent, CodeFunctionNode _child, string _portName)
+        {
+            if (_parent is IntermediateNode _intermediateNode)
+            {
+                _intermediateNode.RemoveChild(_child, _portName);
+                EditorUtility.SetDirty(_intermediateNode);
+            }
+            else if (_parent is ResultNode _resultNode)
+            {
+                _resultNode.child = null;
+                EditorUtility.SetDirty(_resultNode);
+            }
+        }
     }
 }

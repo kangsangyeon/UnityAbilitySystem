@@ -43,6 +43,10 @@ namespace Core.Editor
         {
             m_NodeGraph = _nodeGraph;
 
+            graphViewChanged -= OnGraphViewChanged;
+            DeleteElements(graphElements.ToList());
+            graphViewChanged += OnGraphViewChanged;
+
             if (m_NodeGraph.rootNode == null)
             {
                 var _rootNode = ScriptableObject.CreateInstance<ResultNode>();
@@ -54,6 +58,66 @@ namespace Core.Editor
             }
 
             m_NodeGraph.nodes.ForEach(n => CreateAndAddNodeView(n));
+            m_NodeGraph.nodes.ForEach(n =>
+            {
+                if (n is IntermediateNode _intermediateNode)
+                {
+                    NodeView _parentView = FindNodeView(n);
+                    for (int i = 0; i < _intermediateNode.children.Count; i++)
+                    {
+                        NodeView _childView = FindNodeView(_intermediateNode.children[i]);
+                        Edge _edge = _parentView.inputs[i].ConnectTo(_childView.output);
+                        AddElement(_edge);
+                    }
+                }
+                else if (n is ResultNode _rootNode)
+                {
+                    if (_rootNode.child != null)
+                    {
+                        NodeView _parentView = FindNodeView(n);
+                        NodeView _childView = FindNodeView(_rootNode.child);
+                        Edge _edge = _parentView.inputs[0].ConnectTo(_childView.output);
+                        AddElement(_edge);
+                    }
+                }
+            });
+        }
+
+        private NodeView FindNodeView(CodeFunctionNode _node)
+        {
+            return GetNodeByGuid(_node.guid) as NodeView;
+        }
+
+        private GraphViewChange OnGraphViewChanged(GraphViewChange _graphViewChange)
+        {
+            if (_graphViewChange.elementsToRemove != null)
+            {
+                _graphViewChange.elementsToRemove.ForEach(e =>
+                {
+                    if (e is NodeView _nodeView)
+                    {
+                        m_NodeGraph.DeleteNode(_nodeView.node);
+                    }
+                    else if (e is Edge _edge)
+                    {
+                        NodeView _parentView = _edge.input.node as NodeView;
+                        NodeView _childView = _edge.output.node as NodeView;
+                        m_NodeGraph.RemoveChild(_parentView.node, _childView.node, _edge.input.portName);
+                    }
+                });
+            }
+
+            if (_graphViewChange.edgesToCreate != null)
+            {
+                _graphViewChange.edgesToCreate.ForEach(e =>
+                {
+                    NodeView _parentView = e.input.node as NodeView;
+                    NodeView _childView = e.output.node as NodeView;
+                    m_NodeGraph.AddChild(_parentView.node, _childView.node, e.input.portName);
+                });
+            }
+
+            return _graphViewChange;
         }
 
         private void CreateAndAddNodeView(CodeFunctionNode _node)
