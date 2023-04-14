@@ -18,10 +18,15 @@ namespace StatSystem
         public Stat(StatDefinition _definition)
         {
             m_Definition = _definition;
-            Initialize();
         }
 
-        public void Initialize()
+        /// <summary>
+        /// 생성자에서 호출했을 때, definition의 formula가 초기화 되어 있지 않으므로 오류가 발생했기 때문에,
+        /// 생성자 호출 시점과 값 초기화 시점 중간에 formula를 초기화하기 위해 분리한 함수입니다.
+        /// StatController가 graph를 읽어 한 번에 모든 node들의 stat 인스턴스가 초기화시킵니다.
+        /// 그 전까지는 formula내 어떠한 node의 value도 정상적으로 가져올 수 없기 때문에, 이보다 CalculateValue 호출을 늦춰야 합니다.
+        /// </summary>
+        public virtual void Initialize()
         {
             CalculateValue();
         }

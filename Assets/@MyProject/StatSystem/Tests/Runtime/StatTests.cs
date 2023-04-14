@@ -27,13 +27,13 @@ public class StatTests
 
         StatController _statController = GameObject.FindObjectOfType<StatController>();
         Stat _physicalAttack = _statController.stats["PhysicalAttack"];
-        Assert.AreEqual(0, _physicalAttack.value);
+        int _prevValue = _physicalAttack.value;
         _physicalAttack.AddModifier(new StatModifier()
         {
             magnitude = 5,
             type = ModifierOperationType.Additive
         });
-        Assert.AreEqual(5, _physicalAttack.value);
+        Assert.AreEqual(_prevValue + 5, _physicalAttack.value);
     }
     
     [UnityTest]

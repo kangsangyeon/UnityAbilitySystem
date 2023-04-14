@@ -11,7 +11,12 @@ namespace StatSystem
 
         public PrimaryStat(StatDefinition _definition) : base(_definition)
         {
-            m_BaseValue = _definition.baseValue;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            m_BaseValue = m_Definition.baseValue;
             CalculateValue();
         }
 
