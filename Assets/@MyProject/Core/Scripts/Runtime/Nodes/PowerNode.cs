@@ -14,14 +14,14 @@ namespace Core.Nodes
 
         public override void RemoveChild(CodeFunctionNode _child, string _portName)
         {
-            if (_portName.Equals("A")) exponent = null;
-            else @base = null;
+            if (_portName.Equals("A")) @base = null;
+            else exponent = null;
         }
 
         public override void AddChild(CodeFunctionNode _child, string _portName)
         {
-            if (_portName.Equals("A")) exponent = _child;
-            else @base = _child;
+            if (_portName.Equals("A")) @base = _child;
+            else exponent = _child;
         }
 
         public override ReadOnlyCollection<CodeFunctionNode> children
@@ -29,8 +29,8 @@ namespace Core.Nodes
             get
             {
                 List<CodeFunctionNode> _nodes = new List<CodeFunctionNode>();
-                if (exponent != null) _nodes.Add(exponent);
                 if (@base != null) _nodes.Add(@base);
+                if (exponent != null) _nodes.Add(exponent);
                 return _nodes.AsReadOnly();
             }
         }
