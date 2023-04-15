@@ -28,7 +28,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
   m_Name: Scalar
   m_EditorClassIdentifier: 
-  position: {x: -447.99973, y: 416.6594}
+  position: {x: -446, y: 392}
   guid: 41386aafb20b6ee43b0e7e93c5393b87
   m_Value: 7
 --- !u!114 &-5079483799790852463
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd34bf480af450ab5e70be7b619d797, type: 3}
   m_Name: Devide
   m_EditorClassIdentifier: 
-  position: {x: -337.99973, y: 352.65942}
+  position: {x: -336, y: 328}
   guid: 7383a32a6b17caa4ebd15bc7110fb70a
   dividend: {fileID: 6579394393744144174}
   divisor: {fileID: -7602831877930817116}
@@ -162,8 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: -110.999664, y: 251.65942}
   guid: 7bac98ad6faf60f4d9568b74700dd551
-  base: {fileID: -836832920529897619}
-  exponent: {fileID: 82617675555179760}
+  base: {fileID: 82617675555179760}
+  exponent: {fileID: -836832920529897619}
 --- !u!114 &6579394393744144174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb73278a4b94e71a8eee622104a8fb8, type: 3}
   m_Name: Level
   m_EditorClassIdentifier: 
-  position: {x: -463.99966, y: 314.6594}
+  position: {x: -462, y: 290}
   guid: 622b22421bde5284db677471de444abe
 --- !u!114 &7921746743227607481
 MonoBehaviour:
