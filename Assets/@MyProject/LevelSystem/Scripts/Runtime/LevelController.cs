@@ -26,7 +26,7 @@ namespace LevelSystem
                     m_CurrentExperience = value - requiredExperience;
                     currentExperienceChanged?.Invoke();
                     ++m_Level;
-                    levelChanged.Invoke();
+                    levelChanged?.Invoke();
                 }
                 else if (value < requiredExperience)
                 {
