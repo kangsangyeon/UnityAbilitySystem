@@ -17,7 +17,7 @@ namespace StatSystem
         public UnityEvent initialized = new UnityEvent();
         public UnityEvent willUninitialize = new UnityEvent();
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_IsInitialized == false)
             {
@@ -32,7 +32,7 @@ namespace StatSystem
             willUninitialize.Invoke();
         }
 
-        private void Initialize()
+        protected void Initialize()
         {
             foreach (var _definition in m_StatDatabase.stats)
             {
