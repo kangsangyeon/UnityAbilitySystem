@@ -132,7 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 447335612}
-  - component: {fileID: 447335611}
+  - component: {fileID: 447335614}
+  - component: {fileID: 447335613}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -140,19 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &447335611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 447335610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 161beb0baf81a504d960e3f8b7087593, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StatDatabase: {fileID: 11400000, guid: 7377a9889587167439f95c95cac4e80c, type: 2}
 --- !u!4 &447335612
 Transform:
   m_ObjectHideFlags: 0
@@ -168,3 +156,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &447335613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447335610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08e8370d72747ba9651d9d33ab67ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Level: 1
+  m_CurrentExperience: 0
+  m_RequiredExperienceFormula: {fileID: 11400000, guid: 5b8fd9eac4b247f4a9491799e55b73da, type: 2}
+--- !u!114 &447335614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447335610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5523d35ebc6d45dfa87625e677e0dc4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StatDatabase: {fileID: 11400000, guid: 7377a9889587167439f95c95cac4e80c, type: 2}
+  initialized:
+    m_PersistentCalls:
+      m_Calls: []
+  willUninitialize:
+    m_PersistentCalls:
+      m_Calls: []

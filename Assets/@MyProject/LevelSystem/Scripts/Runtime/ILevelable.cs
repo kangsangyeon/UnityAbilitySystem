@@ -5,7 +5,7 @@ namespace LevelSystem
     public interface ILevelable
     {
         int level { get; }
-        int currentExperience { get; }
+        int currentExperience { get; set; }
         int requiredExperience { get; }
         bool isInitilaized { get; }
         event System.Action levelChanged;
