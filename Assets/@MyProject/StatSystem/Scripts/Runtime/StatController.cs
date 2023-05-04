@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using SaveSystem;
 using StatSystem.Nodes;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace StatSystem
 {
-    public class StatController : MonoBehaviour
+    public class StatController : MonoBehaviour, ISavable
     {
         [SerializeField] private StatDatabase m_StatDatabase;
         protected Dictionary<string, Stat> m_Stats = new Dictionary<string, Stat>(StringComparer.OrdinalIgnoreCase);
@@ -83,5 +84,40 @@ namespace StatSystem
                 }
             }
         }
+
+        #region Stat System
+
+        [System.Serializable]
+        protected class StatControllerData
+        {
+            public Dictionary<string, object> stats;
+        }
+
+        public virtual object data
+        {
+            get
+            {
+                Dictionary<string, object> stats = new Dictionary<string, object>();
+                foreach (Stat _stat in m_Stats.Values)
+                {
+                    if (_stat is ISavable _savable)
+                        stats.Add(_stat.definition.name, _savable.data);
+                }
+
+                return new StatControllerData { stats = stats };
+            }
+        }
+
+        public virtual void Load(object _data)
+        {
+            StatControllerData _statControllerData = (StatControllerData)_data;
+            foreach (Stat _stat in m_Stats.Values)
+            {
+                if (_stat is ISavable _savable)
+                    _savable.Load(_statControllerData.stats[_stat.definition.name]);
+            }
+        }
+
+        #endregion
     }
 }

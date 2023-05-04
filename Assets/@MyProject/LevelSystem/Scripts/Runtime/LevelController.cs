@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using Core;
 using LevelSystem.Nodes;
+using SaveSystem;
 using UnityEngine;
 
 namespace LevelSystem
 {
-    public class LevelController : MonoBehaviour, ILevelable
+    public class LevelController : MonoBehaviour, ILevelable, ISavable
     {
         [SerializeField] private int m_Level = 1;
         [SerializeField] private int m_CurrentExperience;
@@ -62,5 +63,27 @@ namespace LevelSystem
         {
             willUnitialize?.Invoke();
         }
+
+        #region Stat System
+
+        [System.Serializable]
+        protected class LevelControllerData
+        {
+            public int level;
+            public int currentExperience;
+        }
+
+        public object data => new LevelControllerData() { level = level, currentExperience = currentExperience };
+
+        public void Load(object _data)
+        {
+            LevelControllerData _levelControllerData = (LevelControllerData)_data;
+            m_CurrentExperience = _levelControllerData.currentExperience;
+            currentExperienceChanged?.Invoke();
+            m_Level = _levelControllerData.level;
+            levelChanged?.Invoke();
+        }
+
+        #endregion
     }
 }

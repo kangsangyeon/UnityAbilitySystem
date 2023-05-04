@@ -1,10 +1,11 @@
 ﻿using System;
+using SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace StatSystem
 {
-    public class Attribute : Stat
+    public class Attribute : Stat, ISavable
     {
         protected int m_CurrentValue;
 
@@ -51,5 +52,24 @@ namespace StatSystem
 
             appliedModifier.Invoke(_modifier);
         }
+
+        #region Save System
+
+        [System.Serializable]
+        protected class AttributeData
+        {
+            public int currentValue;
+        }
+
+        public object data => new AttributeData() { currentValue = currentValue };
+
+        public void Load(object _data)
+        {
+            AttributeData _attributeData = (AttributeData)_data;
+            m_CurrentValue = _attributeData.currentValue;
+            currentValueChanged?.Invoke();
+        }
+
+        #endregion
     }
 }

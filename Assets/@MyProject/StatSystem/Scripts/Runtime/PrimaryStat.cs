@@ -1,10 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
+using SaveSystem;
 
 [assembly: InternalsVisibleTo("StatSystem.Tests")]
 
 namespace StatSystem
 {
-    public class PrimaryStat : Stat
+    public class PrimaryStat : Stat, ISavable
     {
         private int m_BaseValue;
         public override int baseValue => m_BaseValue;
@@ -31,5 +32,24 @@ namespace StatSystem
             m_BaseValue -= _amount;
             CalculateValue();
         }
+
+        #region Stat System
+
+        [System.Serializable]
+        protected class PrimaryStatData
+        {
+            public int baseValue;
+        }
+
+        public object data => new PrimaryStatData() { baseValue = baseValue };
+
+        public void Load(object _data)
+        {
+            PrimaryStatData _primaryStatData = (PrimaryStatData)_data;
+            m_BaseValue = _primaryStatData.baseValue;
+            CalculateValue();
+        }
+
+        #endregion
     }
 }

@@ -85,5 +85,33 @@ namespace StatSystem
                 }
             }
         }
+
+        #region Stat System
+
+        [System.Serializable]
+        protected class PlayerStatControllerData : StatControllerData
+        {
+            public int statPoints;
+
+            public PlayerStatControllerData(StatControllerData _statControllerData)
+            {
+                stats = _statControllerData.stats;
+            }
+        }
+
+        public override object data
+        {
+            get { return new PlayerStatControllerData(base.data as StatControllerData) { statPoints = statPoints }; }
+        }
+
+        public override void Load(object _data)
+        {
+            base.Load(_data);
+            PlayerStatControllerData _playerStatControllerData = (PlayerStatControllerData)_data;
+            m_StatPoints = _playerStatControllerData.statPoints;
+            statPointsChanged?.Invoke();
+        }
+
+        #endregion
     }
 }
