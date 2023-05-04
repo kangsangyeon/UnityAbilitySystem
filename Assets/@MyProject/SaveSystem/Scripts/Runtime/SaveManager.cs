@@ -12,12 +12,12 @@ namespace SaveSystem
         private void Awake()
         {
             if (m_SaveData.previousSaveExists)
-                m_SaveData.Load();
+                m_SaveData.LoadFile();
         }
 
         private void OnApplicationQuit()
         {
-            m_SaveData.Save();
+            m_SaveData.SaveFile();
         }
     }
 }

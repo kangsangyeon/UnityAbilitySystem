@@ -25,14 +25,14 @@ namespace SaveSystem
             _outData = m_Data[_id];
         }
 
-        public void Load()
+        public void LoadFile()
         {
             FileManager.LoadFromBinaryFile(m_Path, out m_Data);
             m_LoadDataChannel.Load();
             m_Data.Clear();
         }
 
-        public void Save()
+        public void SaveFile()
         {
             if (previousSaveExists)
                 FileManager.LoadFromBinaryFile(m_Path, out m_Data);
@@ -43,7 +43,7 @@ namespace SaveSystem
         }
 
         [ContextMenu("Delete Save")]
-        private void DeleteSave()
+        private void DeleteSaveFile()
         {
             if (previousSaveExists)
                 File.Delete(m_Path);
