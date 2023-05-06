@@ -3,7 +3,7 @@
     <ui:VisualElement name="panel" style="width: 25%; padding-left: 1%; padding-right: 1%; padding-top: 1%; padding-bottom: 1%; position: absolute; background-color: rgb(26, 26, 26); top: 137px; left: 188px;">
         <ui:VisualElement name="level" style="flex-direction: row; justify-content: space-between;">
             <ui:Label text="Level" display-tooltip-when-elided="true" name="label" style="font-size: 16px;" />
-            <ui:Label text="0 / 100" display-tooltip-when-elided="true" name="value" style="font-size: 16px;" />
+            <ui:Label text="1" display-tooltip-when-elided="true" name="value" style="font-size: 16px;" />
         </ui:VisualElement>
         <ui:VisualElement name="experience" style="flex-direction: row; justify-content: space-between;">
             <ui:Label text="Experience" display-tooltip-when-elided="true" name="label" style="font-size: 16px;" />
