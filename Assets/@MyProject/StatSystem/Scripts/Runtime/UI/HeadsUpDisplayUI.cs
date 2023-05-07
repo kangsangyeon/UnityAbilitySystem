@@ -90,8 +90,8 @@ namespace StatSystem.UI
 
         private void OnExperienceChangedInternal()
         {
-            m_HealthBar.value = (float)m_Levelable.currentExperience / m_Levelable.requiredExperience * 100.0f;
-            m_HealthBar.title = $"{m_Levelable.currentExperience} / {m_Levelable.requiredExperience}";
+            m_ExperienceBar.value = (float)m_Levelable.currentExperience / m_Levelable.requiredExperience * 100.0f;
+            m_ExperienceBar.title = $"{m_Levelable.currentExperience} / {m_Levelable.requiredExperience}";
         }
     }
 }

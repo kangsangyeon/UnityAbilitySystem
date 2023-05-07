@@ -16,8 +16,9 @@ namespace StatSystem
 
         public override void Initialize()
         {
-            m_BaseValue = m_Definition.baseValue;
             base.Initialize();
+            m_BaseValue = m_Definition.baseValue;
+            CalculateValue();
         }
 
         internal void Add(int _amount)

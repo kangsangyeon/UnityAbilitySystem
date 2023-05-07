@@ -19,8 +19,9 @@ namespace StatSystem
 
         public override void Initialize()
         {
-            m_CurrentValue = m_Value;
             base.Initialize();
+            m_CurrentValue = m_Value;
+            CalculateValue();
         }
 
         public virtual void ApplyModifier(StatModifier _modifier)
