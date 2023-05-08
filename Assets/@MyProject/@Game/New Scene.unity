@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 161beb0baf81a504d960e3f8b7087593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StatDatabase: {fileID: 11400000, guid: 9ad609b846b3dad4097100d88dc9040b, type: 2}
+  m_StatDatabase: {fileID: 11400000, guid: 695e0e5479e8db84db8e552ad2b76fa0, type: 2}
   initialized:
     m_PersistentCalls:
       m_Calls: []
