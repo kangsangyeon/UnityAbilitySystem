@@ -1,4 +1,6 @@
-﻿using LevelSystem;
+﻿using CombatSystem;
+using Game.Scripts.Runtime;
+using LevelSystem;
 using StatSystem;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,18 +9,20 @@ namespace MyGame.Scripts
 {
     [RequireComponent(typeof(PlayerStatController))]
     [RequireComponent(typeof(NavMeshAgent))]
-    public class Player : MonoBehaviour
+    public class Player : CombatableCharacter
     {
-        private PlayerStatController m_PlayerStatController;
         private ILevelable m_Levelable;
         [SerializeField] private Transform m_Target;
         private NavMeshAgent m_NavMeshAgent;
+        [SerializeField] private MeleeWeapon m_MeleeWeapon;
 
-        private void Awake()
+        protected override void Awake()
         {
-            m_PlayerStatController = GetComponent<PlayerStatController>();
-            m_Levelable = m_PlayerStatController.GetComponent<ILevelable>();
+            base.Awake();
+            m_Levelable = m_StatController.GetComponent<ILevelable>();
             m_NavMeshAgent = GetComponent<NavMeshAgent>();
+            if (m_MeleeWeapon != null)
+                m_MeleeWeapon.hit += collision => ApplyDamage(m_MeleeWeapon, collision.target);
         }
 
         private void Start()
@@ -31,20 +35,22 @@ namespace MyGame.Scripts
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                (m_PlayerStatController.stats["Health"] as Attribute).ApplyModifier(new StatModifier
+                (m_StatController.stats[k_Health] as Attribute).ApplyModifier(new StatModifier
                 {
                     magnitude = -10,
                     type = ModifierOperationType.Additive
                 });
             }
+
             if (Input.GetKeyDown(KeyCode.W))
             {
-                (m_PlayerStatController.stats["Mana"] as Attribute).ApplyModifier(new StatModifier
+                (m_StatController.stats["Mana"] as Attribute).ApplyModifier(new StatModifier
                 {
                     magnitude = -10,
                     type = ModifierOperationType.Additive
                 });
             }
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 m_Levelable.currentExperience += 50;
