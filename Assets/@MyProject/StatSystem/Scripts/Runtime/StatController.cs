@@ -22,9 +22,7 @@ namespace StatSystem
         {
             if (m_IsInitialized == false)
             {
-                m_IsInitialized = true;
                 Initialize();
-                initialized.Invoke();
             }
         }
 
@@ -49,14 +47,14 @@ namespace StatSystem
             {
                 m_Stats.Add(_definition.name, new PrimaryStat(_definition));
             }
-            
+
             InitializeStatFormulas();
 
             foreach (Stat _stat in m_Stats.Values)
             {
                 _stat.Initialize();
             }
-            
+
             initialized.Invoke();
 
             m_IsInitialized = true;
