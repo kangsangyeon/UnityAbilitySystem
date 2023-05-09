@@ -18,7 +18,7 @@ namespace CombatSystem
         {
             m_Collider = GetComponent<Collider>();
             m_Damageable = GetComponent<IDamageable>();
-            m_Pool = new ObjectPool<FloatingText>(OnCreate);
+            m_Pool = new ObjectPool<FloatingText>(OnCreate, OnGet, OnRelease);
         }
 
         private void OnEnable()
@@ -64,6 +64,16 @@ namespace CombatSystem
         {
         }
 
+        private FloatingText OnCreate()
+        {
+            FloatingText _floatingText = Instantiate(m_FloatingTextPrefab);
+            _floatingText.finished.AddListener(m_Pool.Release);
+
+            _floatingText.transform.position = transform.position + GetCenterOfCollider();
+            _floatingText.transform.localScale = Vector3.one * 0.01f;
+            return _floatingText;
+        }
+
         private void OnGet(FloatingText _floatingText)
         {
             _floatingText.transform.position = transform.position + GetCenterOfCollider();
@@ -95,13 +105,6 @@ namespace CombatSystem
             }
 
             return _center;
-        }
-
-        private FloatingText OnCreate()
-        {
-            FloatingText _floatingText = Instantiate(m_FloatingTextPrefab);
-            _floatingText.finished.AddListener(m_Pool.Release);
-            return _floatingText;
         }
     }
 }
