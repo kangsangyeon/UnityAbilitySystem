@@ -42,7 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
   m_Name: Health
   m_EditorClassIdentifier: 
-  m_BaseValue: 0
+  m_BaseValue: 100
   m_Cap: -1
   m_Formula: {fileID: 0}
 --- !u!114 &-4045421305796294241
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
   m_Name: Mana
   m_EditorClassIdentifier: 
-  m_BaseValue: 0
+  m_BaseValue: 100
   m_Cap: -1
   m_Formula: {fileID: 0}
 --- !u!114 &-1265518651094346683

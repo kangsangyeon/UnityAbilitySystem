@@ -11,7 +11,7 @@ namespace Game.Scripts.Runtime
         protected bool m_IsInitialized;
 
         public int health => (m_StatController.stats[k_Health] as StatSystem.Attribute).currentValue;
-        public int maxHealth { get; }
+        public int maxHealth => (m_StatController.stats[k_Health] as StatSystem.Attribute).value;
         public UnityEvent healthChanged { get; set; } = new UnityEvent();
         public UnityEvent maxHealthChanged { get; set; } = new UnityEvent();
         public bool isInitialized => m_IsInitialized;
