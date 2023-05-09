@@ -58,6 +58,8 @@ namespace Game.Scripts.Runtime
             _statControllerStat.valueChanged.RemoveListener(OnMaxHealthChanged);
             _statControllerStat.currentValueChanged.RemoveListener(OnHealthChanged);
             _statControllerStat.appliedModifier.RemoveListener(OnAppliedModifier);
+            m_IsInitialized = false;
+            willUninitialize?.Invoke();
         }
 
         private void OnMaxHealthChanged()
