@@ -18,7 +18,7 @@ namespace StatSystem.Tests
         }
         
         [UnityTest]
-        public IEnumerator Stat_WhenModifierApplied_DoesNotExceedCap()
+        public IEnumerator Attribute_WhenModifierApplied_DoesNotExceedCap()
         {
             yield return null;
 
@@ -36,7 +36,7 @@ namespace StatSystem.Tests
         }
         
         [UnityTest]
-        public IEnumerator Stat_WhenModifierApplied_DoesNotGoBelowZero()
+        public IEnumerator Attribute_WhenModifierApplied_DoesNotGoBelowZero()
         {
             yield return null;
 

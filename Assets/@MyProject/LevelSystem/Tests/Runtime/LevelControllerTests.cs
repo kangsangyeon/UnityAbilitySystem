@@ -18,7 +18,7 @@ namespace LevelSystem.Tests
         }
 
         [UnityTest]
-        public IEnumerator Stat_WhenModifierApplied_DoesNotExceedCap()
+        public IEnumerator LevelController_WhenModifierApplied_DoesNotExceedCap()
         {
             yield return null;
             LevelController _levelController = GameObject.FindObjectOfType<LevelController>();

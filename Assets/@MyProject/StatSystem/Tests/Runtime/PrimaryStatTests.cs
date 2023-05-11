@@ -19,7 +19,7 @@ namespace StatSystem.Tests
         }
 
         [UnityTest]
-        public IEnumerator Stat_WhenAddCalled_ChangesBaseValue()
+        public IEnumerator PrimaryStat_WhenAddCalled_ChangesBaseValue()
         {
             yield return null;
 
