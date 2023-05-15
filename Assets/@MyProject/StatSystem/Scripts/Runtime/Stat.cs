@@ -39,10 +39,11 @@ namespace StatSystem
             CalculateValue();
         }
 
-        public void RemoveModifierFromSource(Object _source)
+        public void RemoveModifierFromSource(object _source)
         {
-            m_Modifiers.RemoveAll(m => m.source.GetInstanceID() == _source.GetInstanceID());
-            CalculateValue();
+            int _count = m_Modifiers.RemoveAll(m => m.source == _source);
+            if (_count > 0)
+                CalculateValue();
         }
 
         internal void CalculateValue()
