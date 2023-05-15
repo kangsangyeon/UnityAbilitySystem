@@ -10,5 +10,11 @@ namespace StatSystem.Nodes
         public Stat stat;
 
         public override float value => stat.value;
+
+        public override float CalculateValue(GameObject _source)
+        {
+            StatController _statController = _source.GetComponent<StatController>();
+            return _statController.stats[m_StatName].value;
+        }
     }
 }

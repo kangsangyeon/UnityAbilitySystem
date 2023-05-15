@@ -6,5 +6,6 @@ namespace Core.Nodes
     {
         [SerializeField] protected float m_Value;
         public override float value => m_Value;
+        public override float CalculateValue(GameObject _source) => m_Value;
     }
 }

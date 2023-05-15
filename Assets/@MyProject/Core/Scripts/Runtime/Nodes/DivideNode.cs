@@ -4,12 +4,15 @@ using UnityEngine;
 
 namespace Core.Nodes
 {
-    public class DivideNode: IntermediateNode
+    public class DivideNode : IntermediateNode
     {
         [HideInInspector] public CodeFunctionNode dividend;
         [HideInInspector] public CodeFunctionNode divisor;
 
         public override float value => dividend.value / divisor.value;
+
+        public override float CalculateValue(GameObject _source) =>
+            dividend.CalculateValue(_source) / divisor.CalculateValue(_source);
 
         public override void RemoveChild(CodeFunctionNode _child, string _portName)
         {

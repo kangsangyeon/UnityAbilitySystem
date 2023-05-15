@@ -12,6 +12,9 @@ namespace Core.Nodes
 
         public override float value => Mathf.Pow(@base.value, exponent.value);
 
+        public override float CalculateValue(GameObject _source) =>
+            Mathf.Pow(@base.CalculateValue(_source), exponent.CalculateValue(_source));
+
         public override void RemoveChild(CodeFunctionNode _child, string _portName)
         {
             if (_portName.Equals("A")) @base = null;

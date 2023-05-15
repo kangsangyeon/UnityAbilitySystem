@@ -11,6 +11,9 @@ namespace Core.Nodes
 
         public override float value => factorA.value * factorB.value;
 
+        public override float CalculateValue(GameObject _source) =>
+            factorA.CalculateValue(_source) * factorB.CalculateValue(_source);
+
         public override void RemoveChild(CodeFunctionNode _child, string _portName)
         {
             if (_portName.Equals("A")) factorA = null;

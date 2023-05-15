@@ -11,6 +11,9 @@ namespace Core.Nodes
 
         public override float value => appendA.value + appendB.value;
 
+        public override float CalculateValue(GameObject _source) =>
+            appendA.CalculateValue(_source) + appendB.CalculateValue(_source);
+
         public override void RemoveChild(CodeFunctionNode _child, string _portName)
         {
             if (_portName.Equals("A")) appendA = null;

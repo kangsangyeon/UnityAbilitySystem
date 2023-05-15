@@ -7,5 +7,6 @@ namespace Core.Nodes
         [HideInInspector] public CodeFunctionNode child;
 
         public override float value => child.value;
+        public override float CalculateValue(GameObject _source) => child.CalculateValue(_source);
     }
 }

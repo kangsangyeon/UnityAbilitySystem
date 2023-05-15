@@ -11,6 +11,9 @@ namespace Core.Nodes
 
         public override float value => minuend.value - subtrahend.value;
 
+        public override float CalculateValue(GameObject _source) =>
+            minuend.CalculateValue(_source) - subtrahend.CalculateValue(_source);
+
         public override void RemoveChild(CodeFunctionNode _child, string _portName)
         {
             if (_portName.Equals("A")) minuend = null;

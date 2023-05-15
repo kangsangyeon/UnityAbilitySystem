@@ -11,6 +11,8 @@ namespace Core
         public CodeFunctionNode rootNode;
         public List<CodeFunctionNode> nodes = new List<CodeFunctionNode>();
 
+        public float CalculateValue(GameObject _source) => rootNode.CalculateValue(_source);
+
         public List<T> FindNodesOfType<T>()
             where T : CodeFunctionNode
         {
