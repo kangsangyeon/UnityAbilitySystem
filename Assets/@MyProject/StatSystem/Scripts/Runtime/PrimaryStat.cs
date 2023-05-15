@@ -10,7 +10,7 @@ namespace StatSystem
         private int m_BaseValue;
         public override int baseValue => m_BaseValue;
 
-        public PrimaryStat(StatDefinition _definition) : base(_definition)
+        public PrimaryStat(StatDefinition _definition, StatController _controller) : base(_definition, _controller)
         {
         }
 

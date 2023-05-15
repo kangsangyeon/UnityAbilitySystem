@@ -7,6 +7,7 @@ namespace StatSystem
     public class Stat
     {
         protected StatDefinition m_Definition;
+        protected StatController m_Controller;
         protected int m_Value;
         protected List<StatModifier> m_Modifiers = new List<StatModifier>();
 
@@ -15,9 +16,10 @@ namespace StatSystem
         public virtual int baseValue => m_Definition.baseValue;
         public UnityEvent valueChanged = new UnityEvent();
 
-        public Stat(StatDefinition _definition)
+        public Stat(StatDefinition _definition, StatController _controller)
         {
             m_Definition = _definition;
+            m_Controller = _controller;
         }
 
         /// <summary>

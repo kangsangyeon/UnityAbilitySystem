@@ -13,7 +13,7 @@ namespace StatSystem
         public UnityEvent currentValueChanged = new UnityEvent();
         public UnityEvent<StatModifier> appliedModifier = new UnityEvent<StatModifier>();
 
-        public Attribute(StatDefinition _definition) : base(_definition)
+        public Attribute(StatDefinition _definition, StatController _controller) : base(_definition, _controller)
         {
         }
 

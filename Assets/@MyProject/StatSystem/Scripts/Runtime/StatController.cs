@@ -35,17 +35,24 @@ namespace StatSystem
         {
             foreach (var _definition in m_StatDatabase.stats)
             {
-                m_Stats.Add(_definition.name, new Stat(_definition));
+                m_Stats.Add(_definition.name, new Stat(_definition, this));
             }
 
             foreach (var _definition in m_StatDatabase.attributes)
             {
-                m_Stats.Add(_definition.name, new Attribute(_definition));
+                if (_definition.name.Equals("Health", StringComparison.OrdinalIgnoreCase))
+                {
+                    m_Stats.Add(_definition.name, new Health(_definition, this));
+                }
+                else
+                {
+                    m_Stats.Add(_definition.name, new Attribute(_definition, this));
+                }
             }
 
             foreach (var _definition in m_StatDatabase.primaryStats)
             {
-                m_Stats.Add(_definition.name, new PrimaryStat(_definition));
+                m_Stats.Add(_definition.name, new PrimaryStat(_definition, this));
             }
 
             InitializeStatFormulas();
