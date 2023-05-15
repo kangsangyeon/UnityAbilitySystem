@@ -14,6 +14,7 @@ namespace MyGame
         private StatController m_StatController;
         private static readonly int MOVEMENT_SPEED = Animator.StringToHash("MovementSpeed");
         private static readonly int VELOCITY = Animator.StringToHash("Velocity");
+        private static readonly int AttackSpeed = Animator.StringToHash("AttackSpeed");
 
         private void Awake()
         {
@@ -42,19 +43,27 @@ namespace MyGame
             if (m_StatController.IsInitialized())
             {
                 m_StatController.stats["MovementSpeed"].valueChanged.RemoveListener(OnMovementSpeedChanged);
+                m_StatController.stats["AttackSpeed"].valueChanged.RemoveListener(OnAttackSpeedChanged);
             }
         }
 
         private void OnStatControllerInitialized()
         {
             OnMovementSpeedChanged();
+            OnAttackSpeedChanged();
             m_StatController.stats["MovementSpeed"].valueChanged.AddListener(OnMovementSpeedChanged);
+            m_StatController.stats["AttackSpeed"].valueChanged.AddListener(OnAttackSpeedChanged);
         }
 
         private void OnMovementSpeedChanged()
         {
             m_Animator.SetFloat(MOVEMENT_SPEED, m_StatController.stats["MovementSpeed"].value / 100f);
             m_NavMeshAgent.speed = m_BaseSpeed * m_StatController.stats["MovementSpeed"].value / 100f;
+        }
+
+        private void OnAttackSpeedChanged()
+        {
+            m_Animator.SetFloat(AttackSpeed, m_StatController.stats["AttackSpeed"].value / 100.0f);
         }
     }
 }
