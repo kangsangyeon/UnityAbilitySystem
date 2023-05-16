@@ -19,7 +19,7 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
-        private VisualElement CreateApplicationFieldsGUI()
+        protected VisualElement CreateApplicationFieldsGUI()
         {
             VisualElement _root = new VisualElement();
             ListView _modifiers = new ListView()
