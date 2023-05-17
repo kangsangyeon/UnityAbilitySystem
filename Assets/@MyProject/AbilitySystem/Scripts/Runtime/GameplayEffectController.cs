@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using StatSystem;
 using UnityEngine;
+using UnityEngine.Events;
 using Attribute = StatSystem.Attribute;
 
 namespace AbilitySystem
@@ -11,6 +13,13 @@ namespace AbilitySystem
     {
         protected List<GameplayPersistentEffect> m_ActiveEffects = new List<GameplayPersistentEffect>();
         public ReadOnlyCollection<GameplayPersistentEffect> activeEffects => m_ActiveEffects.AsReadOnly();
+
+        [SerializeField] private List<GameplayEffectDefinition> m_StartEffectDefinitions;
+
+        private bool m_IsInitialized;
+        public bool isInitialized => m_IsInitialized;
+
+        public UnityEvent initialized;
 
         protected StatController m_StatController;
 
@@ -109,9 +118,43 @@ namespace AbilitySystem
             }
         }
 
+        private void OnStatControllerInitialized()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            foreach (GameplayEffectDefinition _effectDefinition in m_StartEffectDefinitions)
+            {
+                EffectTypeAttribute _attribute =
+                    _effectDefinition.GetType().GetCustomAttributes(true)
+                        .OfType<EffectTypeAttribute>().FirstOrDefault();
+
+                GameplayEffect _effect = Activator.CreateInstance(
+                    _attribute.type,
+                    _effectDefinition, // definition
+                    m_StartEffectDefinitions, // source
+                    gameObject // instigator
+                ) as GameplayEffect;
+
+                ApplyGameplayEffectToSelf(_effect);
+            }
+
+            m_IsInitialized = true;
+            initialized?.Invoke();
+        }
+
         private void Awake()
         {
             m_StatController = GetComponent<StatController>();
+        }
+
+        private void OnEnable()
+        {
+            m_StatController.initialized.AddListener(OnStatControllerInitialized);
+            if (m_StatController.IsInitialized())
+                OnStatControllerInitialized();
         }
 
         private void Update()
