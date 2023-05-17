@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5492856275385010071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
+  m_Name: Scalar
+  m_EditorClassIdentifier: 
+  position: {x: 243, y: 235}
+  guid: e6cda19862a66b942916030c1d16bfd8
+  m_Value: 3
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5760a7dd8c34a9ba90d40e8cfb4a352, type: 3}
+  m_Name: DexterityModifierMagnitude
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 4195645196873630423}
+  nodes:
+  - {fileID: 4195645196873630423}
+  - {fileID: -5492856275385010071}
+--- !u!114 &4195645196873630423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e614c21f2445a58ac5c7fc18477179, type: 3}
+  m_Name: ResultNode
+  m_EditorClassIdentifier: 
+  position: {x: 480.88, y: 234.84}
+  guid: c9b30c987d9cc594780a5c9eb509bd8c
+  child: {fileID: -5492856275385010071}

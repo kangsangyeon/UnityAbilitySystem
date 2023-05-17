@@ -45,6 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17718805268146a38ba6a2e17c7100b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StartEffectDefinitions:
+  - {fileID: 11400000, guid: a38dfb4744ed9fb418babc3175e9ca4c, type: 2}
+  initialized:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-8811647111398547568
 MonoBehaviour:
   m_ObjectHideFlags: 0
