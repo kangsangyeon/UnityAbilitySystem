@@ -9,6 +9,10 @@ using Attribute = StatSystem.Attribute;
 
 namespace AbilitySystem
 {
+    /// <summary>
+    /// controller를 소유하는 entity에 effect를 적용할 때 사용합니다.
+    /// 적용된 persistent effect의 유효 시간이 만료되었는지도 확인하고, 만료된 경우 삭제합니다.
+    /// </summary>
     public class GameplayEffectController : MonoBehaviour
     {
         protected List<GameplayPersistentEffect> m_ActiveEffects = new List<GameplayPersistentEffect>();
@@ -39,6 +43,12 @@ namespace AbilitySystem
         {
             m_ActiveEffects.Add(_effect);
             AddUninhibitedEffects(_effect);
+        }
+        
+        private void RemoveActiveGameplayEffect(GameplayPersistentEffect _effect, bool _prematureRemoval)
+        {
+            m_ActiveEffects.Remove(_effect);
+            RemoveUninhibitedEffects(_effect);
         }
 
         private void ExecuteGameplayEffect(GameplayEffect _effect)
@@ -91,12 +101,9 @@ namespace AbilitySystem
             }
         }
 
-        private void RemoveActiveGameplayEffect(GameplayPersistentEffect _effect, bool _prematureRemoval)
-        {
-            m_ActiveEffects.Remove(_effect);
-            RemoveUninhibitedEffects(_effect);
-        }
-
+        /// <summary>
+        /// persistent effect가 만료되었는지 확인하고, 만료된 경우 해당 effect를 삭제합니다.
+        /// </summary>
         private void HandleDuration()
         {
             List<GameplayPersistentEffect> _effectsToRemove = new List<GameplayPersistentEffect>();

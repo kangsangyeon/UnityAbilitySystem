@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace AbilitySystem
 {
+    /// <summary>
+    /// 런타임에 entity에 영향을 끼칠 수 있는 effect 인스턴스 클래스입니다.
+    /// effect definition 내 modifier definition 목록을 읽고, 개별적으로 modifier 인스턴스화하여 캐싱합니다.
+    /// 이는 effect controller로 인해 대상 entity에 effect를 적용할 때 사용됩니다.
+    /// </summary>
     public class GameplayEffect
     {
         protected GameplayEffectDefinition m_Definition;
@@ -29,10 +34,16 @@ namespace AbilitySystem
 
             foreach (var _modifierDefinition in definition.ModifierDefinitions)
             {
+                // modifier definition 목록을 순회하며 modifier 인스턴스를 생성하여
+                // modifier 목록에 캐싱합니다.
+
                 StatModifier _statModifier;
 
                 if (_modifierDefinition is GameplayEffectDamageDefinition _damageDefinition)
                 {
+                    // 데미지를 입히는 modifier인 경우 실행됩니다.
+                    // 데미지를 입히는 HealthModifier를 생성합니다.
+
                     HealthModifier _healthModifier = new HealthModifier()
                     {
                         magnitude = Mathf.RoundToInt(_modifierDefinition.formula.CalculateValue(_instigator)),
@@ -55,11 +66,15 @@ namespace AbilitySystem
                 }
                 else
                 {
+                    // 그렇지 않은 경우 StatModifier를 생성합니다.
+
                     _statModifier = new StatModifier()
                     {
                         magnitude = Mathf.RoundToInt(_modifierDefinition.formula.CalculateValue(_instigator))
                     };
                 }
+
+                // 생성한 modifier를 modifier 목록에 추가합니다.
 
                 _statModifier.source = this;
                 _statModifier.type = _modifierDefinition.type;

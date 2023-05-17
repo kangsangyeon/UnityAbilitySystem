@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace AbilitySystem
 {
@@ -21,6 +20,9 @@ namespace AbilitySystem
             m_EffectController = GetComponent<GameplayEffectController>();
         }
 
+        /// <summary>
+        /// 활성화될 때 이 entity의 passive ability를 적용합니다.
+        /// </summary>
         private void OnEnable()
         {
             m_EffectController.initialized.AddListener(OnEffectControllerInitialized);
@@ -38,6 +40,9 @@ namespace AbilitySystem
             Initialize();
         }
 
+        /// <summary>
+        /// ability 목록을 확인하고, passive ability를 적용합니다.
+        /// </summary>
         protected virtual void Initialize()
         {
             foreach (AbilityDefinition _definition in m_AbilityDefinitions)
