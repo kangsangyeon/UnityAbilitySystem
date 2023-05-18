@@ -7,7 +7,7 @@ namespace AbilitySystem
     /// </summary>
     public class SingleTargetAbility : ActiveAbility
     {
-        public SingleTargetAbility(AbilityDefinition _definition, AbilityController _controller) : base(_definition, _controller)
+        public SingleTargetAbility(SingleTargetAbilityDefinition _definition, AbilityController _controller) : base(_definition, _controller)
         {
         }
 

@@ -50,6 +50,7 @@ namespace CombatSystem
         {
             FloatingText _damageText = m_Pool.Get();
             _damageText.Set(_magnitude.ToString(), _isCriticalHit ? Color.red : Color.white);
+            _damageText.Animate();
             if (_isCriticalHit)
                 _damageText.transform.localScale *= 2;
         }
@@ -58,6 +59,7 @@ namespace CombatSystem
         {
             FloatingText _text = m_Pool.Get();
             _text.Set(_amount.ToString(), Color.green);
+            _text.Animate();
         }
 
         private void OnDefeated()

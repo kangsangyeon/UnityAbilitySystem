@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AbilitySystem
 {
@@ -12,6 +13,14 @@ namespace AbilitySystem
 
         protected Dictionary<string, Ability> m_Abilities = new Dictionary<string, Ability>();
         public Dictionary<string, Ability> abilities => m_Abilities;
+
+        protected ActiveAbility m_CurrentAbility;
+        public ActiveAbility currentAbility => m_CurrentAbility;
+
+        protected GameObject m_Target;
+        public GameObject target => m_Target;
+
+        public UnityEvent<ActiveAbility> activatedAbility = new UnityEvent<ActiveAbility>();
 
         private GameplayEffectController m_EffectController;
 
@@ -64,16 +73,20 @@ namespace AbilitySystem
             }
         }
 
+        /// <summary>
+        /// ability 목록을 조회하여 ability name에 해당하는 ability가 있는지 확인하고,
+        /// 있는 경우 해당 ability를 기록하고 activatedAbility 이벤트를 실행합니다.
+        /// *ability name은 반드시 ActiveAbility의 이름이여야 합니다.
+        /// </summary>
         public bool TryActivateAbility(string _abilityName, GameObject _target)
         {
             if (m_Abilities.TryGetValue(_abilityName, out Ability _ability))
             {
                 if (_ability is ActiveAbility _activeAbility)
                 {
-                    if (_ability is SingleTargetAbility _singleTargetAbility)
-                    {
-                        _singleTargetAbility.Cast(_target);
-                    }
+                    m_Target = _target;
+                    m_CurrentAbility = _activeAbility;
+                    activatedAbility?.Invoke(_activeAbility);
 
                     return true;
                 }

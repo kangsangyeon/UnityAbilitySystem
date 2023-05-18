@@ -1,4 +1,4 @@
-﻿using CombatSystem;
+﻿using AbilitySystem;
 using Game.Scripts.Runtime;
 using LevelSystem;
 using StatSystem;
@@ -7,53 +7,29 @@ using UnityEngine.AI;
 
 namespace MyGame.Scripts
 {
+    [RequireComponent(typeof(AbilityController))]
     [RequireComponent(typeof(PlayerStatController))]
     [RequireComponent(typeof(NavMeshAgent))]
     public class Player : CombatableCharacter
     {
         private ILevelable m_Levelable;
-        [SerializeField] private Transform m_Target;
+        [SerializeField] private GameObject m_Target;
         private NavMeshAgent m_NavMeshAgent;
-        [SerializeField] private MeleeWeapon m_MeleeWeapon;
+        private AbilityController m_AbilityController;
 
         protected override void Awake()
         {
             base.Awake();
             m_Levelable = m_StatController.GetComponent<ILevelable>();
             m_NavMeshAgent = GetComponent<NavMeshAgent>();
-            if (m_MeleeWeapon != null)
-                m_MeleeWeapon.hit += collision => ApplyDamage(m_MeleeWeapon, collision.target);
-        }
-
-        private void Start()
-        {
-            if (m_Target != null)
-                m_NavMeshAgent.SetDestination(m_Target.position);
+            m_AbilityController = GetComponent<AbilityController>();
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                (m_StatController.stats[k_Health] as Attribute).ApplyModifier(new StatModifier
-                {
-                    magnitude = -10,
-                    type = ModifierOperationType.Additive
-                });
-            }
-
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                (m_StatController.stats["Mana"] as Attribute).ApplyModifier(new StatModifier
-                {
-                    magnitude = -10,
-                    type = ModifierOperationType.Additive
-                });
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                m_Levelable.currentExperience += 50;
+                m_AbilityController.TryActivateAbility("Shock", m_Target);
             }
         }
     }
