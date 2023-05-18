@@ -47,8 +47,8 @@ namespace AbilitySystem
         {
             foreach (AbilityDefinition _definition in m_AbilityDefinitions)
             {
-                AbilityAttributeType _attribute = _definition.GetType().GetCustomAttributes(false)
-                    .OfType<AbilityAttributeType>().FirstOrDefault();
+                AbilityTypeAttribute _attribute = _definition.GetType().GetCustomAttributes(false)
+                    .OfType<AbilityTypeAttribute>().FirstOrDefault();
                 Ability _ability = Activator.CreateInstance(
                     _attribute.type,
                     _definition, // definition

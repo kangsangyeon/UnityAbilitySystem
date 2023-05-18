@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
   m_Name: Wisdom
   m_EditorClassIdentifier: 
-  m_BaseValue: 0
+  m_BaseValue: 1
   m_Cap: -1
   m_Formula: {fileID: 0}
 --- !u!114 &8262419207272005694
