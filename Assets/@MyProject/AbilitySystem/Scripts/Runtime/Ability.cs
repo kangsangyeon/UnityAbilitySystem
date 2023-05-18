@@ -31,7 +31,7 @@ namespace AbilitySystem
             {
                 foreach (GameplayEffectDefinition _definition in _effectDefinitions)
                 {
-                    EffectTypeAttribute _attribute = _definition.GetType().CustomAttributes
+                    EffectTypeAttribute _attribute = _definition.GetType().GetCustomAttributes(false)
                         .OfType<EffectTypeAttribute>().FirstOrDefault();
 
                     GameplayEffect _effect = Activator.CreateInstance(
