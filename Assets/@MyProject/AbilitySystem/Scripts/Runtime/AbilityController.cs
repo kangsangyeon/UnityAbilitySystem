@@ -63,5 +63,24 @@ namespace AbilitySystem
                 }
             }
         }
+
+        public bool TryActivateAbility(string _abilityName, GameObject _target)
+        {
+            if (m_Abilities.TryGetValue(_abilityName, out Ability _ability))
+            {
+                if (_ability is ActiveAbility _activeAbility)
+                {
+                    if (_ability is SingleTargetAbility _singleTargetAbility)
+                    {
+                        _singleTargetAbility.Cast(_target);
+                    }
+
+                    return true;
+                }
+            }
+
+            Debug.Log($"Ability {_ability}를 찾을 수 없습니다!");
+            return false;
+        }
     }
 }
