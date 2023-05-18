@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using AbilitySystem;
 using NUnit.Framework;
 using StatSystem;
 using UnityEditor;
@@ -40,6 +41,21 @@ namespace MyProject.AbilitySystem.Tests.Scripts
             StatController _statController = m_Player.GetComponent<StatController>();
             Stat _wisdom = _statController.stats["Wisdom"];
             Assert.AreEqual(4, _wisdom.value);
+        }
+
+        [UnityTest]
+        public IEnumerator AbilityController_WhenActivateAbility_ApplyEffects()
+        {
+            yield return null;
+
+            StatController _statController = m_Enemy.GetComponent<StatController>();
+            Health _health = _statController.stats["Health"] as Health;
+            Assert.AreEqual(100, _health.currentValue);
+
+            AbilityController _abilityController = m_Player.GetComponent<AbilityController>();
+            _abilityController.TryActivateAbility("SingleTargetAbility", m_Enemy);
+
+            Assert.AreEqual(95, _health.currentValue);
         }
     }
 }
