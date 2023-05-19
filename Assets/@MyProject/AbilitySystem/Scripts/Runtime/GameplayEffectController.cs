@@ -27,6 +27,42 @@ namespace AbilitySystem
 
         protected StatController m_StatController;
 
+        public bool CanApplyAttributeModifiers(GameplayEffectDefinition _effectDefinition)
+        {
+            foreach (var _modifierDefinition in _effectDefinition.ModifierDefinitions)
+            {
+                m_StatController.stats.TryGetValue(_modifierDefinition.statName, out Stat _stat);
+
+                if (_stat == null)
+                {
+                    Debug.LogWarning($"{_modifierDefinition.statName} attribute를 찾을 수 없습니다!");
+                    return false;
+                }
+
+                Attribute _attribute = _stat as Attribute;
+
+                if (_attribute == null)
+                {
+                    Debug.LogWarning($"{_modifierDefinition.statName}이 attribute가 아닙니다! attribute만 cost로 사용될 수 있습니다.");
+                    return false;
+                }
+
+                if (_modifierDefinition.type != ModifierOperationType.Additive)
+                {
+                    Debug.LogWarning("cost는 additive만 지원합니다!");
+                    return false;
+                }
+
+                if (_attribute.currentValue < Mathf.Abs(_modifierDefinition.formula.CalculateValue(gameObject)))
+                {
+                    Debug.Log($"{_effectDefinition.name} 사용에 필요한 cost를 만족하지 않습니다! ({_modifierDefinition.statName} 부족)");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public void ApplyGameplayEffectToSelf(GameplayEffect _effectToApply)
         {
             if (_effectToApply is GameplayPersistentEffect _persistentEffect)
@@ -44,7 +80,7 @@ namespace AbilitySystem
             m_ActiveEffects.Add(_effect);
             AddUninhibitedEffects(_effect);
         }
-        
+
         private void RemoveActiveGameplayEffect(GameplayPersistentEffect _effect, bool _prematureRemoval)
         {
             m_ActiveEffects.Remove(_effect);

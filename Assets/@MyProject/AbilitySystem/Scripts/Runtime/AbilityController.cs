@@ -74,6 +74,19 @@ namespace AbilitySystem
         }
 
         /// <summary>
+        /// active ability를 사용할 수 있는지에 대한 여부를 반환합니다.
+        /// active ability의 cost가 있다면, 사용하는 데 필요한 cost를 지불할 수 있는지에 대한 여부를 확인해 반환합니다.
+        /// cost가 없다면 조건 없이 사용 가능함을 의미하므로 true를 반환합니다.
+        /// </summary>
+        public bool CanActivateAbility(ActiveAbility _ability)
+        {
+            if (_ability.definition.cost != null)
+                return m_EffectController.CanApplyAttributeModifiers(_ability.definition.cost);
+
+            return true;
+        }
+
+        /// <summary>
         /// ability 목록을 조회하여 ability name에 해당하는 ability가 있는지 확인하고,
         /// 있는 경우 해당 ability를 기록하고 activatedAbility 이벤트를 실행합니다.
         /// *ability name은 반드시 ActiveAbility의 이름이여야 합니다.
@@ -84,8 +97,13 @@ namespace AbilitySystem
             {
                 if (_ability is ActiveAbility _activeAbility)
                 {
+                    if (CanActivateAbility(_activeAbility) == false)
+                        return false;
+
                     m_Target = _target;
                     m_CurrentAbility = _activeAbility;
+
+                    CommitAbility(_activeAbility);
                     activatedAbility?.Invoke(_activeAbility);
 
                     return true;
@@ -94,6 +112,11 @@ namespace AbilitySystem
 
             Debug.Log($"Ability {_ability}를 찾을 수 없습니다!");
             return false;
+        }
+
+        private void CommitAbility(ActiveAbility _ability)
+        {
+            m_EffectController.ApplyGameplayEffectToSelf(new GameplayEffect(_ability.definition.cost, _ability, gameObject));
         }
     }
 }

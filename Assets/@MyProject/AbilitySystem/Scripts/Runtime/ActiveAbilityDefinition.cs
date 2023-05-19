@@ -6,5 +6,8 @@ namespace AbilitySystem
     {
         [SerializeField] private string m_AnimationName;
         public string animationName => m_AnimationName;
+
+        [SerializeField] protected GameplayEffectDefinition m_Cost;
+        public GameplayEffectDefinition cost => m_Cost;
     }
 }
