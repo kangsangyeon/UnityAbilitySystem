@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4948907450048740988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
+  m_Name: Scalar
+  m_EditorClassIdentifier: 
+  position: {x: 250, y: 215}
+  guid: d94b36b3ae8c99e4ca50d79f1fb48ee1
+  m_Value: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5760a7dd8c34a9ba90d40e8cfb4a352, type: 3}
+  m_Name: DurationMagnitude
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 4354299400657544196}
+  nodes:
+  - {fileID: 4354299400657544196}
+  - {fileID: -4948907450048740988}
+--- !u!114 &4354299400657544196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e614c21f2445a58ac5c7fc18477179, type: 3}
+  m_Name: ResultNode
+  m_EditorClassIdentifier: 
+  position: {x: 508.8, y: 214.92}
+  guid: d7bb4d30838396a4e953aa261255bef4
+  child: {fileID: -4948907450048740988}

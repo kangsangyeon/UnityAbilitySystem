@@ -1,12 +1,11 @@
 ﻿using System.Collections;
-using AbilitySystem;
 using NUnit.Framework;
 using StatSystem;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace MyProject.AbilitySystem.Tests.Scripts
+namespace AbilitySystem.Tests
 {
     public class AbilityControllerTests
     {

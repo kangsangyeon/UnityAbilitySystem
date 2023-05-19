@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using AbilitySystem;
+using Core;
 using NUnit.Framework;
 using StatSystem;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace MyProject.AbilitySystem.Tests.Scripts.Runtime
+namespace AbilitySystem.Tests
 {
     public class GameplayEffectControllerTests
     {
@@ -91,6 +91,36 @@ namespace MyProject.AbilitySystem.Tests.Scripts.Runtime
             StatController _statController = m_Player.GetComponent<StatController>();
             Stat _dexterity = _statController.stats["Dexterity"];
             Assert.AreEqual(4, _dexterity.value);
+        }
+
+        [UnityTest]
+        public IEnumerator GameplayEffectController_WhenEffectApplied_AddGrantedTags()
+        {
+            yield return null;
+
+            TagController _tagController = m_Player.GetComponent<TagController>();
+            GameplayEffectController _effectController = m_Player.GetComponent<GameplayEffectController>();
+            GameplayPersistentEffectDefinition _persistentEffectDefinition = AssetDatabase.LoadAssetAtPath<GameplayPersistentEffectDefinition>(
+                "Assets/@MyProject/AbilitySystem/Tests/ScriptableObjects/WhenEffectApplied_GrantTags/GameplayPersistentEffect.asset");
+            GameplayPersistentEffect _effect = new GameplayPersistentEffect(_persistentEffectDefinition, null, m_Player);
+            _effectController.ApplyGameplayEffectToSelf(_effect);
+            Assert.AreEqual(true, _tagController.Contains("test"));
+        }
+
+        [UnityTest]
+        public IEnumerator GameplayEffectController_WhenPersistentEffectExpires_RemoveGrantedTags()
+        {
+            yield return null;
+
+            TagController _tagController = m_Player.GetComponent<TagController>();
+            GameplayEffectController _effectController = m_Player.GetComponent<GameplayEffectController>();
+            GameplayPersistentEffectDefinition _persistentEffectDefinition = AssetDatabase.LoadAssetAtPath<GameplayPersistentEffectDefinition>(
+                "Assets/@MyProject/AbilitySystem/Tests/ScriptableObjects/WhenEffectApplied_GrantTags/GameplayPersistentEffect.asset");
+            GameplayPersistentEffect _effect = new GameplayPersistentEffect(_persistentEffectDefinition, null, m_Player);
+            _effectController.ApplyGameplayEffectToSelf(_effect);
+            Assert.AreEqual(true, _tagController.Contains("test"));
+            yield return new WaitForSeconds(1f);
+            Assert.AreEqual(false, _tagController.Contains("test"));
         }
     }
 }
