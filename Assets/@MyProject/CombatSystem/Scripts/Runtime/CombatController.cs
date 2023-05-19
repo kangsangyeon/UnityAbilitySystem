@@ -71,14 +71,14 @@ namespace CombatSystem
             FloatingText _floatingText = Instantiate(m_FloatingTextPrefab);
             _floatingText.finished.AddListener(m_Pool.Release);
 
-            _floatingText.transform.position = transform.position + GetCenterOfCollider();
+            _floatingText.transform.position = transform.position + Utils.GetCenterOfCollider(m_Collider);
             _floatingText.transform.localScale = Vector3.one * 0.01f;
             return _floatingText;
         }
 
         private void OnGet(FloatingText _floatingText)
         {
-            _floatingText.transform.position = transform.position + GetCenterOfCollider();
+            _floatingText.transform.position = transform.position + Utils.GetCenterOfCollider(m_Collider);
             _floatingText.transform.localScale = Vector3.one * 0.01f;
             _floatingText.gameObject.SetActive(true);
         }
@@ -86,27 +86,6 @@ namespace CombatSystem
         private void OnRelease(FloatingText _floatingText)
         {
             _floatingText.gameObject.SetActive(false);
-        }
-
-        private Vector3 GetCenterOfCollider()
-        {
-            Vector3 _center;
-
-            if (m_Collider is CapsuleCollider _capsule)
-            {
-                _center = _capsule.center;
-            }
-            else if (m_Collider is CharacterController _character)
-            {
-                _center = _character.center;
-            }
-            else
-            {
-                _center = Vector3.zero;
-                Debug.LogWarning("Could not find center");
-            }
-
-            return _center;
         }
     }
 }

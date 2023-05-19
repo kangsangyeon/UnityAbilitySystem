@@ -12,11 +12,19 @@ namespace AbilitySystem.Editor
             VisualElement _root = new VisualElement();
 
             _root.Add(CreateApplicationFieldsGUI());
+            _root.Add(CreateSpecialEffectFieldsGUI());
             _root.Add(CreateDurationFieldsGUI());
             _root.Add(CreateTagFieldsGUI());
 
             RegisterCallbacks(_root);
 
+            return _root;
+        }
+
+        protected override VisualElement CreateSpecialEffectFieldsGUI()
+        {
+            VisualElement _root = new VisualElement();
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_SpecialPersistentEffectDefinition")));
             return _root;
         }
 

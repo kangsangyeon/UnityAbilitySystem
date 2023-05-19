@@ -16,7 +16,7 @@ namespace AbilitySystem
     /// </summary>
     [RequireComponent(typeof(StatController))]
     [RequireComponent(typeof(TagController))]
-    public class GameplayEffectController : MonoBehaviour
+    public partial class GameplayEffectController : MonoBehaviour
     {
         protected List<GameplayPersistentEffect> m_ActiveEffects = new List<GameplayPersistentEffect>();
         public ReadOnlyCollection<GameplayPersistentEffect> activeEffects => m_ActiveEffects.AsReadOnly();
@@ -77,6 +77,11 @@ namespace AbilitySystem
             {
                 ExecuteGameplayEffect(_effectToApply);
             }
+
+            if (_effectToApply.definition.specialEffectDefinition != null)
+            {
+                PlaySpecialEffect(_effectToApply);
+            }
         }
 
         private void AddGameplayEffect(GameplayPersistentEffect _effect)
@@ -127,6 +132,11 @@ namespace AbilitySystem
             {
                 m_TagController.AddTag(_tag);
             }
+
+            if (_effect.definition.specialPersistentEffectDefinition != null)
+            {
+                PlaySpecialEffect(_effect);
+            }
         }
 
         /// <summary>
@@ -148,6 +158,11 @@ namespace AbilitySystem
             foreach (string _tag in _effect.definition.grantedTags)
             {
                 m_TagController.RemoveTag(_tag);
+            }
+
+            if (_effect.definition.specialPersistentEffectDefinition != null)
+            {
+                StopSpecialEffect(_effect);
             }
         }
 

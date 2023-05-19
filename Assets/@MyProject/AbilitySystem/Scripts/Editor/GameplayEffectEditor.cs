@@ -15,6 +15,7 @@ namespace AbilitySystem.Editor
             VisualElement _root = new VisualElement();
 
             _root.Add(CreateApplicationFieldsGUI());
+            _root.Add(CreateSpecialEffectFieldsGUI());
 
             return _root;
         }
@@ -35,6 +36,13 @@ namespace AbilitySystem.Editor
             Button _addButton = _modifiers.Q<Button>("unity-list-view__add-button");
             _addButton.clicked += AddButtonOnClicked;
             _root.Add(_modifiers);
+            return _root;
+        }
+
+        protected virtual VisualElement CreateSpecialEffectFieldsGUI()
+        {
+            VisualElement _root = new VisualElement();
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_SpecialEffectDefinition")));
             return _root;
         }
 
