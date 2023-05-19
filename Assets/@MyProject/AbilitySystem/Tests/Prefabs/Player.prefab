@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -2914232228723951675}
   - component: {fileID: -8811647111398547568}
   - component: {fileID: -1043253428560839005}
+  - component: {fileID: 5623326165909167254}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -86,6 +87,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d6da6ea92e61def44b44b2ac9f7915f3, type: 2}
   - {fileID: 11400000, guid: 690012c3f3775e3418daac6df2bd5138, type: 2}
   - {fileID: 11400000, guid: ce864b7c964e03b45930bf0eb9a08f05, type: 2}
+  - {fileID: 11400000, guid: fe506d1e229e0f74fa5990de9a41a915, type: 2}
   activatedAbility:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5623326165909167254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409802991911002014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66e1f262b734dfa85fafdd756ac0b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  tagRemoved:
     m_PersistentCalls:
       m_Calls: []

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Core;
 using NUnit.Framework;
 using StatSystem;
 using UnityEditor;
@@ -83,6 +84,21 @@ namespace AbilitySystem.Tests
             _abilityController.TryActivateAbility("AbilityWithCost", m_Enemy);
             Assert.AreEqual(0, _mana.currentValue);
             Assert.AreEqual(false, _abilityController.TryActivateAbility("AbilityWithCost", m_Enemy));
+        }
+
+        [UnityTest]
+        public IEnumerator AbilityController_WhenAbilityOnCooldown_BlockAbilityActivation()
+        {
+            yield return null;
+
+            AbilityController _abilityController = m_Player.GetComponent<AbilityController>();
+            TagController _tagController = m_Player.GetComponent<TagController>();
+            _abilityController.TryActivateAbility("AbilityWithCooldown", m_Player);
+            Assert.AreEqual(true, _tagController.tags.Contains("test.cooldown"));
+            Assert.AreEqual(false, _abilityController.TryActivateAbility("AbilityWithCooldown", m_Player));
+            yield return new WaitForSeconds(2f);
+            Assert.AreEqual(false, _tagController.tags.Contains("test.cooldown"));
+            Assert.AreEqual(true, _abilityController.TryActivateAbility("AbilityWithCooldown", m_Player));
         }
     }
 }

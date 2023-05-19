@@ -135,8 +135,11 @@ namespace AbilitySystem
 
         private void CommitAbility(ActiveAbility _ability)
         {
-            m_EffectController.ApplyGameplayEffectToSelf(new GameplayEffect(_ability.definition.cost, _ability, gameObject));
-            m_EffectController.ApplyGameplayEffectToSelf(new GameplayPersistentEffect(_ability.definition.cooldown, _ability, gameObject));
+            if (_ability.definition.cost != null)
+                m_EffectController.ApplyGameplayEffectToSelf(new GameplayEffect(_ability.definition.cost, _ability, gameObject));
+
+            if (_ability.definition.cooldown != null)
+                m_EffectController.ApplyGameplayEffectToSelf(new GameplayPersistentEffect(_ability.definition.cooldown, _ability, gameObject));
         }
     }
 }
