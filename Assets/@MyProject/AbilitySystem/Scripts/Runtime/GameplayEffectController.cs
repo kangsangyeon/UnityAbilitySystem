@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Core;
 using StatSystem;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,8 @@ namespace AbilitySystem
     /// controller를 소유하는 entity에 effect를 적용할 때 사용합니다.
     /// 적용된 persistent effect의 유효 시간이 만료되었는지도 확인하고, 만료된 경우 삭제합니다.
     /// </summary>
+    [RequireComponent(typeof(StatController))]
+    [RequireComponent(typeof(TagController))]
     public class GameplayEffectController : MonoBehaviour
     {
         protected List<GameplayPersistentEffect> m_ActiveEffects = new List<GameplayPersistentEffect>();
@@ -26,6 +29,7 @@ namespace AbilitySystem
         public UnityEvent initialized;
 
         protected StatController m_StatController;
+        protected TagController m_TagController;
 
         public bool CanApplyAttributeModifiers(GameplayEffectDefinition _effectDefinition)
         {
@@ -118,12 +122,17 @@ namespace AbilitySystem
                     _stat.AddModifier(_effect.modifiers[i]);
                 }
             }
+
+            foreach (string _tag in _effect.definition.grantedTags)
+            {
+                m_TagController.AddTag(_tag);
+            }
         }
 
         /// <summary>
         /// effect가 제거되어 stat들에 영향을 그만 주어야 할 때 호출합니다.
         /// effect modifier에 의해 영향을 받는 각 stat들은 이 effect로부터 영향받는 modifier를 전부 제거합니다.
-        /// </summary>
+        /// </summary
         private void RemoveUninhibitedEffects(GameplayPersistentEffect _effect)
         {
             for (int i = 0; i < _effect.modifiers.Count; ++i)
@@ -134,6 +143,11 @@ namespace AbilitySystem
                 {
                     _stat.RemoveModifierFromSource(_effect);
                 }
+            }
+
+            foreach (string _tag in _effect.definition.grantedTags)
+            {
+                m_TagController.RemoveTag(_tag);
             }
         }
 
@@ -191,6 +205,7 @@ namespace AbilitySystem
         private void Awake()
         {
             m_StatController = GetComponent<StatController>();
+            m_TagController = GetComponent<TagController>();
         }
 
         private void OnEnable()

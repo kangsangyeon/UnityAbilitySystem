@@ -13,6 +13,7 @@ namespace AbilitySystem.Editor
 
             _root.Add(CreateApplicationFieldsGUI());
             _root.Add(CreateDurationFieldsGUI());
+            _root.Add(CreateTagFieldsGUI());
 
             RegisterCallbacks(_root);
 
@@ -31,6 +32,13 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
+        private VisualElement CreateTagFieldsGUI()
+        {
+            VisualElement _root = new VisualElement();
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedTags")));
+            return _root;
+        }
+
         private void RegisterCallbacks(VisualElement _root)
         {
             GameplayPersistentEffectDefinition _definition = target as GameplayPersistentEffectDefinition;
@@ -39,10 +47,7 @@ namespace AbilitySystem.Editor
             PropertyField _isInfiniteField = _root.Q<PropertyField>("is-infinite");
 
             _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex;
-            _isInfiniteField.RegisterValueChangeCallback(evt =>
-            {
-                _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex;
-            });
+            _isInfiniteField.RegisterValueChangeCallback(evt => { _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex; });
         }
     }
 }

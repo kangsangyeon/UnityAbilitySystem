@@ -1,4 +1,6 @@
-﻿using Core;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Core;
 using UnityEngine;
 
 namespace AbilitySystem
@@ -17,5 +19,9 @@ namespace AbilitySystem
 
         [SerializeField] private NodeGraph m_DurationFormula;
         public NodeGraph durationFormula => m_DurationFormula;
+
+        [Tooltip("이 태그들은 내가 적용하려는 액터에 적용됩니다.")]
+        [SerializeField] protected List<string> m_GrantedTags;
+        public ReadOnlyCollection<string> grantedTags => m_GrantedTags.AsReadOnly();
     }
 }
