@@ -13,12 +13,19 @@ namespace AbilitySystem
     [CreateAssetMenu(fileName = "GameplayEffect", menuName = "AbilitySystem/Effect/GameplayEffect", order = 0)]
     public class GameplayEffectDefinition : ScriptableObject
     {
+        /// <summary>
+        /// 대상 entity에게 effect가 적용되면 적용할 stat modifier 목록입니다.
+        /// </summary>
         [SerializeField] protected List<AbstractGameplayEffectStatModifierDefinition> m_ModifierDefinitions;
 
         public ReadOnlyCollection<AbstractGameplayEffectStatModifierDefinition> ModifierDefinitions =>
             m_ModifierDefinitions.AsReadOnly();
 
+        /// <summary>
+        /// effect가 적용될 때 생성될 특수 효과에 대한 정보를 기록한 scriptable object입니다.
+        /// </summary>
         [SerializeField] private SpecialEffectDefinition m_SpecialEffectDefinition;
+
         public SpecialEffectDefinition specialEffectDefinition => m_SpecialEffectDefinition;
     }
 }
