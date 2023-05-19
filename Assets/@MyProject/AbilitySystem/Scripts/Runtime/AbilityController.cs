@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace AbilitySystem
 {
     [RequireComponent(typeof(GameplayEffectController))]
+    [RequireComponent(typeof(TagController))]
     public class AbilityController : MonoBehaviour
     {
         [SerializeField] private List<AbilityDefinition> m_AbilityDefinitions;
@@ -23,10 +25,12 @@ namespace AbilitySystem
         public UnityEvent<ActiveAbility> activatedAbility = new UnityEvent<ActiveAbility>();
 
         private GameplayEffectController m_EffectController;
+        private TagController m_TagController;
 
         protected void Awake()
         {
             m_EffectController = GetComponent<GameplayEffectController>();
+            m_TagController = GetComponent<TagController>();
         }
 
         /// <summary>
@@ -83,6 +87,21 @@ namespace AbilitySystem
             if (_ability.definition.cost != null)
                 return m_EffectController.CanApplyAttributeModifiers(_ability.definition.cost);
 
+            if (_ability.definition.cooldown != null)
+            {
+                // ability의 cooldown 속성이 존재하는 경우,
+                // cooldown effect에 granted된 tag 중 하나라도 tag controller에 존재하는 경우를 쿨타운 상태에 있다고 판단합니다.
+                // 다른 말로, cooldown effect는 granted tag 속성만 추가하면 되며,
+                // ability를 사용하면 cooldown의 granted를 ability 사용자의 tag controller에 추가하고,
+                // cooldown 여부를 판단하는 것은 ability 사용자의 tag controller 내에 cooldown에서 사용하는 tag가 포함되어 있는지에 대한 여부를 확인하는 것과 같습니다.
+
+                if (m_TagController.ContainsAny(_ability.definition.cooldown.grantedTags))
+                {
+                    Debug.LogWarning($"{_ability.definition.name}이 쿨다운 상태에 있습니다!");
+                    return false;
+                }
+            }
+
             return true;
         }
 
@@ -117,6 +136,7 @@ namespace AbilitySystem
         private void CommitAbility(ActiveAbility _ability)
         {
             m_EffectController.ApplyGameplayEffectToSelf(new GameplayEffect(_ability.definition.cost, _ability, gameObject));
+            m_EffectController.ApplyGameplayEffectToSelf(new GameplayPersistentEffect(_ability.definition.cooldown, _ability, gameObject));
         }
     }
 }
