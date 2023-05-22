@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1ff1a54c274f36bb0fe74e5b0fe82e, type: 3}
+  m_Name: GameplayPersistentEffect
+  m_EditorClassIdentifier: 
+  m_ModifierDefinitions:
+  - {fileID: 8472510109795666709}
+  m_SpecialEffectDefinition: {fileID: 0}
+  m_IsInfinite: 1
+  m_DurationFormula: {fileID: 0}
+  m_IsPeriodic: 1
+  m_Period: 1
+  m_ExecutePeriodicEffectOnApplication: 0
+  m_GrantedTags: []
+  m_SpecialPersistentEffectDefinition: {fileID: 0}
+--- !u!114 &8472510109795666709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424ac4cb6a73495a9440da7fa5ef86ff, type: 3}
+  m_Name: GameplayEffectDamageDefinition
+  m_EditorClassIdentifier: 
+  m_Formula: {fileID: 11400000, guid: 828b6f986f0256e478cfc22307c3f35c, type: 2}
+  m_CanCriticalHit: 0
