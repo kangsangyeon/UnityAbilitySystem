@@ -36,11 +36,14 @@ namespace Core
 
         public void AddTag(string _tag)
         {
-            if (m_TagCountMap.ContainsKey(_tag))
-                ++m_TagCountMap[_tag];
+            if (m_TagCountMap.ContainsKey(_tag) == false)
+            {
+                m_TagCountMap.Add(_tag, 1);
+                tagAdded?.Invoke(_tag);
+                return;
+            }
 
-            m_TagCountMap.Add(_tag, 1);
-            tagAdded?.Invoke(_tag);
+            ++m_TagCountMap[_tag];
         }
 
         public void RemoveTag(string _tag)
