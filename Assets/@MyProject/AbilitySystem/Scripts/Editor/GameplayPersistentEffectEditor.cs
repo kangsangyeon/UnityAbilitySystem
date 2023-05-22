@@ -14,6 +14,7 @@ namespace AbilitySystem.Editor
             _root.Add(CreateApplicationFieldsGUI());
             _root.Add(CreateSpecialEffectFieldsGUI());
             _root.Add(CreateDurationFieldsGUI());
+            _root.Add(CreatePeriodFieldsGUI());
             _root.Add(CreateTagFieldsGUI());
 
             RegisterCallbacks(_root);
@@ -40,6 +41,18 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
+        private VisualElement CreatePeriodFieldsGUI()
+        {
+            VisualElement _periodFields = new VisualElement() { name = "period" };
+            _periodFields.Add(new PropertyField(serializedObject.FindProperty("m_Period")));
+            _periodFields.Add(new PropertyField(serializedObject.FindProperty("m_ExecutePeriodicEffectOnApplication")));
+
+            VisualElement _root = new VisualElement();
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_IsPeriodic")) { name = "is-periodic" });
+            _root.Add(_periodFields);
+            return _root;
+        }
+
         private VisualElement CreateTagFieldsGUI()
         {
             VisualElement _root = new VisualElement();
@@ -56,6 +69,11 @@ namespace AbilitySystem.Editor
 
             _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex;
             _isInfiniteField.RegisterValueChangeCallback(evt => { _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex; });
+
+            VisualElement _periodFields = _root.Q("period");
+            PropertyField _isPeriodicField = _root.Q<PropertyField>("is-periodic");
+            _periodFields.style.display = _definition.isPeriodic ? DisplayStyle.Flex : DisplayStyle.None;
+            _isPeriodicField.RegisterValueChangeCallback(evt => { _periodFields.style.display = _definition.isPeriodic ? DisplayStyle.Flex : DisplayStyle.None; });
         }
     }
 }

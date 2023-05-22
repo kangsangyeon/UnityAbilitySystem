@@ -88,6 +88,12 @@ namespace AbilitySystem
         {
             m_ActiveEffects.Add(_effect);
             AddUninhibitedEffects(_effect);
+
+            if (_effect.definition.isPeriodic
+                && _effect.definition.executePeriodicEffectOnApplication)
+            {
+                ExecuteGameplayEffect(_effect);
+            }
         }
 
         private void RemoveActiveGameplayEffect(GameplayPersistentEffect _effect, bool _prematureRemoval)
@@ -180,6 +186,16 @@ namespace AbilitySystem
                     if (Mathf.Approximately(_activeEffect.remainingDuration, 0f))
                     {
                         _effectsToRemove.Add(_activeEffect);
+                    }
+                }
+
+                if (_activeEffect.definition.isPeriodic)
+                {
+                    _activeEffect.remainingPeriod = Math.Max(_activeEffect.remainingPeriod - Time.deltaTime, 0f);
+                    if (Mathf.Approximately(_activeEffect.remainingPeriod, 0f))
+                    {
+                        ExecuteGameplayEffect(_activeEffect);
+                        _activeEffect.remainingPeriod = _activeEffect.definition.period;
                     }
                 }
             }

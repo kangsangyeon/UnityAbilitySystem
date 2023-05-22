@@ -27,9 +27,18 @@ namespace AbilitySystem
         /// <summary>
         /// effect의 만료 시간을 계산하는 계산식 scriptable object입니다.
         /// </summary>
-        [SerializeField] private NodeGraph m_DurationFormula;
+        [SerializeField] protected NodeGraph m_DurationFormula;
 
         public NodeGraph durationFormula => m_DurationFormula;
+
+        [SerializeField] protected bool m_IsPeriodic;
+        public bool isPeriodic => m_IsPeriodic;
+
+        [SerializeField] protected float m_Period;
+        public float period => m_Period;
+
+        [SerializeField] private bool m_ExecutePeriodicEffectOnApplication;
+        public bool executePeriodicEffectOnApplication => m_ExecutePeriodicEffectOnApplication;
 
         /// <summary>
         /// 대상 entity에게 effect가 적용되면 부여할 tag 목록입니다.

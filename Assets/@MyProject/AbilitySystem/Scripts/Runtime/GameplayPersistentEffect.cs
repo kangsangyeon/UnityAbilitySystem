@@ -11,6 +11,7 @@ namespace AbilitySystem
         public new GameplayPersistentEffectDefinition definition => m_Definition as GameplayPersistentEffectDefinition;
 
         public float remainingDuration;
+        public float remainingPeriod;
 
         private float m_Duration;
         public float duration => m_Duration;
@@ -21,6 +22,8 @@ namespace AbilitySystem
         {
             if (!definition.isInfinite)
                 remainingDuration = m_Duration = definition.durationFormula.CalculateValue(_instigator);
+
+            remainingPeriod = definition.period;
         }
     }
 }
