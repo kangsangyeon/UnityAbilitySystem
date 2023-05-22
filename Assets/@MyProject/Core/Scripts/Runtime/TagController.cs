@@ -12,7 +12,7 @@ namespace Core
         public UnityEvent<string> tagAdded;
         public UnityEvent<string> tagRemoved;
 
-        public ReadOnlyCollection<string> tags { get; }
+        public ReadOnlyCollection<string> tags => m_TagCountMap.Keys.ToList().AsReadOnly();
 
         public bool Contains(string _tag)
         {
