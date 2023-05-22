@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c7b4614e334c4db054678183f36ee3, type: 3}
+  m_Name: Heal
+  m_EditorClassIdentifier: 
+  m_GameplayEffectDefinitions:
+  - {fileID: 11400000, guid: bd1a35d5503f31141a2d3d8eee4f1fca, type: 2}
+  m_AnimationName: Cast
+  m_Cost: {fileID: 11400000, guid: d49e6b79fe1a73745a9314b965e8dac1, type: 2}
+  m_Cooldown: {fileID: 11400000, guid: 752403412f6f99b488aad7d603f8cb43, type: 2}

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5760a7dd8c34a9ba90d40e8cfb4a352, type: 3}
+  m_Name: Heal_ManaModifierMagnitude
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 397773099716925962}
+  nodes:
+  - {fileID: 397773099716925962}
+  - {fileID: 4614107670006471620}
+--- !u!114 &397773099716925962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e614c21f2445a58ac5c7fc18477179, type: 3}
+  m_Name: ResultNode
+  m_EditorClassIdentifier: 
+  position: {x: 505.64, y: 171.68}
+  guid: 26965bde3cda40745a76723c3a17722a
+  child: {fileID: 4614107670006471620}
+--- !u!114 &4614107670006471620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
+  m_Name: Scalar
+  m_EditorClassIdentifier: 
+  position: {x: 254, y: 172}
+  guid: a0b8220776401914aa5f88e7c5dc825a
+  m_Value: -15

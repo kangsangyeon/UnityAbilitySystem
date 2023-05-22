@@ -663,6 +663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AbilityDefinitions:
   - {fileID: 11400000, guid: 4f5a60937650c8b4c8165aa2648eb80b, type: 2}
+  - {fileID: 11400000, guid: cd9cdc894ea6867498993235af6764d3, type: 2}
   activatedAbility:
     m_PersistentCalls:
       m_Calls: []
