@@ -9,6 +9,10 @@ namespace AbilitySystem
         private Dictionary<SpecialEffectDefinition, int> m_SpecialEffectCountMap = new Dictionary<SpecialEffectDefinition, int>();
         private Dictionary<SpecialEffectDefinition, VisualEffect> m_SpecialEffectMap = new Dictionary<SpecialEffectDefinition, VisualEffect>();
 
+        /// <summary>
+        /// 대상 entity의 위치에서 persistent effect에서 정의한 특수 효과를 재생합니다.
+        /// 이 특수 효과가 looping 효과라면, 특수 효과 목록에 추가한 뒤 persistent effect가 삭제될 때 함께 사라집니다.
+        /// </summary>
         private void PlaySpecialEffect(GameplayPersistentEffect _effect)
         {
             VisualEffect _visualEffect = Instantiate(_effect.definition.specialPersistentEffectDefinition.prefab, transform);
@@ -42,6 +46,9 @@ namespace AbilitySystem
             _visualEffect.Play();
         }
 
+        /// <summary>
+        /// 대상 entity의 위치에서 effect에서 정의한 특수 효과를 재생합니다.
+        /// </summary>
         private void PlaySpecialEffect(GameplayEffect _effect)
         {
             VisualEffect _visualEffect = Instantiate(_effect.definition.specialEffectDefinition.prefab);
@@ -60,6 +67,10 @@ namespace AbilitySystem
             _visualEffect.Play();
         }
 
+        /// <summary>
+        /// persistent effect가 entity에서 적용 해제될 때 호출됩니다.
+        /// effect 적용 시 looping되는 특수 효과를 재생했다면, 이를 중단시킵니다.
+        /// </summary>
         private void StopSpecialEffect(GameplayPersistentEffect _effect)
         {
             if (m_SpecialEffectCountMap.ContainsKey(_effect.definition.specialPersistentEffectDefinition) == false)

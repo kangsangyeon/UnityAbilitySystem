@@ -7,21 +7,48 @@ using UnityEngine.Events;
 
 namespace AbilitySystem
 {
+    /// <summary>
+    /// ability를 사용할 수 있는 주체 entity에게 부착되는 컴포넌트입니다.
+    /// 사용 가능한 ability의 목록을 가지고, ability를 사용할 때 이 컴포넌트를 통해 사용할 수 있습니다.
+    /// passive ability의 경우, enable시에 주체에게 적용됩니다.
+    /// active ability의 경우, 발동 함수를 사용할 때 적용됩니다.
+    /// active ability의 쿨타임과 비용 소모를 따지며, 발동 가능한지 여부를 확인해 발동하는 것도 처리됩니다.
+    /// </summary>
     [RequireComponent(typeof(GameplayEffectController))]
     [RequireComponent(typeof(TagController))]
     public class AbilityController : MonoBehaviour
     {
+        /// <summary>
+        /// 이 controller를 소유한 entity가 가진 ability입니다.
+        /// 이 list에 추가된 ability가 passive ability인 경우, 자동으로 적용됩니다.
+        /// active ability인 경우, ability의 이름으로 사용 요청할 수 있습니다.
+        /// </summary>
         [SerializeField] private List<AbilityDefinition> m_AbilityDefinitions;
 
+        /// <summary>
+        /// definition 목록을 읽어 인스턴스화된 ability 목록입니다.
+        /// </summary>
         protected Dictionary<string, Ability> m_Abilities = new Dictionary<string, Ability>();
+
         public Dictionary<string, Ability> abilities => m_Abilities;
 
+        /// <summary>
+        /// 가장 마지막에 발동한 ability 인스턴스입니다.
+        /// </summary>
         protected ActiveAbility m_CurrentAbility;
+
         public ActiveAbility currentAbility => m_CurrentAbility;
 
+        /// <summary>
+        /// 가장 마지막에 발동한 ability의 목표 entity입니다.
+        /// </summary>
         protected GameObject m_Target;
+
         public GameObject target => m_Target;
 
+        /// <summary>
+        /// ability를 발동했을 때 호출되는 이벤트입니다.
+        /// </summary>
         public UnityEvent<ActiveAbility> activatedAbility = new UnityEvent<ActiveAbility>();
 
         private GameplayEffectController m_EffectController;
@@ -133,13 +160,19 @@ namespace AbilitySystem
             return false;
         }
 
+        /// <summary>
+        /// 어빌리티를 실제로 행할 때 호출합니다.
+        /// (존재하는 경우)ability의 cost의 effect를 적용하고, cooldown의 tag를 자신에게 부여합니다.
+        /// </summary>
         private void CommitAbility(ActiveAbility _ability)
         {
             if (_ability.definition.cost != null)
-                m_EffectController.ApplyGameplayEffectToSelf(new GameplayEffect(_ability.definition.cost, _ability, gameObject));
+                m_EffectController.ApplyGameplayEffectToSelf(new GameplayEffect(_ability.definition.cost, _ability,
+                    gameObject));
 
             if (_ability.definition.cooldown != null)
-                m_EffectController.ApplyGameplayEffectToSelf(new GameplayPersistentEffect(_ability.definition.cooldown, _ability, gameObject));
+                m_EffectController.ApplyGameplayEffectToSelf(
+                    new GameplayPersistentEffect(_ability.definition.cooldown, _ability, gameObject));
         }
     }
 }

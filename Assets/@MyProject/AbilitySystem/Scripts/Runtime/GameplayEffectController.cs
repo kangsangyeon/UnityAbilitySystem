@@ -18,14 +18,28 @@ namespace AbilitySystem
     [RequireComponent(typeof(TagController))]
     public partial class GameplayEffectController : MonoBehaviour
     {
+        /// <summary>
+        /// controller를 소유한 entity에게 적용중인 persistent effect 목록입니다.
+        /// </summary>
         protected List<GameplayPersistentEffect> m_ActiveEffects = new List<GameplayPersistentEffect>();
+
         public ReadOnlyCollection<GameplayPersistentEffect> activeEffects => m_ActiveEffects.AsReadOnly();
 
+        /// <summary>
+        /// 이 controller 컴포넌트가 시작될 때 controller를 소유한 entity에게 적용되는 effect 목록입니다.
+        /// </summary>
         [SerializeField] private List<GameplayEffectDefinition> m_StartEffectDefinitions;
 
+        /// <summary>
+        /// 이 controller가 초기화되었는지에 대한 여부입니다.
+        /// </summary>
         private bool m_IsInitialized;
+
         public bool isInitialized => m_IsInitialized;
 
+        /// <summary>
+        /// 이 controller가 초기화되었을 때 호출되는 이벤트입니다.
+        /// </summary>
         public UnityEvent initialized;
 
         protected StatController m_StatController;
@@ -71,15 +85,20 @@ namespace AbilitySystem
         {
             if (_effectToApply is GameplayPersistentEffect _persistentEffect)
             {
+                // persistent effect인 경우,
+                // 나중에 effect의 만료 시간을 초과하거나 삭제를 원할 때 삭제될 수 있어야 하므로 목록에 추가하고 적용합니다.
                 AddGameplayEffect(_persistentEffect);
             }
             else
             {
+                // 아닌 경우, 일회성으로 적용되는 effect이므로
+                // 목록에 저장하지 않고 적용만 합니다.
                 ExecuteGameplayEffect(_effectToApply);
             }
 
             if (_effectToApply.definition.specialEffectDefinition != null)
             {
+                // 특수 효과 재생이 필요한 경우 재생합니다.
                 PlaySpecialEffect(_effectToApply);
             }
         }

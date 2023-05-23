@@ -15,13 +15,28 @@ namespace AbilitySystem
         protected GameplayEffectDefinition m_Definition;
         public GameplayEffectDefinition definition => m_Definition;
 
+        /// <summary>
+        /// 이 effect를 발생시킨 원인입니다.
+        /// instigator와 자칫 헷갈릴 수 있지만, instigator는 이 원인을 발생시킨 entity이고, 이것은 실제 원인입니다.
+        /// 예를 들어, 이 effect가 적이 던진 수류탄에 피해를 입어 발생한 effect라면, source는 수류탄 오브젝트입니다.
+        /// </summary>
         private object m_Source;
+
         public object source => m_Source;
 
+        /// <summary>
+        /// 이 effect를 발생시킨 entity입니다.
+        /// </summary>
         private GameObject m_Instigator;
+
         public GameObject instigator => m_Instigator;
 
+        /// <summary>
+        /// 인스턴스화한 modifier 목록입니다.
+        /// effect를 적용할 때 적용 대상 entity에게 이 modifier들을 적용합니다.
+        /// </summary>
         private List<StatModifier> m_Modifiers = new List<StatModifier>();
+
         public ReadOnlyCollection<StatModifier> modifiers => m_Modifiers.AsReadOnly();
 
         public GameplayEffect(GameplayEffectDefinition _definition, object _source, GameObject _instigator)

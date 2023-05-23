@@ -31,13 +31,28 @@ namespace AbilitySystem
 
         public NodeGraph durationFormula => m_DurationFormula;
 
+        /// <summary>
+        /// 이 effect가 대상 entity에게 일정 시간마다 반복하며 적용되어야 할 때 참으로 설정하는 플래그입니다.
+        /// 일반적으로 이 속성이 참이라면 이 effect는 (일시적인 변화만을 주기 위한 용도로) attribute modifier만을 가집니다.
+        /// </summary>
         [SerializeField] protected bool m_IsPeriodic;
+
         public bool isPeriodic => m_IsPeriodic;
 
+        /// <summary>
+        /// isPeriodic 플래그가 참일 때 사용되는 값이며, 반복 주기입니다.
+        /// </summary>
         [SerializeField] protected float m_Period;
+
         public float period => m_Period;
 
+        /// <summary>
+        /// isPeriodic 플래그가 참일 때 사용되는 값이며,
+        /// effect가 적용되기 시작한 순간에 적용을 필요로 할 때 참으로 설정하는 플래그입니다.
+        /// 그렇지 않으면 매번 반복되는 주기 끝에서만 적용합니다.
+        /// </summary>
         [SerializeField] private bool m_ExecutePeriodicEffectOnApplication;
+
         public bool executePeriodicEffectOnApplication => m_ExecutePeriodicEffectOnApplication;
 
         /// <summary>
