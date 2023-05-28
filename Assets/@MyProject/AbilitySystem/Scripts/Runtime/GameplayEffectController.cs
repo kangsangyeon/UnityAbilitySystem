@@ -81,11 +81,103 @@ namespace AbilitySystem
             return true;
         }
 
-        public void ApplyGameplayEffectToSelf(GameplayEffect _effectToApply)
+        public bool ApplyGameplayEffectToSelf(GameplayEffect _effectToApply)
         {
-            if (_effectToApply is GameplayPersistentEffect _persistentEffect)
+            bool _shouldAdd = true;
+            if (_effectToApply is GameplayStackableEffect _stackableEffect)
             {
-                // persistent effect인 경우,
+                GameplayStackableEffect _existingStackableEffect = m_ActiveEffects.Find(
+                    _effect => _effect.definition == _effectToApply.definition) as GameplayStackableEffect;
+
+                if (_existingStackableEffect != null)
+                {
+                    // 이 effect가 stackable effect이고,
+                    // 이미 controller를 소유한 entity에게 적용중일 때 실행됩니다.
+
+                    // 이미 적용중인 stackable effect인 경우,
+                    // 기본적으로 이 effect를 controller의 effect 목록에 추가하지는 않습니다.
+                    _shouldAdd = false;
+
+                    if (_existingStackableEffect.stackCount == _existingStackableEffect.definition.stackLimitCount)
+                    {
+                        // 이 effect가 stackable effect이고,
+                        // stack count가 limit에 닿은 상태에서 다시 한 번 stacking되려 할 때 호출됩니다.
+                        // stackable effect의 definition의 overflow effect 목록을 읽고, 이를 적용합니다. 
+
+                        foreach (GameplayPersistentEffectDefinition _effectDefinition in _existingStackableEffect
+                                     .definition.overflowEffects)
+                        {
+                            EffectTypeAttribute _attribute =
+                                _effectDefinition.GetType().GetCustomAttributes(true)
+                                    .OfType<EffectTypeAttribute>().FirstOrDefault();
+
+                            GameplayEffect _overflowEffect = Activator.CreateInstance(
+                                _attribute.type,
+                                _effectDefinition, // definition
+                                _existingStackableEffect, // source
+                                gameObject // instigator
+                            ) as GameplayEffect;
+
+                            ApplyGameplayEffectToSelf(_overflowEffect);
+                        }
+
+                        if (_existingStackableEffect.definition.clearStackOnOverflow)
+                        {
+                            // overflow시 stack이 clear되는 effect라면,
+                            // 이 effect를 제거한 뒤 잠시 뒤의 코드에서 새로 추가합니다.
+                            RemoveActiveGameplayEffect(_existingStackableEffect, true);
+                            _shouldAdd = true;
+                        }
+
+                        if (_existingStackableEffect.definition.denyOverflowApplication)
+                        {
+                            // overflow가 일어나서는 안되는 effect가 overflow되었다면,
+                            // 경고 메세지를 출력합니다.
+                            Debug.Log("Deny overflow application!");
+                            return false;
+                        }
+                    }
+
+                    if (_shouldAdd == false)
+                    {
+                        // 이 stackable effect가 이미 적용되어 있는 effect이며
+                        // clear stack on overflow 속성이 false라서 새로 추가되지 않을 때 실행됩니다.
+
+                        _existingStackableEffect.stackCount = Math.Min(
+                            _existingStackableEffect.stackCount + _stackableEffect.stackCount,
+                            _existingStackableEffect.definition.stackLimitCount);
+
+                        if (_existingStackableEffect.definition.stackDurationRefreshPolicy
+                            == GameplayEffectStackingDurationPolicy.RefreshOnSuccessfulApplication)
+                        {
+                            // 이 stackable effect가 적용될 때마다 만료시간이 새로 초기화되어야 한다면,
+                            // 만료시간을 재계산합니다.
+                            _existingStackableEffect.remainingDuration =
+                                _existingStackableEffect.definition.durationFormula.CalculateValue(gameObject);
+                        }
+
+                        if (_existingStackableEffect.definition.stackPeriodResetPolicy
+                            == GameplayEffectStackingPeriodPolicy.ResetOnSuccessfulApplication)
+                        {
+                            // 이 stackable effect가 적용될 때마다 반복 주기 시간이 새로 초기화되어야 한다면,
+                            // 이번 반복 주기의 끝까지 남은 시간을 초기화합니다.
+                            _existingStackableEffect.remainingPeriod = _existingStackableEffect.definition.period;
+                        }
+                    }
+                    else
+                    {
+                        // 이 stackable effect가 적용되어 있지 않은 상태에서 새로이 적용되거나
+                        // 또는 stack limit에 도달했으며 clear stack on overflow 속성이 true일 때 실행됩니다.
+                        // effect 목록에 추가하고 적용합니다.
+                        AddGameplayEffect(_stackableEffect);
+                    }
+                }
+            }
+            else if (_effectToApply is GameplayPersistentEffect _persistentEffect
+                     && _shouldAdd)
+            {
+                // stackable effect이지만 effect 추가가 필요한 경우,
+                // 또는 persistent effect인 경우 이 쪽이 실행됩니다.
                 // 나중에 effect의 만료 시간을 초과하거나 삭제를 원할 때 삭제될 수 있어야 하므로 목록에 추가하고 적용합니다.
                 AddGameplayEffect(_persistentEffect);
             }
@@ -101,6 +193,8 @@ namespace AbilitySystem
                 // 특수 효과 재생이 필요한 경우 재생합니다.
                 PlaySpecialEffect(_effectToApply);
             }
+
+            return true;
         }
 
         private void AddGameplayEffect(GameplayPersistentEffect _effect)
@@ -204,7 +298,37 @@ namespace AbilitySystem
                     _activeEffect.remainingDuration = Math.Max(_activeEffect.remainingDuration - Time.deltaTime, 0f);
                     if (Mathf.Approximately(_activeEffect.remainingDuration, 0f))
                     {
-                        _effectsToRemove.Add(_activeEffect);
+                        // 이 effect의 만료 시간이 다 되어 제거되어야 할 때 실행됩니다.
+
+                        // 이 effect가 정말로 제거되어야 하는지에 대한 여부를 판별하는 값입니다.
+                        // 이 effect가 stackable effect이고, expiration policy 설정으로 인해 만료 시간이 경과되어도 스택 카운트만 감소시킬 뿐 제거되지 말아야 하는 경우 이 값은 false로 설정됩니다.
+                        bool _shouldRemove = true;
+
+                        if (_activeEffect is GameplayStackableEffect _stackableEffect)
+                        {
+                            if (_stackableEffect.definition.stackExpirationPolicy
+                                == GameplayEffectStackingExpirationPolicy.RemoveSingleStackAndRefreshDuration)
+                            {
+                                // 이 effect가 stackable effect이고,
+                                // 만료 정책에 의해 스택 카운트만 감소시킬 뿐 제거되지 말아야 할 때 실행됩니다.
+
+                                --_stackableEffect.stackCount;
+
+                                if (_stackableEffect.stackCount > 0)
+                                {
+                                    // 스택 카운트가 0이 되지 않았다면,
+                                    // 만료 시간을 초기화할 뿐이고, effect를 제거하지 않습니다.
+                                    _shouldRemove = false;
+                                    _stackableEffect.remainingDuration =
+                                        _stackableEffect.definition.durationFormula.CalculateValue(gameObject);
+                                }
+                            }
+                        }
+
+                        if (_shouldRemove)
+                        {
+                            _effectsToRemove.Add(_activeEffect);
+                        }
                     }
                 }
 
@@ -213,6 +337,9 @@ namespace AbilitySystem
                     _activeEffect.remainingPeriod = Math.Max(_activeEffect.remainingPeriod - Time.deltaTime, 0f);
                     if (Mathf.Approximately(_activeEffect.remainingPeriod, 0f))
                     {
+                        // 이 effect가 periodic 속성을 가지고 있고,
+                        // 반복 주기의 끝에 왔을 때 실행됩니다.
+                        // 다시 effect를 적용시키고, 다음 반복 주기가 시작될 때까지 남은 시간을 초기화합니다.
                         ExecuteGameplayEffect(_activeEffect);
                         _activeEffect.remainingPeriod = _activeEffect.definition.period;
                     }

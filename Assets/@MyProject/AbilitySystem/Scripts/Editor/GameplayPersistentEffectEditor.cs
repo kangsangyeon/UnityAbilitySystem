@@ -12,10 +12,10 @@ namespace AbilitySystem.Editor
             VisualElement _root = new VisualElement();
 
             _root.Add(CreateApplicationFieldsGUI());
-            _root.Add(CreateSpecialEffectFieldsGUI());
             _root.Add(CreateDurationFieldsGUI());
             _root.Add(CreatePeriodFieldsGUI());
             _root.Add(CreateTagFieldsGUI());
+            _root.Add(CreateSpecialEffectFieldsGUI());
 
             RegisterCallbacks(_root);
 
@@ -29,7 +29,7 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
-        private VisualElement CreateDurationFieldsGUI()
+        protected VisualElement CreateDurationFieldsGUI()
         {
             VisualElement _root = new VisualElement();
 
@@ -41,7 +41,7 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
-        private VisualElement CreatePeriodFieldsGUI()
+        protected VisualElement CreatePeriodFieldsGUI()
         {
             VisualElement _periodFields = new VisualElement() { name = "period" };
             _periodFields.Add(new PropertyField(serializedObject.FindProperty("m_Period")));
@@ -53,14 +53,14 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
-        private VisualElement CreateTagFieldsGUI()
+        protected VisualElement CreateTagFieldsGUI()
         {
             VisualElement _root = new VisualElement();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedTags")));
             return _root;
         }
 
-        private void RegisterCallbacks(VisualElement _root)
+        protected void RegisterCallbacks(VisualElement _root)
         {
             GameplayPersistentEffectDefinition _definition = target as GameplayPersistentEffectDefinition;
 
