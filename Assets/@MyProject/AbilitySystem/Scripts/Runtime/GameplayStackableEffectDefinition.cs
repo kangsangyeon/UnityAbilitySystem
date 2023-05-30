@@ -29,8 +29,8 @@ namespace AbilitySystem
         order = 0)]
     public class GameplayStackableEffectDefinition : GameplayPersistentEffectDefinition
     {
-        [SerializeField] private List<GameplayPersistentEffectDefinition> m_OverflowEffects;
-        public ReadOnlyCollection<GameplayPersistentEffectDefinition> overflowEffects => m_OverflowEffects.AsReadOnly();
+        [SerializeField] private List<GameplayEffectDefinition> m_OverflowEffects;
+        public ReadOnlyCollection<GameplayEffectDefinition> overflowEffects => m_OverflowEffects.AsReadOnly();
 
         [SerializeField] private bool m_DenyOverflowApplication;
         public bool denyOverflowApplication => m_DenyOverflowApplication;
