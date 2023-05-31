@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Core;
 using UnityEngine;
 
@@ -6,8 +7,16 @@ namespace AbilitySystem
 {
     public partial class GameplayEffectController
     {
-        private Dictionary<SpecialEffectDefinition, int> m_SpecialEffectCountMap = new Dictionary<SpecialEffectDefinition, int>();
-        private Dictionary<SpecialEffectDefinition, VisualEffect> m_SpecialEffectMap = new Dictionary<SpecialEffectDefinition, VisualEffect>();
+        private Dictionary<SpecialEffectDefinition, int> m_SpecialEffectCountMap =
+            new Dictionary<SpecialEffectDefinition, int>();
+
+        private Dictionary<SpecialEffectDefinition, VisualEffect> m_SpecialEffectMap =
+            new Dictionary<SpecialEffectDefinition, VisualEffect>();
+
+        private List<VisualEffect> m_StatusEffects = new List<VisualEffect>();
+        private float m_Period = 1f;
+        private int m_Index;
+        private float m_RemainingPeriod;
 
         /// <summary>
         /// 대상 entity의 위치에서 persistent effect에서 정의한 특수 효과를 재생합니다.
@@ -15,7 +24,8 @@ namespace AbilitySystem
         /// </summary>
         private void PlaySpecialEffect(GameplayPersistentEffect _effect)
         {
-            VisualEffect _visualEffect = Instantiate(_effect.definition.specialPersistentEffectDefinition.prefab, transform);
+            VisualEffect _visualEffect =
+                Instantiate(_effect.definition.specialPersistentEffectDefinition.prefab, transform);
             _visualEffect.finished.AddListener(_effect => Destroy(_effect.gameObject));
 
             if (_effect.definition.specialPersistentEffectDefinition.location == PlayLocation.Center)
@@ -36,6 +46,11 @@ namespace AbilitySystem
                 {
                     m_SpecialEffectCountMap.Add(_effect.definition.specialPersistentEffectDefinition, 1);
                     m_SpecialEffectMap.Add(_effect.definition.specialPersistentEffectDefinition, _visualEffect);
+
+                    if (_effect.definition.tags.Any(t => t.StartsWith("status")))
+                    {
+                        m_StatusEffects.Add(_visualEffect);
+                    }
                 }
                 else
                 {
@@ -57,11 +72,13 @@ namespace AbilitySystem
 
             if (_effect.definition.specialEffectDefinition.location == PlayLocation.Center)
             {
-                _visualEffect.transform.position = transform.position + Utils.GetCenterOfCollider(GetComponent<Collider>());
+                _visualEffect.transform.position =
+                    transform.position + Utils.GetCenterOfCollider(GetComponent<Collider>());
             }
             else if (_effect.definition.specialEffectDefinition.location == PlayLocation.Above)
             {
-                _visualEffect.transform.position = transform.position + Vector3.up * Utils.GetComponentHeight(gameObject);
+                _visualEffect.transform.position =
+                    transform.position + Vector3.up * Utils.GetComponentHeight(gameObject);
             }
 
             _visualEffect.Play();
@@ -87,6 +104,27 @@ namespace AbilitySystem
 
                 m_SpecialEffectCountMap.Remove(_effect.definition.specialPersistentEffectDefinition);
                 m_SpecialEffectMap.Remove(_effect.definition.specialPersistentEffectDefinition);
+
+                if (_effect.definition.tags.Any(t => t.StartsWith("status")))
+                {
+                    m_StatusEffects.Remove(_visualEffect);
+                }
+            }
+        }
+
+        private void HandleStatusEffects()
+        {
+            if (m_StatusEffects.Count > 0)
+            {
+                m_RemainingPeriod = Mathf.Max(m_RemainingPeriod - Time.deltaTime, 0f);
+
+                if (Mathf.Approximately(m_RemainingPeriod, 0f))
+                {
+                    m_StatusEffects[m_Index].gameObject.SetActive(false);
+                    m_Index = (m_Index + 1) % m_StatusEffects.Count;
+                    m_StatusEffects[m_Index].gameObject.SetActive(true);
+                    m_RemainingPeriod = m_Period;
+                }
             }
         }
     }

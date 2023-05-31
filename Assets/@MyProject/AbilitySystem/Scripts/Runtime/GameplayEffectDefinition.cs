@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Core;
 using UnityEngine;
@@ -27,5 +28,12 @@ namespace AbilitySystem
         [SerializeField] private SpecialEffectDefinition m_SpecialEffectDefinition;
 
         public SpecialEffectDefinition specialEffectDefinition => m_SpecialEffectDefinition;
+
+        /// <summary>
+        /// effect의 태그 목록입니다.
+        /// </summary>
+        [SerializeField] private List<string> m_Tags;
+
+        public ReadOnlyCollection<string> tags => m_Tags.AsReadOnly();
     }
 }

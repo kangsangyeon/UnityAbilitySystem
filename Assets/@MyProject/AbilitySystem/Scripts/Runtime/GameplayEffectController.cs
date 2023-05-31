@@ -143,7 +143,7 @@ namespace AbilitySystem
                 {
                     // 이 stackable effect가 이미 적용되어 있는 effect이며
                     // clear stack on overflow 속성이 false라서 새로 추가되지 않을 때 실행됩니다.
-                    
+
                     // 스택 카운트를 증가시킵니다.
                     _existingStackableEffect.stackCount = Math.Min(
                         _existingStackableEffect.stackCount + _stackableEffect.stackCount,
