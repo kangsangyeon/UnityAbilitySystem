@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AbilitySystem
 {
@@ -14,6 +15,24 @@ namespace AbilitySystem
     {
         protected AbilityDefinition m_Definition;
         public AbilityDefinition definition => m_Definition;
+
+        private int m_Level = 5;
+
+        public int level
+        {
+            get => m_Level;
+            set
+            {
+                int _newLevel = Mathf.Min(value, definition.maxLevel);
+                if (_newLevel != m_Level)
+                {
+                    m_Level = _newLevel;
+                    levelChanged?.Invoke();
+                }
+            }
+        }
+
+        public UnityEvent levelChanged = new UnityEvent();
 
         protected AbilityController m_Controller;
 

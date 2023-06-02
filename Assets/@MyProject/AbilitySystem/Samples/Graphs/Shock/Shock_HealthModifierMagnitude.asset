@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e614c21f2445a58ac5c7fc18477179, type: 3}
   m_Name: ResultNode
   m_EditorClassIdentifier: 
-  position: {x: 477, y: 214.23999}
+  position: {x: 357.2, y: 150}
   guid: 17ec289f33c94a9479b9f6fc7e29fc3b
-  child: {fileID: 3909089568727393203}
+  child: {fileID: 5199136677109887791}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31,6 +31,8 @@ MonoBehaviour:
   nodes:
   - {fileID: -8917177922861372484}
   - {fileID: 3909089568727393203}
+  - {fileID: 5517924449889132598}
+  - {fileID: 5199136677109887791}
 --- !u!114 &3909089568727393203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +45,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
   m_Name: Scalar
   m_EditorClassIdentifier: 
-  position: {x: 273.88214, y: 214.00002}
+  position: {x: 7.600006, y: 217}
   guid: 77a553888d535994a8844d2f1e03134e
   m_Value: -10
+--- !u!114 &5199136677109887791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 909bfefd45f2473fa476ed5e3d8a3a63, type: 3}
+  m_Name: Multiply
+  m_EditorClassIdentifier: 
+  position: {x: 193.08, y: 150}
+  guid: 9dd05830c69843d42a609bffc7028151
+  factorA: {fileID: 5517924449889132598}
+  factorB: {fileID: 3909089568727393203}
+--- !u!114 &5517924449889132598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f5f651806348e09aa791121fd73cff, type: 3}
+  m_Name: Ability Level
+  m_EditorClassIdentifier: 
+  position: {x: 7.600006, y: 121}
+  guid: e1bd571a33cd6674792cfb4f1f70c914
+  m_AbilityName: Shock
