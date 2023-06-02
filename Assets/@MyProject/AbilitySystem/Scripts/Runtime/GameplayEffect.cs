@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Core;
 using StatSystem;
 using UnityEngine;
 
@@ -10,8 +11,10 @@ namespace AbilitySystem
     /// effect definition 내 modifier definition 목록을 읽고, 개별적으로 modifier 인스턴스화하여 캐싱합니다.
     /// 이는 effect controller로 인해 대상 entity에 effect를 적용할 때 사용됩니다.
     /// </summary>
-    public class GameplayEffect
+    public class GameplayEffect : ITaggable
     {
+        public ReadOnlyCollection<string> tags => m_Definition.tags;
+
         protected GameplayEffectDefinition m_Definition;
         public GameplayEffectDefinition definition => m_Definition;
 

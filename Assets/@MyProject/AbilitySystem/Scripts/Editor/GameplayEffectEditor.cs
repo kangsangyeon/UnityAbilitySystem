@@ -15,8 +15,8 @@ namespace AbilitySystem.Editor
             VisualElement _root = new VisualElement();
 
             _root.Add(CreateApplicationFieldsGUI());
-            _root.Add(CreateSpecialEffectFieldsGUI());
             _root.Add(CreateTagFieldsGUI());
+            _root.Add(CreateSpecialEffectFieldsGUI());
 
             return _root;
         }

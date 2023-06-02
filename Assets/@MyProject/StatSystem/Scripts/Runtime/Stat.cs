@@ -16,10 +16,10 @@ namespace StatSystem
         public virtual int baseValue => m_Definition.baseValue;
         public UnityEvent valueChanged = new UnityEvent();
 
-        public Stat(StatDefinition _definition, StatController _controller)
+        public Stat(StatDefinition _definition, StatController statController)
         {
             m_Definition = _definition;
-            m_Controller = _controller;
+            m_Controller = statController;
         }
 
         /// <summary>

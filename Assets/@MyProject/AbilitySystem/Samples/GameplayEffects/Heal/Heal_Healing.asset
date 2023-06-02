@@ -15,6 +15,8 @@ MonoBehaviour:
   m_ModifierDefinitions:
   - {fileID: 2219538198915261090}
   m_SpecialEffectDefinition: {fileID: 11400000, guid: 2f88a9458857022449fb1d0a3d2601ee, type: 2}
+  m_Tags:
+  - healing
 --- !u!114 &2219538198915261090
 MonoBehaviour:
   m_ObjectHideFlags: 0

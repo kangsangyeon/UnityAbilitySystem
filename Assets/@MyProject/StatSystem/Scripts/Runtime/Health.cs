@@ -5,13 +5,24 @@ namespace StatSystem
 {
     public class Health : Attribute
     {
-        public Health(StatDefinition _definition, StatController _controller) : base(_definition, _controller)
+        private TagController m_TagController;
+
+        public Health(StatDefinition _definition, StatController _statController, TagController _tagController)
+            : base(_definition, _statController)
         {
+            m_TagController = _tagController;
         }
 
         public override void ApplyModifier(StatModifier _modifier)
         {
             ITaggable _source = _modifier.source as ITaggable;
+
+            if (_source.tags.Contains("healing")
+                && m_TagController.Contains("zombify"))
+            {
+                // zombify 상태에서 healing을 받으면 힐을 받는 양이 그대로 대미지로 들어옵니다.
+                _modifier.magnitude *= -1;
+            }
 
             if (_source != null)
             {

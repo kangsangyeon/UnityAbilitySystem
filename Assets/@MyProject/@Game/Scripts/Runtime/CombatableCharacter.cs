@@ -83,8 +83,15 @@ namespace Game.Scripts.Runtime
             }
             else
             {
-                var _healthModifier = _modifier as HealthModifier;
-                damaged?.Invoke(_healthModifier.magnitude, _healthModifier.isCriticalHit);
+                // critical hit은 HealthModifier를 사용할 때만 줄 수 있습니다.
+                
+                bool _isCriticalHit = false;
+                if (_modifier is HealthModifier _healthModifier)
+                {
+                    _isCriticalHit = _healthModifier.isCriticalHit;
+                }
+
+                damaged?.Invoke(_modifier.magnitude, _isCriticalHit);
                 if ((m_StatController.stats[k_Health] as StatSystem.Attribute).currentValue == 0)
                     defeated?.Invoke();
             }
@@ -125,7 +132,8 @@ namespace Game.Scripts.Runtime
             // 크리티컬 공격에 성공한 경우, 공격력을 높입니다.
             if (m_StatController.stats["CriticalHitChance"].value / 100.0f >= Random.value)
             {
-                _rawDamage.magnitude = Mathf.RoundToInt(_rawDamage.magnitude * m_StatController.stats["CriticalHitMultiplier"].value / 100.0f);
+                _rawDamage.magnitude = Mathf.RoundToInt(_rawDamage.magnitude *
+                    m_StatController.stats["CriticalHitMultiplier"].value / 100.0f);
                 _rawDamage.isCriticalHit = true;
             }
 

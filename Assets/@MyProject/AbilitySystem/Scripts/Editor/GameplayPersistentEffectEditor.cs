@@ -24,7 +24,7 @@ namespace AbilitySystem.Editor
 
         protected override VisualElement CreateSpecialEffectFieldsGUI()
         {
-            VisualElement _root = new VisualElement();
+            VisualElement _root = base.CreateSpecialEffectFieldsGUI();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_SpecialPersistentEffectDefinition")));
             return _root;
         }
@@ -68,12 +68,18 @@ namespace AbilitySystem.Editor
             PropertyField _isInfiniteField = _root.Q<PropertyField>("is-infinite");
 
             _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex;
-            _isInfiniteField.RegisterValueChangeCallback(evt => { _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex; });
+            _isInfiniteField.RegisterValueChangeCallback(evt =>
+            {
+                _durationField.style.display = _definition.isInfinite ? DisplayStyle.None : DisplayStyle.Flex;
+            });
 
             VisualElement _periodFields = _root.Q("period");
             PropertyField _isPeriodicField = _root.Q<PropertyField>("is-periodic");
             _periodFields.style.display = _definition.isPeriodic ? DisplayStyle.Flex : DisplayStyle.None;
-            _isPeriodicField.RegisterValueChangeCallback(evt => { _periodFields.style.display = _definition.isPeriodic ? DisplayStyle.Flex : DisplayStyle.None; });
+            _isPeriodicField.RegisterValueChangeCallback(evt =>
+            {
+                _periodFields.style.display = _definition.isPeriodic ? DisplayStyle.Flex : DisplayStyle.None;
+            });
         }
     }
 }
