@@ -66,7 +66,7 @@ namespace AbilitySystem
                         _attribute.type,
                         _definition, // definition
                         this, // source
-                        _other // instigator
+                        m_Controller.gameObject // instigator
                     ) as GameplayEffect;
 
                     _effectController.ApplyGameplayEffectToSelf(_effect);
