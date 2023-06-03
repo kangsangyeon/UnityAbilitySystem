@@ -54,7 +54,7 @@ namespace AbilitySystem
         private GameplayEffectController m_EffectController;
         private TagController m_TagController;
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             m_EffectController = GetComponent<GameplayEffectController>();
             m_TagController = GetComponent<TagController>();
@@ -63,14 +63,14 @@ namespace AbilitySystem
         /// <summary>
         /// 활성화될 때 이 entity의 passive ability를 적용합니다.
         /// </summary>
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             m_EffectController.initialized.AddListener(OnEffectControllerInitialized);
             if (m_EffectController.isInitialized)
                 OnEffectControllerInitialized();
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             m_EffectController.initialized.RemoveListener(OnEffectControllerInitialized);
         }

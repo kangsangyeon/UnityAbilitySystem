@@ -38,11 +38,12 @@ namespace LevelSystem
         }
 
         public int requiredExperience => Mathf.RoundToInt(m_RequiredExperienceFormula.rootNode.value);
-        public bool isInitilaized => m_IsInitialized;
+        public bool isInitialized => m_IsInitialized;
         public event Action levelChanged;
         public event Action currentExperienceChanged;
         public event Action initialized;
         public event Action willUnitialize;
+        public event Action loaded;
 
         private void Awake()
         {
@@ -79,9 +80,8 @@ namespace LevelSystem
         {
             LevelControllerData _levelControllerData = (LevelControllerData)_data;
             m_CurrentExperience = _levelControllerData.currentExperience;
-            currentExperienceChanged?.Invoke();
             m_Level = _levelControllerData.level;
-            levelChanged?.Invoke();
+            loaded?.Invoke();
         }
 
         #endregion

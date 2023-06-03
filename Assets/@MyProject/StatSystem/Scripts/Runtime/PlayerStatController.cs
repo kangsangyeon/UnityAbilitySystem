@@ -32,7 +32,7 @@ namespace StatSystem
         {
             m_Levelable.initialized += OnLevelableInitialized;
             m_Levelable.willUnitialize += UnregisterEvents;
-            if (m_Levelable.isInitilaized)
+            if (m_Levelable.isInitialized)
             {
                 OnLevelableInitialized();
             }
@@ -42,7 +42,7 @@ namespace StatSystem
         {
             m_Levelable.initialized -= OnLevelableInitialized;
             m_Levelable.willUnitialize -= UnregisterEvents;
-            if (m_Levelable.isInitilaized)
+            if (m_Levelable.isInitialized)
             {
                 UnregisterEvents();
             }
