@@ -53,7 +53,7 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
-        protected VisualElement CreateTagFieldsGUI()
+        protected override VisualElement CreateTagFieldsGUI()
         {
             VisualElement _root = base.CreateTagFieldsGUI();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedTags")));
