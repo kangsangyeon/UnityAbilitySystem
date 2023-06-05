@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Core;
+using LevelSystem;
 using NUnit.Framework;
 using StatSystem;
 using UnityEditor;
@@ -99,6 +100,18 @@ namespace AbilitySystem.Tests
             yield return new WaitForSeconds(2f);
             Assert.AreEqual(false, _tagController.tags.Contains("test.cooldown"));
             Assert.AreEqual(true, _abilityController.TryActivateAbility("AbilityWithCooldown", m_Player));
+        }
+
+        [UnityTest]
+        public IEnumerator AbilityController_WhenLevelUp_GainAbilityPoints()
+        {
+            yield return null;
+
+            PlayerAbilityController _playerAbilityController = m_Player.GetComponent<PlayerAbilityController>();
+            LevelController _levelController = m_Player.GetComponent<LevelController>();
+            Assert.AreEqual(0, _playerAbilityController.abilityPoints);
+            _levelController.currentExperience += _levelController.requiredExperience;
+            Assert.AreEqual(3, _playerAbilityController.abilityPoints);
         }
     }
 }

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5378855254342107368}
   - component: {fileID: -2914232228723951675}
   - component: {fileID: -8811647111398547568}
-  - component: {fileID: -1043253428560839005}
+  - component: {fileID: 8909986212955833202}
   - component: {fileID: 5623326165909167254}
+  - component: {fileID: 6369626121033740646}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -71,7 +72,7 @@ MonoBehaviour:
   willUninitialize:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-1043253428560839005
+--- !u!114 &8909986212955833202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,7 +81,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7409802991911002014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d589936c2b2d44c3a24bbe280dff620a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d60cafbb73a45668b6d0b999ba9802a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_AbilityDefinitions:
@@ -89,6 +90,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ce864b7c964e03b45930bf0eb9a08f05, type: 2}
   - {fileID: 11400000, guid: fe506d1e229e0f74fa5990de9a41a915, type: 2}
   activatedAbility:
+    m_PersistentCalls:
+      m_Calls: []
+  abilityPointsChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5623326165909167254
@@ -109,3 +113,18 @@ MonoBehaviour:
   tagRemoved:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6369626121033740646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409802991911002014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08e8370d72747ba9651d9d33ab67ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Level: 1
+  m_CurrentExperience: 0
+  m_RequiredExperienceFormula: {fileID: 11400000, guid: a71b1aabe959675459827c79357fa6e6, type: 2}
