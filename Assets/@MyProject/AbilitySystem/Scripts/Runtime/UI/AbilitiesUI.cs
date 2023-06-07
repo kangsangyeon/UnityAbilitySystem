@@ -48,7 +48,9 @@ namespace AbilitySystem.UI
                     --m_Controller.abilityPoints;
                     ++_ability.level;
                     _level.text = _ability.level.ToString();
-                    _incrementButton.SetEnabled(_ability.level != _ability.definition.maxLevel);
+                    _incrementButton.SetEnabled(
+                        m_Controller.abilityPoints > 0
+                        && _ability.level != _ability.definition.maxLevel);
                 };
                 _icon.style.backgroundImage = new StyleBackground(_ability.definition.icon);
                 m_Parent.Add(_abilityElement);
