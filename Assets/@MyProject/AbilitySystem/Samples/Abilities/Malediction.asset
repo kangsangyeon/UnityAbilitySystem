@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GameplayEffectDefinitions:
   - {fileID: 11400000, guid: 4d77db2fee3efcc41a07511096abc3c9, type: 2}
+  m_MaxLevel: 20
+  m_Icon: {fileID: 21300000, guid: 2e218364e8eb0ba4098335d25489da80, type: 3}
+  m_Description: 
   m_AnimationName: Cast
   m_Cost: {fileID: 11400000, guid: fe3eac3d564f100429cab27366d041e7, type: 2}
   m_Cooldown: {fileID: 11400000, guid: 09932def033282340bc138dd045e0f01, type: 2}
