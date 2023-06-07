@@ -16,7 +16,7 @@ namespace AbilitySystem
         protected AbilityDefinition m_Definition;
         public AbilityDefinition definition => m_Definition;
 
-        private int m_Level = 5;
+        private int m_Level = 0;
 
         public int level
         {

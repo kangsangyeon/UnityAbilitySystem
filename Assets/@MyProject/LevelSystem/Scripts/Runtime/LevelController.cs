@@ -24,10 +24,8 @@ namespace LevelSystem
             {
                 if (value >= requiredExperience)
                 {
-                    m_CurrentExperience = value - requiredExperience;
-                    currentExperienceChanged?.Invoke();
-                    ++m_Level;
-                    levelChanged?.Invoke();
+                    m_CurrentExperience = value;
+                    LevelUp();
                 }
                 else if (value < requiredExperience)
                 {
@@ -44,6 +42,17 @@ namespace LevelSystem
         public event Action initialized;
         public event Action willUnitialize;
         public event Action loaded;
+
+        private void LevelUp()
+        {
+            while (m_CurrentExperience >= requiredExperience)
+            {
+                m_CurrentExperience -= requiredExperience;
+                currentExperienceChanged?.Invoke();
+                ++m_Level;
+                levelChanged?.Invoke();
+            }
+        }
 
         private void Awake()
         {
@@ -65,7 +74,7 @@ namespace LevelSystem
             willUnitialize?.Invoke();
         }
 
-        #region Stat System
+        #region Save System
 
         [System.Serializable]
         protected class LevelControllerData

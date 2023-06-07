@@ -89,6 +89,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 690012c3f3775e3418daac6df2bd5138, type: 2}
   - {fileID: 11400000, guid: ce864b7c964e03b45930bf0eb9a08f05, type: 2}
   - {fileID: 11400000, guid: fe506d1e229e0f74fa5990de9a41a915, type: 2}
+  - {fileID: 11400000, guid: 98f50e6c0cd69c94cb64c57d9d1d3398, type: 2}
   activatedAbility:
     m_PersistentCalls:
       m_Calls: []
