@@ -9,6 +9,11 @@
 # Assets폴더 내 특정 폴더 내 파일들을 제외한 모든 파일들을 제외합니다.
 Assets/*
 !Assets/@MyProject
+!Assets/@MyProject.meta
+!Assets/NuGet.config
+!Assets/NuGet.config.meta
+!Assets/packages.config
+!Assets/packages.config.meta
 
 # Rider
 .idea/
