@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1ff1a54c274f36bb0fe74e5b0fe82e, type: 3}
   m_Name: Heal_Cooldown
   m_EditorClassIdentifier: 
+  m_Description: "\uCFE8\uB2E4\uC6B4: {GameplayPersistentEffect.duration}"
   m_ModifierDefinitions: []
   m_SpecialEffectDefinition: {fileID: 0}
+  m_Tags: []
   m_IsInfinite: 0
   m_DurationFormula: {fileID: 11400000, guid: 9d282ca1c37bec9429ac4b6fbf6f7f8c, type: 2}
+  m_IsPeriodic: 0
+  m_Period: 0
+  m_ExecutePeriodicEffectOnApplication: 0
   m_GrantedTags: []
   m_SpecialPersistentEffectDefinition: {fileID: 0}

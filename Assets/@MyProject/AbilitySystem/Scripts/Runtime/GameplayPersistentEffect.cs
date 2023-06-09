@@ -10,6 +10,8 @@ namespace AbilitySystem
     {
         public new GameplayPersistentEffectDefinition definition => m_Definition as GameplayPersistentEffectDefinition;
 
+        public float duration => definition.durationFormula.CalculateValue(instigator);
+
         /// <summary>
         /// 이 effect가 만료될 때까지 남은 시간입니다.
         /// 이 effect의 infinite 플래그가 false일 때만 사용됩니다.
@@ -29,7 +31,7 @@ namespace AbilitySystem
             base(_definition, _source, _instigator)
         {
             if (!definition.isInfinite)
-                remainingDuration = definition.durationFormula.CalculateValue(_instigator);
+                remainingDuration = duration;
 
             remainingPeriod = definition.period;
         }

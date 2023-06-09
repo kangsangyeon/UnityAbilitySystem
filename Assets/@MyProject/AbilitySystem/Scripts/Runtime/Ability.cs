@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -59,6 +60,10 @@ namespace AbilitySystem
             {
                 foreach (GameplayEffectDefinition _definition in _effectDefinitions)
                 {
+                    // definition이 persistent effect, 또는 stackable effect일 때에도
+                    // 그에 대응하는 effect 인스턴스를 잘 만들 수 있도록
+                    // definition에서 지정한 전용 type을 가져와 이를 인스턴스화합니다.
+
                     EffectTypeAttribute _attribute = _definition.GetType().GetCustomAttributes(false)
                         .OfType<EffectTypeAttribute>().FirstOrDefault();
 
@@ -72,6 +77,28 @@ namespace AbilitySystem
                     _effectController.ApplyGameplayEffectToSelf(_effect);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder _stringBuilder = new StringBuilder();
+
+            foreach (GameplayEffectDefinition _definition in definition.gameplayEffectDefinitions)
+            {
+                EffectTypeAttribute _attribute = _definition.GetType().GetCustomAttributes(false)
+                    .OfType<EffectTypeAttribute>().FirstOrDefault();
+
+                GameplayEffect _effect = Activator.CreateInstance(
+                    _attribute.type,
+                    _definition, // definition
+                    this, // source
+                    m_Controller.gameObject // instigator
+                ) as GameplayEffect;
+
+                _stringBuilder.Append(_effect).AppendLine();
+            }
+
+            return _stringBuilder.ToString();
         }
     }
 }

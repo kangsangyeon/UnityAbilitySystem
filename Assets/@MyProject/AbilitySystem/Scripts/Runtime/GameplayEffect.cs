@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Core;
 using StatSystem;
 using UnityEngine;
@@ -98,6 +100,23 @@ namespace AbilitySystem
                 _statModifier.type = _modifierDefinition.type;
                 m_Modifiers.Add(_statModifier);
             }
+        }
+
+        public override string ToString()
+        {
+            return ReplaceMacro(definition.description, this);
+        }
+
+        protected string ReplaceMacro(string _value, object _object)
+        {
+            return Regex.Replace(_value, @"{(.+?)}",
+                match =>
+                {
+                    var p = Expression.Parameter(_object.GetType(), _object.GetType().Name);
+                    var e = System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda(
+                        new[] { p }, null, match.Groups[1].Value);
+                    return (e.Compile().DynamicInvoke(_object) ?? "").ToString();
+                });
         }
     }
 }

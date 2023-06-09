@@ -14,10 +14,32 @@ namespace AbilitySystem.Editor
         {
             VisualElement _root = new VisualElement();
 
+            StyleSheet _styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(
+                "Assets/@MyProject/AbilitySystem/Scripts/Editor/GameplayEffectEditor.uss");
+            _root.styleSheets.Add(_styleSheet);
+
+            _root.Add(CreateCoreFieldsGUI());
             _root.Add(CreateApplicationFieldsGUI());
             _root.Add(CreateTagFieldsGUI());
             _root.Add(CreateSpecialEffectFieldsGUI());
 
+            return _root;
+        }
+
+        protected virtual VisualElement CreateCoreFieldsGUI()
+        {
+            VisualElement _root = new VisualElement();
+
+            TextField _description = new TextField()
+            {
+                label = "Description",
+                bindingPath = "m_Description",
+                multiline = true
+            };
+            _description.Bind(serializedObject);
+            _description.AddToClassList("description");
+
+            _root.Add(_description);
             return _root;
         }
 
@@ -46,7 +68,7 @@ namespace AbilitySystem.Editor
             _root.Add(new PropertyField(serializedObject.FindProperty("m_SpecialEffectDefinition")));
             return _root;
         }
-        
+
         protected virtual VisualElement CreateTagFieldsGUI()
         {
             VisualElement _root = new VisualElement();

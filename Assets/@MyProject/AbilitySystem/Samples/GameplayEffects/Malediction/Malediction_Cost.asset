@@ -27,6 +27,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6011970f3c0746b89805570c517d9383, type: 3}
   m_Name: Malediction_Cost
   m_EditorClassIdentifier: 
+  m_Description: "\uC18C\uBE44 \uB9C8\uB098: {GameplayEffect.modifiers[0]}"
   m_ModifierDefinitions:
   - {fileID: -70602601370400439}
   m_SpecialEffectDefinition: {fileID: 0}

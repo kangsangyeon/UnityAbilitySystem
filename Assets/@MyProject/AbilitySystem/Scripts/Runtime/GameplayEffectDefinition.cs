@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Core;
 using UnityEngine;
@@ -14,6 +13,9 @@ namespace AbilitySystem
     [CreateAssetMenu(fileName = "GameplayEffect", menuName = "AbilitySystem/Effect/GameplayEffect", order = 0)]
     public class GameplayEffectDefinition : ScriptableObject
     {
+        [SerializeField] private string m_Description;
+        public string description => m_Description;
+
         /// <summary>
         /// 대상 entity에게 effect가 적용되면 적용할 stat modifier 목록입니다.
         /// </summary>

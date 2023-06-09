@@ -1,0 +1,4 @@
+﻿.description {
+    white-space: normal;
+    height: 100px;
+}

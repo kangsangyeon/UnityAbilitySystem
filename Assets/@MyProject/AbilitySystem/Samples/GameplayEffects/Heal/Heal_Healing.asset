@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6011970f3c0746b89805570c517d9383, type: 3}
   m_Name: Heal_Healing
   m_EditorClassIdentifier: 
+  m_Description: "\uCCB4\uB825\uC744 {GameplayEffect.modifiers[0]}\uB9CC\uD07C \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
   m_ModifierDefinitions:
   - {fileID: 2219538198915261090}
   m_SpecialEffectDefinition: {fileID: 11400000, guid: 2f88a9458857022449fb1d0a3d2601ee, type: 2}

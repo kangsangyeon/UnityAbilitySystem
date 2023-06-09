@@ -27,6 +27,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1ff1a54c274f36bb0fe74e5b0fe82e, type: 3}
   m_Name: Regeneration_Regeneration
   m_EditorClassIdentifier: 
+  m_Description: "\uB300\uC0C1\uC5D0\uAC8C \uB9E4 {GameplayPersistentEffect.definition.period}\uCD08
+    \uB9C8\uB2E4 {GameplayPersistentEffect.modifiers[0]}\uB9CC\uD07C\uC758 \uCE58\uC720\uB97C
+    {GameplayPersistentEffect.duration}\uCD08 \uB3D9\uC548 \uC90D\uB2C8\uB2E4."
   m_ModifierDefinitions:
   - {fileID: -2303586359093108113}
   m_SpecialEffectDefinition: {fileID: 0}
