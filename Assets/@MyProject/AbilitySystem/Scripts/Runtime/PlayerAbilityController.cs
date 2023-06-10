@@ -64,10 +64,45 @@ namespace AbilitySystem
         {
             m_Levelable.levelChanged -= OnLevelChanged;
         }
-        
+
         private void OnLevelChanged()
         {
             abilityPoints += 3;
         }
+
+        #region Save System
+
+        [System.Serializable]
+        protected class PlayerAbilityControllerData : AbilityControllerData
+        {
+            public int abilityPoints;
+
+            public PlayerAbilityControllerData(AbilityControllerData _data)
+            {
+                this.abilities = _data.abilities;
+            }
+        }
+
+        public override object data
+        {
+            get
+            {
+                return new PlayerAbilityControllerData(base.data as AbilityControllerData)
+                {
+                    abilityPoints = this.abilityPoints
+                };
+            }
+        }
+
+        public override void Load(object _data)
+        {
+            base.Load(_data);
+
+            PlayerAbilityControllerData _playerAbilityControllerData = data as PlayerAbilityControllerData;
+            this.m_AbilityPoints = _playerAbilityControllerData.abilityPoints;
+            abilityPointsChanged?.Invoke();
+        }
+
+        #endregion
     }
 }

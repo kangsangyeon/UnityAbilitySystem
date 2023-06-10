@@ -82,7 +82,7 @@ namespace AbilitySystem.UI
             }
         }
 
-        private void Hide()
+        public void Hide()
         {
             m_UIDocument.rootVisualElement.style.display = DisplayStyle.None;
         }

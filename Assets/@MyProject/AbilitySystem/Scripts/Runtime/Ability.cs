@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +13,7 @@ namespace AbilitySystem
     /// 대상 entity에게 ability를 적용하면 ability definition 내 effect definition 목록을 순회하며
     /// effect 인스턴스를 만들고, 이를 effect controller을 통해 적용합니다.
     /// </summary>
-    public abstract class Ability
+    public abstract class Ability : ISavable
     {
         protected AbilityDefinition m_Definition;
         public AbilityDefinition definition => m_Definition;
@@ -100,5 +101,24 @@ namespace AbilitySystem
 
             return _stringBuilder.ToString();
         }
+
+        #region Save System
+
+        [System.Serializable]
+        protected class AbilityData
+        {
+            public int level;
+        }
+
+        public object data => new AbilityData() { level = this.level };
+
+        public void Load(object _data)
+        {
+            AbilityData abilityData = (AbilityData)_data;
+            m_Level = abilityData.level;
+            levelChanged?.Invoke();
+        }
+
+        #endregion
     }
 }

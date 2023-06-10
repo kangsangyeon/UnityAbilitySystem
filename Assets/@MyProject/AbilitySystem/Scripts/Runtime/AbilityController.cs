@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core;
+using SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +17,7 @@ namespace AbilitySystem
     /// </summary>
     [RequireComponent(typeof(GameplayEffectController))]
     [RequireComponent(typeof(TagController))]
-    public class AbilityController : MonoBehaviour
+    public class AbilityController : MonoBehaviour, ISavable
     {
         /// <summary>
         /// 이 controller를 소유한 entity가 가진 ability입니다.
@@ -174,5 +175,40 @@ namespace AbilitySystem
                 m_EffectController.ApplyGameplayEffectToSelf(
                     new GameplayPersistentEffect(_ability.definition.cooldown, _ability, gameObject));
         }
+
+        #region Save System
+
+        [System.Serializable]
+        protected class AbilityControllerData
+        {
+            public Dictionary<string, object> abilities;
+        }
+
+        public virtual object data
+        {
+            get
+            {
+                Dictionary<string, object> _abilities = new Dictionary<string, object>();
+                foreach (Ability _ability in m_Abilities.Values)
+                {
+                    if (_ability is ISavable _savable)
+                        _abilities.Add(_ability.definition.name, _savable.data);
+                }
+
+                return new AbilityControllerData { abilities = _abilities };
+            }
+        }
+
+        public virtual void Load(object _data)
+        {
+            AbilityControllerData _abilityControllerData = (AbilityControllerData)_data;
+            foreach (Ability _ability in m_Abilities.Values)
+            {
+                if (_ability is ISavable _savable)
+                    _savable.Load(_abilityControllerData.abilities[_ability.definition.name]);
+            }
+        }
+
+        #endregion
     }
 }

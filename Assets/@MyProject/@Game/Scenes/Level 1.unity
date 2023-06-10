@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 3a3badbbb00e3e6409fce14c18ec5a58, type: 2}
+--- !u!1 &377904983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 377904985}
+  - component: {fileID: 377904984}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &377904984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377904983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4eeb8cb811d46dc9fea66975bb7f9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SaveData: {fileID: 11400000, guid: f222a8828e9c123459034308d8a80d68, type: 2}
+--- !u!4 &377904985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377904983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &412262067
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +542,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &683556995 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7127328142274742818, guid: 7d4eed36dbdf60d40a04ffeb39b9f842, type: 3}
+  m_PrefabInstance: {fileID: 7127328142251242297}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684d574c839145c19d803980c9a8e50a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &958596308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -579,6 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839436dcc70e4540875695c1384cc0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_AbilitiesUI: {fileID: 683556995}
   m_Target: {fileID: 437030227}
 --- !u!114 &958596312
 MonoBehaviour:
@@ -707,6 +764,22 @@ MonoBehaviour:
   abilityPointsChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &958596322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958596309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960a2a2ac46c4b6ca89974db5306e9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SaveData: {fileID: 11400000, guid: f222a8828e9c123459034308d8a80d68, type: 2}
+  m_SaveDataChannel: {fileID: 11400000, guid: 72b8daefadbda12488033abb6242c5a8, type: 2}
+  m_LoadDataChannel: {fileID: 11400000, guid: 9f62d9a593ca96c4394fee7bb4988686, type: 2}
+  m_Id: 822dd3e7-25b7-4441-8d8b-6c1e0dd0c27e
 --- !u!1001 &1190254548
 PrefabInstance:
   m_ObjectHideFlags: 0

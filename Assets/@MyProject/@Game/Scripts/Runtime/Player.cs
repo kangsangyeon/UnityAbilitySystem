@@ -1,4 +1,5 @@
 ﻿using AbilitySystem;
+using AbilitySystem.UI;
 using Game.Scripts.Runtime;
 using LevelSystem;
 using StatSystem;
@@ -13,6 +14,7 @@ namespace MyGame.Scripts
     public class Player : CombatableCharacter
     {
         private ILevelable m_Levelable;
+        [SerializeField] private AbilitiesUI m_AbilitiesUI;
         [SerializeField] private GameObject m_Target;
         private NavMeshAgent m_NavMeshAgent;
         private AbilityController m_AbilityController;
@@ -46,6 +48,18 @@ namespace MyGame.Scripts
             else if (Input.GetKeyDown(KeyCode.A))
             {
                 m_AbilityController.TryActivateAbility("Malediction", m_Target);
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                m_Levelable.currentExperience += 100;
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                m_AbilitiesUI.Show();
+            }
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                m_AbilitiesUI.Hide();
             }
         }
     }
