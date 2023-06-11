@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace CombatSystem.Core
+﻿namespace Core
 {
     public interface IDamage
     {

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Core;
 using UnityEngine;
 
-namespace CombatSystem.Scripts.Runtime
+namespace CombatSystem
 {
     public class Sword : MeleeWeapon, ITaggable
     {

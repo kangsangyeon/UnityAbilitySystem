@@ -1,4 +1,5 @@
 ﻿using CombatSystem.Core;
+using Core;
 using StatSystem;
 using UnityEngine;
 using UnityEngine.Events;

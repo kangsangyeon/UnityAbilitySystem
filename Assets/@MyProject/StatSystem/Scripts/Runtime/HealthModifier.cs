@@ -1,4 +1,4 @@
-﻿using CombatSystem.Core;
+﻿using Core;
 using UnityEngine;
 
 namespace StatSystem

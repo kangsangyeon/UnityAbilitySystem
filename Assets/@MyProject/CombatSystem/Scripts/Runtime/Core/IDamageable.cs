@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using Core;
+using UnityEngine.Events;
 
 namespace CombatSystem.Core
 {
