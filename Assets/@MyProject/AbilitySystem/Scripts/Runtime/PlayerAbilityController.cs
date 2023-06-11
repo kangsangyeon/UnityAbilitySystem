@@ -98,7 +98,7 @@ namespace AbilitySystem
         {
             base.Load(_data);
 
-            PlayerAbilityControllerData _playerAbilityControllerData = data as PlayerAbilityControllerData;
+            PlayerAbilityControllerData _playerAbilityControllerData = _data as PlayerAbilityControllerData;
             this.m_AbilityPoints = _playerAbilityControllerData.abilityPoints;
             abilityPointsChanged?.Invoke();
         }
