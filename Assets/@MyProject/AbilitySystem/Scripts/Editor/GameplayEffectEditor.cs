@@ -72,7 +72,8 @@ namespace AbilitySystem.Editor
         protected virtual VisualElement CreateTagFieldsGUI()
         {
             VisualElement _root = new VisualElement();
-            _root.Add(new PropertyField(serializedObject.FindProperty("m_Tags"))); // 8:03
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_Tags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_RemoveEffectsWithTags")));
             return _root;
         }
 

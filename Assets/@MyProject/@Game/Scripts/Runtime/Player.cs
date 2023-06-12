@@ -76,6 +76,10 @@ namespace MyGame.Scripts
             {
                 m_AbilityController.TryActivateAbility("Fireball", m_Target);
             }
+            else if (Input.GetKeyDown(KeyCode.X))
+            {
+                m_AbilityController.TryActivateAbility("Cleanse", m_Target);
+            }
         }
     }
 }

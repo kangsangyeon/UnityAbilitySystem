@@ -83,6 +83,16 @@ namespace AbilitySystem
 
         public bool ApplyGameplayEffectToSelf(GameplayEffect _effectToApply)
         {
+            // 이 effect가 적용됨으로써 삭제되어야 하는 effect의 목록을 조회하고 삭제합니다.
+
+            List<GameplayPersistentEffect> _effectsToRemove =
+                m_ActiveEffects
+                    .Where(e => e.definition.tags.Any(t => _effectToApply.definition.removeEffectsWithTags.Contains(t)))
+                    .ToList();
+
+            _effectsToRemove.ForEach(e => RemoveActiveGameplayEffect(e, true));
+
+
             bool _shouldAdd = true;
             if (_effectToApply is GameplayStackableEffect _stackableEffect)
             {

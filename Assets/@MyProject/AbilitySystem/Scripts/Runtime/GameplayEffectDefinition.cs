@@ -37,5 +37,11 @@ namespace AbilitySystem
         [SerializeField] private List<string> m_Tags;
 
         public ReadOnlyCollection<string> tags => m_Tags.AsReadOnly();
+
+        /// <summary>
+        /// 이 effect가 적용될 때, 적용  대상에게 이미 적용중인 이 태그를 가진 effect들을 삭제합니다.
+        /// </summary>
+        [SerializeField] private List<string> m_RemoveEffectsWithTags;
+        public ReadOnlyCollection<string> removeEffectsWithTags => m_RemoveEffectsWithTags.AsReadOnly();
     }
 }
