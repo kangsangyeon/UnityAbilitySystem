@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CombatSystem.Core;
 using Core;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace CombatSystem
     public class CombatController : MonoBehaviour
     {
         [SerializeField] private FloatingText m_FloatingTextPrefab;
+
+        public Dictionary<string, RangedWeapon> rangedWeapons = new Dictionary<string, RangedWeapon>();
+
         private ObjectPool<FloatingText> m_Pool;
         private Collider m_Collider;
         private IDamageable m_Damageable;
@@ -19,6 +23,11 @@ namespace CombatSystem
             m_Collider = GetComponent<Collider>();
             m_Damageable = GetComponent<IDamageable>();
             m_Pool = new ObjectPool<FloatingText>(OnCreate, OnGet, OnRelease);
+
+            foreach (RangedWeapon _weapon in GetComponentsInChildren<RangedWeapon>())
+            {
+                rangedWeapons.Add(_weapon.id, _weapon);
+            }
         }
 
         private void OnEnable()

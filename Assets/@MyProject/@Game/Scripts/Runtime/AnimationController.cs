@@ -89,6 +89,14 @@ namespace MyGame
             }
         }
 
+        public void Shoot()
+        {
+            if (m_AbilityController.currentAbility is ProjectileAbility _projectileAbility)
+            {
+                _projectileAbility.Shoot(m_AbilityController.target);
+            }
+        }
+
         #endregion
     }
 }

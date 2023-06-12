@@ -29,6 +29,17 @@ namespace MyGame.Scripts
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                (m_Target.GetComponent<StatController>().stats["Health"] as Health)
+                    .ApplyModifier(new HealthModifier() { magnitude = 100 });
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                (GetComponent<StatController>().stats["Mana"] as Attribute)
+                    .ApplyModifier(new StatModifier() { magnitude = 100 });
+            }
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 m_AbilityController.TryActivateAbility("Shock", m_Target);
@@ -60,6 +71,10 @@ namespace MyGame.Scripts
             else if (Input.GetKeyDown(KeyCode.F))
             {
                 m_AbilitiesUI.Hide();
+            }
+            else if (Input.GetKeyDown(KeyCode.Z))
+            {
+                m_AbilityController.TryActivateAbility("Fireball", m_Target);
             }
         }
     }
