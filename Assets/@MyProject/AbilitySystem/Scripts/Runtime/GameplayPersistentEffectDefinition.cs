@@ -63,6 +63,9 @@ namespace AbilitySystem
 
         public ReadOnlyCollection<string> grantedTags => m_GrantedTags.AsReadOnly();
 
+        [SerializeField] private List<string> m_GrantedApplicationImmunityTags;
+        public ReadOnlyCollection<string> grantedApplicationImmunityTags => m_GrantedApplicationImmunityTags.AsReadOnly();
+
         /// <summary>
         /// effect가 적용될 때 생성되는 특수 효과에 대한 정보를 기록한 scriptable object입니다.
         /// </summary>

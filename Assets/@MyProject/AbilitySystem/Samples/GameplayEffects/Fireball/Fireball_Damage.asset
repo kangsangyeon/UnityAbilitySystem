@@ -17,7 +17,9 @@ MonoBehaviour:
   m_ModifierDefinitions:
   - {fileID: 4504136101511789043}
   m_SpecialEffectDefinition: {fileID: 0}
-  m_Tags: []
+  m_Tags:
+  - damage
+  m_RemoveEffectsWithTags: []
 --- !u!114 &4504136101511789043
 MonoBehaviour:
   m_ObjectHideFlags: 0

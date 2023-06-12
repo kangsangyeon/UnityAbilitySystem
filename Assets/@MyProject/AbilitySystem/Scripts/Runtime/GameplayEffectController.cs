@@ -83,6 +83,16 @@ namespace AbilitySystem
 
         public bool ApplyGameplayEffectToSelf(GameplayEffect _effectToApply)
         {
+            bool _hasImmunity =
+                m_ActiveEffects
+                    .Any(e => e.definition.grantedApplicationImmunityTags.Any(t => _effectToApply.definition.tags.Contains(t)));
+
+            if (_hasImmunity)
+            {
+                Debug.Log($"{_effectToApply.definition.name}에 면역을 가지고 있어 적용되지 않습니다.");
+                return false;
+            }
+
             // 이 effect가 적용됨으로써 삭제되어야 하는 effect의 목록을 조회하고 삭제합니다.
 
             List<GameplayPersistentEffect> _effectsToRemove =

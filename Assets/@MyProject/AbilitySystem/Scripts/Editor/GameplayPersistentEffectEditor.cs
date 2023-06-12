@@ -62,6 +62,7 @@ namespace AbilitySystem.Editor
         {
             VisualElement _root = base.CreateTagFieldsGUI();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedApplicationImmunityTags")));
             return _root;
         }
 

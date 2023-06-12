@@ -80,6 +80,10 @@ namespace MyGame.Scripts
             {
                 m_AbilityController.TryActivateAbility("Cleanse", m_Target);
             }
+            else if (Input.GetKeyDown(KeyCode.C))
+            {
+                m_AbilityController.TryActivateAbility("ShieldAura", m_Target);
+            }
         }
     }
 }
