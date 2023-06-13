@@ -63,7 +63,12 @@ namespace AbilitySystem
 
         public ReadOnlyCollection<string> grantedTags => m_GrantedTags.AsReadOnly();
 
+        /// <summary>
+        /// 대상 entity에게 effect가 적용되면 부여할 면역 tag 목록입니다.
+        /// 예를 들어 대상이 "poison" 태그를 면역으로 가지고 있을 때, "poison" 태그를 가진 effect는 대상에게 적용되지 않습니다.
+        /// </summary>
         [SerializeField] private List<string> m_GrantedApplicationImmunityTags;
+
         public ReadOnlyCollection<string> grantedApplicationImmunityTags => m_GrantedApplicationImmunityTags.AsReadOnly();
 
         /// <summary>
