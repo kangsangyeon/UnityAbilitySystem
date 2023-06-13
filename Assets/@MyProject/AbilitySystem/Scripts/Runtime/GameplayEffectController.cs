@@ -95,6 +95,16 @@ namespace AbilitySystem
                 return false;
             }
 
+            // 이 effect가 적용되기 위한 필요 조건을 만족하는지에 대한 여부를 판별합니다.
+
+            if (m_TagController.SatisfiesRequirements(
+                    _effectToApply.definition.applicationMustBePresentTags,
+                    _effectToApply.definition.applicationMustBeAbsentTags) == false)
+            {
+                Debug.Log($"{_effectToApply.definition.name}을 적용하기 위한 필요 조건이 만족되지 않아 적용되지 않습니다.");
+                return false;
+            }
+
             // 이 effect가 적용됨으로써 삭제되어야 하는 effect의 목록을 조회하고 삭제합니다.
 
             List<GameplayPersistentEffect> _effectsToRemove =

@@ -19,12 +19,15 @@ MonoBehaviour:
   m_SpecialEffectDefinition: {fileID: 0}
   m_Tags: []
   m_RemoveEffectsWithTags: []
+  m_ApplicationMustBePresentTags: []
+  m_ApplicationMustBeAbsentTags: []
   m_IsInfinite: 0
   m_DurationFormula: {fileID: 11400000, guid: 389111663bcc24049ba85d704fa97dc0, type: 2}
   m_IsPeriodic: 1
   m_Period: 1
   m_ExecutePeriodicEffectOnApplication: 0
-  m_GrantedTags: []
+  m_GrantedTags:
+  - burning
   m_GrantedApplicationImmunityTags: []
   m_SpecialPersistentEffectDefinition: {fileID: 11400000, guid: 2cd9f2c110d9d6148a98f4dc66453351, type: 2}
   m_OverflowEffects: []

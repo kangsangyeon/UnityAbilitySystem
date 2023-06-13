@@ -84,6 +84,10 @@ namespace MyGame.Scripts
             {
                 m_AbilityController.TryActivateAbility("ShieldAura", m_Target);
             }
+            else if (Input.GetKeyDown(KeyCode.V))
+            {
+                m_AbilityController.TryActivateAbility("Combustion", m_Target);
+            }
         }
     }
 }

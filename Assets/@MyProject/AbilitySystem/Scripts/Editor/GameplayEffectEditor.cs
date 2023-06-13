@@ -94,6 +94,8 @@ namespace AbilitySystem.Editor
             VisualElement _root = new VisualElement();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_Tags")));
             _root.Add(new PropertyField(serializedObject.FindProperty("m_RemoveEffectsWithTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_ApplicationMustBePresentTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_ApplicationMustBeAbsentTags")));
             return _root;
         }
 

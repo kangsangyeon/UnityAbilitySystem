@@ -47,5 +47,12 @@ namespace AbilitySystem
         [SerializeField] private List<string> m_RemoveEffectsWithTags;
 
         public ReadOnlyCollection<string> removeEffectsWithTags => m_RemoveEffectsWithTags.AsReadOnly();
+
+        [SerializeField] private List<string> m_ApplicationMustBePresentTags;
+
+        public ReadOnlyCollection<string> applicationMustBePresentTags => m_ApplicationMustBePresentTags.AsReadOnly();
+
+        [SerializeField] private List<string> m_ApplicationMustBeAbsentTags;
+        public ReadOnlyCollection<string> applicationMustBeAbsentTags => m_ApplicationMustBeAbsentTags.AsReadOnly();
     }
 }
