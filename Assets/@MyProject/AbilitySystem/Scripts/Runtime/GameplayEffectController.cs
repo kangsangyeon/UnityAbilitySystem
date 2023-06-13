@@ -83,6 +83,8 @@ namespace AbilitySystem
 
         public bool ApplyGameplayEffectToSelf(GameplayEffect _effectToApply)
         {
+            // 이 effect가 면역에 의해 적용되지 말아야 하는지에 대한 여부를 판별합니다.
+
             bool _hasImmunity =
                 m_ActiveEffects
                     .Any(e => e.definition.grantedApplicationImmunityTags.Any(t => _effectToApply.definition.tags.Contains(t)));
@@ -102,6 +104,24 @@ namespace AbilitySystem
 
             _effectsToRemove.ForEach(e => RemoveActiveGameplayEffect(e, true));
 
+            // 이 effect가 적용됨으로써 적용되어야 하는 상태 이상 effect의 목록을 읽고 적용합니다.
+
+            foreach (GameplayEffectDefinition _conditionalEffectDefinition in _effectToApply.definition.conditionalEffects)
+            {
+                EffectTypeAttribute _attribute =
+                    _conditionalEffectDefinition.GetType()
+                        .GetCustomAttributes(true).OfType<EffectTypeAttribute>().FirstOrDefault();
+
+                GameplayEffect _conditionalEffect =
+                    Activator.CreateInstance(
+                        _attribute.type,
+                        _conditionalEffectDefinition, // definition
+                        _effectToApply, // source
+                        _effectToApply.instigator // instigator
+                    ) as GameplayEffect;
+
+                ApplyGameplayEffectToSelf(_conditionalEffect);
+            }
 
             bool _shouldAdd = true;
             if (_effectToApply is GameplayStackableEffect _stackableEffect)

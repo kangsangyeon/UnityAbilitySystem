@@ -24,6 +24,9 @@ namespace AbilitySystem
         public ReadOnlyCollection<AbstractGameplayEffectStatModifierDefinition> ModifierDefinitions =>
             m_ModifierDefinitions.AsReadOnly();
 
+        [SerializeField] private List<GameplayEffectDefinition> m_ConditionalEffects;
+        public ReadOnlyCollection<GameplayEffectDefinition> conditionalEffects => m_ConditionalEffects.AsReadOnly();
+
         /// <summary>
         /// effect가 적용될 때 생성될 특수 효과에 대한 정보를 기록한 scriptable object입니다.
         /// </summary>
@@ -42,6 +45,7 @@ namespace AbilitySystem
         /// 이 effect가 적용될 때, 적용  대상에게 이미 적용중인 이 태그를 가진 effect들을 삭제합니다.
         /// </summary>
         [SerializeField] private List<string> m_RemoveEffectsWithTags;
+
         public ReadOnlyCollection<string> removeEffectsWithTags => m_RemoveEffectsWithTags.AsReadOnly();
     }
 }

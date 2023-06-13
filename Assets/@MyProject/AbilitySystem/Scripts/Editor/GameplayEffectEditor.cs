@@ -20,6 +20,7 @@ namespace AbilitySystem.Editor
 
             _root.Add(CreateCoreFieldsGUI());
             _root.Add(CreateApplicationFieldsGUI());
+            _root.Add(CreateGameplayEffectFieldsGUI());
             _root.Add(CreateTagFieldsGUI());
             _root.Add(CreateSpecialEffectFieldsGUI());
 
@@ -59,6 +60,25 @@ namespace AbilitySystem.Editor
             Button _addButton = _modifiers.Q<Button>("unity-list-view__add-button");
             _addButton.clicked += AddButtonOnClicked;
             _root.Add(_modifiers);
+            return _root;
+        }
+
+        protected virtual VisualElement CreateGameplayEffectFieldsGUI()
+        {
+            VisualElement _root = new VisualElement();
+
+            ListView _listView = new ListView()
+            {
+                bindingPath = "m_ConditionalEffects",
+                virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
+                reorderable = true,
+                showFoldoutHeader = true,
+                showAddRemoveFooter = true,
+                headerTitle = "Conditional Effects"
+            };
+            _listView.Bind(serializedObject);
+            _root.Add(_listView);
+
             return _root;
         }
 

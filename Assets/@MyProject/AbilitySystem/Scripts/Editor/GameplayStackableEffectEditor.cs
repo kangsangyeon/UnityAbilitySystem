@@ -42,9 +42,9 @@ namespace AbilitySystem.Editor
             return _root;
         }
 
-        protected VisualElement CreateGameplayEffectFieldsGUI()
+        protected override VisualElement CreateGameplayEffectFieldsGUI()
         {
-            VisualElement _root = new VisualElement();
+            VisualElement _root = base.CreateGameplayEffectFieldsGUI();
 
             ListView _overflowGameplayEffects = new ListView
             {
