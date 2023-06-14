@@ -88,6 +88,10 @@ namespace MyGame.Scripts
             {
                 m_AbilityController.TryActivateAbility("Combustion", m_Target);
             }
+            else if (Input.GetKeyDown(KeyCode.B))
+            {
+                m_AbilityController.TryActivateAbility("FrostAura", m_Target);
+            }
         }
     }
 }

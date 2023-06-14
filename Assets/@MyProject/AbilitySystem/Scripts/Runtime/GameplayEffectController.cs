@@ -107,6 +107,17 @@ namespace AbilitySystem
                 return false;
             }
 
+            if (_effectToApply is GameplayPersistentEffect _persistentEffectToApply)
+            {
+                if (m_TagController.SatisfiesRequirements(
+                        _persistentEffectToApply.definition.persistMustBePresentTags,
+                        _persistentEffectToApply.definition.persistMustBeAbsentTags) == false)
+                {
+                    Debug.Log($"지속 효과인 {_effectToApply.definition.name}이 지속되기 위한 필요 조건이 만족되지 않아 적용되지 않습니다.");
+                    return false;
+                }
+            }
+
             // 이 effect가 적용됨으로써 삭제되어야 하는 effect의 목록을 조회하고 삭제합니다.
 
             List<GameplayPersistentEffect> _effectsToRemove =
@@ -477,6 +488,14 @@ namespace AbilitySystem
             }
         }
 
+        private void CheckRemovalTagRequirements(string _tag)
+        {
+            m_ActiveEffects
+                .Where(e => m_TagController.SatisfiesRequirements(e.definition.persistMustBePresentTags, e.definition.persistMustBeAbsentTags) == false)
+                .ToList()
+                .ForEach(e => RemoveActiveGameplayEffect(e, true));
+        }
+
         private void Awake()
         {
             m_StatController = GetComponent<StatController>();
@@ -491,6 +510,8 @@ namespace AbilitySystem
 
             m_TagController.tagAdded.AddListener(CheckOngoingTagRequirements);
             m_TagController.tagRemoved.AddListener(CheckOngoingTagRequirements);
+            m_TagController.tagAdded.AddListener(CheckRemovalTagRequirements);
+            m_TagController.tagRemoved.AddListener(CheckRemovalTagRequirements);
         }
 
         private void OnDisable()
@@ -499,6 +520,8 @@ namespace AbilitySystem
 
             m_TagController.tagAdded.RemoveListener(CheckOngoingTagRequirements);
             m_TagController.tagRemoved.RemoveListener(CheckOngoingTagRequirements);
+            m_TagController.tagAdded.RemoveListener(CheckRemovalTagRequirements);
+            m_TagController.tagRemoved.RemoveListener(CheckRemovalTagRequirements);
         }
 
         private void Update()

@@ -84,6 +84,12 @@ namespace AbilitySystem
         [SerializeField] private List<string> m_UninhibitedMustBeAbsentTags;
         public ReadOnlyCollection<string> uninhibitedMustBeAbsentTags => m_UninhibitedMustBeAbsentTags.AsReadOnly();
 
+        [SerializeField] private List<string> m_PersistMustBePresentTags;
+        public ReadOnlyCollection<string> persistMustBePresentTags => m_PersistMustBePresentTags.AsReadOnly();
+
+        [SerializeField] private List<string> m_PersisMustBeAbsentTags;
+        public ReadOnlyCollection<string> persistMustBeAbsentTags => m_PersisMustBeAbsentTags.AsReadOnly();
+
         /// <summary>
         /// effect가 적용될 때 생성되는 특수 효과에 대한 정보를 기록한 scriptable object입니다.
         /// </summary>

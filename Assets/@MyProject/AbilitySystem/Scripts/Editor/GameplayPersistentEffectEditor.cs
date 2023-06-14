@@ -66,6 +66,8 @@ namespace AbilitySystem.Editor
             _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedApplicationImmunityTags")));
             _root.Add(new PropertyField(serializedObject.FindProperty("m_UninhibitedMustBePresentTags")));
             _root.Add(new PropertyField(serializedObject.FindProperty("m_UninhibitedMustBeAbsentTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_PersistMustBePresentTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_PersisMustBeAbsentTags")));
             return _root;
         }
 

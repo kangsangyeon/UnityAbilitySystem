@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7599540601626370730
+--- !u!114 &-7131987579760495031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,12 +24,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a25ae9b7ab8458daea226675a928dba, type: 3}
-  m_Name: ShieldAura
+  m_Script: {fileID: 11500000, guid: 4f1ff1a54c274f36bb0fe74e5b0fe82e, type: 3}
+  m_Name: FrostAura
   m_EditorClassIdentifier: 
   m_Description: 
   m_ModifierDefinitions:
-  - {fileID: -7599540601626370730}
+  - {fileID: -7131987579760495031}
   m_ConditionalEffects: []
   m_SpecialEffectDefinition: {fileID: 0}
   m_Tags: []
@@ -37,23 +37,16 @@ MonoBehaviour:
   m_ApplicationMustBePresentTags: []
   m_ApplicationMustBeAbsentTags: []
   m_IsInfinite: 0
-  m_DurationFormula: {fileID: 11400000, guid: e4c1dc95f03bdc9439d64f84bcf532ac, type: 2}
+  m_DurationFormula: {fileID: 11400000, guid: 7ca74ccefeba0b14883d470add53b297, type: 2}
   m_IsPeriodic: 0
   m_Period: 0
   m_ExecutePeriodicEffectOnApplication: 0
   m_GrantedTags: []
-  m_GrantedApplicationImmunityTags:
-  - damage
+  m_GrantedApplicationImmunityTags: []
   m_UninhibitedMustBePresentTags: []
   m_UninhibitedMustBeAbsentTags: []
   m_PersistMustBePresentTags: []
-  m_PersisMustBeAbsentTags: []
-  m_SpecialPersistentEffectDefinition: {fileID: 11400000, guid: 9fa6ce209515a7749835ee7770239319, type: 2}
+  m_PersisMustBeAbsentTags:
+  - burning
+  m_SpecialPersistentEffectDefinition: {fileID: 11400000, guid: 55d194f56ea74284793e3e85329a0308, type: 2}
   m_PeriodicInhibitionPolicy: 0
-  m_OverflowEffects: []
-  m_DenyOverflowApplication: 0
-  m_ClearStackOnOverflow: 0
-  m_StackLimitCount: 1
-  m_StackDurationRefreshPolicy: 1
-  m_StackPeriodResetPolicy: 0
-  m_StackExpirationPolicy: 0
