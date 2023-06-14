@@ -87,7 +87,9 @@ namespace AbilitySystem
 
             bool _hasImmunity =
                 m_ActiveEffects
-                    .Any(e => e.definition.grantedApplicationImmunityTags.Any(t => _effectToApply.definition.tags.Contains(t)));
+                    .Any(e =>
+                        e.isInhibited == false
+                        && e.definition.grantedApplicationImmunityTags.Any(t => _effectToApply.definition.tags.Contains(t)));
 
             if (_hasImmunity)
             {
@@ -250,19 +252,23 @@ namespace AbilitySystem
         private void AddGameplayEffect(GameplayPersistentEffect _effect)
         {
             m_ActiveEffects.Add(_effect);
-            AddUninhibitedEffects(_effect);
+
+            CheckOngoingTagRequirements(_effect);
 
             if (_effect.definition.isPeriodic
                 && _effect.definition.executePeriodicEffectOnApplication)
             {
-                ExecuteGameplayEffect(_effect);
+                if (_effect.isInhibited == false)
+                    ExecuteGameplayEffect(_effect);
             }
         }
 
         private void RemoveActiveGameplayEffect(GameplayPersistentEffect _effect, bool _prematureRemoval)
         {
             m_ActiveEffects.Remove(_effect);
-            RemoveUninhibitedEffects(_effect);
+
+            if (_effect.isInhibited == false)
+                RemoveUninhibitedEffects(_effect);
         }
 
         private void ExecuteGameplayEffect(GameplayEffect _effect)
@@ -390,7 +396,10 @@ namespace AbilitySystem
                         // 이 effect가 periodic 속성을 가지고 있고,
                         // 반복 주기의 끝에 왔을 때 실행됩니다.
                         // 다시 effect를 적용시키고, 다음 반복 주기가 시작될 때까지 남은 시간을 초기화합니다.
-                        ExecuteGameplayEffect(_activeEffect);
+
+                        if (_activeEffect.isInhibited == false)
+                            ExecuteGameplayEffect(_activeEffect);
+
                         _activeEffect.remainingPeriod = _activeEffect.definition.period;
                     }
                 }
@@ -429,6 +438,45 @@ namespace AbilitySystem
             initialized?.Invoke();
         }
 
+        private void CheckOngoingTagRequirements(string _tag)
+        {
+            m_ActiveEffects.ForEach(CheckOngoingTagRequirements);
+        }
+
+        private void CheckOngoingTagRequirements(GameplayPersistentEffect _effect)
+        {
+            bool _shouldBeInhibited = !m_TagController.SatisfiesRequirements(
+                _effect.definition.uninhibitedMustBePresentTags,
+                _effect.definition.uninhibitedMustBeAbsentTags);
+
+            if (_effect.isInhibited != _shouldBeInhibited)
+            {
+                _effect.isInhibited = _shouldBeInhibited;
+
+                if (_effect.isInhibited)
+                {
+                    RemoveUninhibitedEffects(_effect);
+                }
+                else
+                {
+                    if (_effect.definition.isPeriodic)
+                    {
+                        if (_effect.definition.periodicInhibitionPolicy == GameplayEffectPeriodInhibitionRemovedPolicy.ResetPeriod)
+                        {
+                            _effect.remainingPeriod = _effect.definition.period;
+                        }
+                        else if (_effect.definition.periodicInhibitionPolicy == GameplayEffectPeriodInhibitionRemovedPolicy.ExecuteAndResetPeriod)
+                        {
+                            ExecuteGameplayEffect(_effect);
+                            _effect.remainingPeriod = _effect.definition.period;
+                        }
+                    }
+
+                    AddUninhibitedEffects(_effect);
+                }
+            }
+        }
+
         private void Awake()
         {
             m_StatController = GetComponent<StatController>();
@@ -440,6 +488,17 @@ namespace AbilitySystem
             m_StatController.initialized.AddListener(OnStatControllerInitialized);
             if (m_StatController.IsInitialized())
                 OnStatControllerInitialized();
+
+            m_TagController.tagAdded.AddListener(CheckOngoingTagRequirements);
+            m_TagController.tagRemoved.AddListener(CheckOngoingTagRequirements);
+        }
+
+        private void OnDisable()
+        {
+            m_StatController.initialized.RemoveListener(OnStatControllerInitialized);
+
+            m_TagController.tagAdded.RemoveListener(CheckOngoingTagRequirements);
+            m_TagController.tagRemoved.RemoveListener(CheckOngoingTagRequirements);
         }
 
         private void Update()

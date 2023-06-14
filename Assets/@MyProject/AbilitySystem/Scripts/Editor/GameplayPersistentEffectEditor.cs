@@ -51,6 +51,7 @@ namespace AbilitySystem.Editor
             VisualElement _periodFields = new VisualElement() { name = "period" };
             _periodFields.Add(new PropertyField(serializedObject.FindProperty("m_Period")));
             _periodFields.Add(new PropertyField(serializedObject.FindProperty("m_ExecutePeriodicEffectOnApplication")));
+            _periodFields.Add(new PropertyField(serializedObject.FindProperty("m_PeriodicInhibitionPolicy")));
 
             VisualElement _root = new VisualElement();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_IsPeriodic")) { name = "is-periodic" });
@@ -63,6 +64,8 @@ namespace AbilitySystem.Editor
             VisualElement _root = base.CreateTagFieldsGUI();
             _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedTags")));
             _root.Add(new PropertyField(serializedObject.FindProperty("m_GrantedApplicationImmunityTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_UninhibitedMustBePresentTags")));
+            _root.Add(new PropertyField(serializedObject.FindProperty("m_UninhibitedMustBeAbsentTags")));
             return _root;
         }
 

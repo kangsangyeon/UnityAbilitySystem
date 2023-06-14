@@ -17,7 +17,8 @@ MonoBehaviour:
   - {fileID: 8008036640476532185}
   m_ConditionalEffects: []
   m_SpecialEffectDefinition: {fileID: 0}
-  m_Tags: []
+  m_Tags:
+  - burning
   m_RemoveEffectsWithTags: []
   m_ApplicationMustBePresentTags: []
   m_ApplicationMustBeAbsentTags: []
@@ -29,7 +30,10 @@ MonoBehaviour:
   m_GrantedTags:
   - burning
   m_GrantedApplicationImmunityTags: []
+  m_UninhibitedMustBePresentTags: []
+  m_UninhibitedMustBeAbsentTags: []
   m_SpecialPersistentEffectDefinition: {fileID: 11400000, guid: 2cd9f2c110d9d6148a98f4dc66453351, type: 2}
+  m_PeriodicInhibitionPolicy: 0
   m_OverflowEffects: []
   m_DenyOverflowApplication: 0
   m_ClearStackOnOverflow: 0

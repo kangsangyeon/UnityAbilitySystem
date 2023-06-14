@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace AbilitySystem
 {
+    public enum GameplayEffectPeriodInhibitionRemovedPolicy
+    {
+        NeverReset,
+        ResetPeriod,
+        ExecuteAndResetPeriod
+    }
+
     /// <summary>
     /// 만료 시간을 가지는 effect scriptable object입니다.
     /// 만료 시간을 초과하면 대상 entity에 적용된 effect의 영향을 모두 제거합니다.
@@ -71,11 +78,20 @@ namespace AbilitySystem
 
         public ReadOnlyCollection<string> grantedApplicationImmunityTags => m_GrantedApplicationImmunityTags.AsReadOnly();
 
+        [SerializeField] private List<string> m_UninhibitedMustBePresentTags;
+        public ReadOnlyCollection<string> uninhibitedMustBePresentTags => m_UninhibitedMustBePresentTags.AsReadOnly();
+
+        [SerializeField] private List<string> m_UninhibitedMustBeAbsentTags;
+        public ReadOnlyCollection<string> uninhibitedMustBeAbsentTags => m_UninhibitedMustBeAbsentTags.AsReadOnly();
+
         /// <summary>
         /// effect가 적용될 때 생성되는 특수 효과에 대한 정보를 기록한 scriptable object입니다.
         /// </summary>
         [SerializeField] private SpecialEffectDefinition m_SpecialPersistentEffectDefinition;
 
         public SpecialEffectDefinition specialPersistentEffectDefinition => m_SpecialPersistentEffectDefinition;
+
+        [SerializeField] private GameplayEffectPeriodInhibitionRemovedPolicy m_PeriodicInhibitionPolicy;
+        public GameplayEffectPeriodInhibitionRemovedPolicy periodicInhibitionPolicy => m_PeriodicInhibitionPolicy;
     }
 }

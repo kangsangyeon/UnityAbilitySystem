@@ -397,7 +397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17718805268146a38ba6a2e17c7100b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartEffectDefinitions: []
+  m_StartEffectDefinitions:
+  - {fileID: 11400000, guid: 74ddca1da87df3648993f45818254437, type: 2}
   initialized:
     m_PersistentCalls:
       m_Calls: []

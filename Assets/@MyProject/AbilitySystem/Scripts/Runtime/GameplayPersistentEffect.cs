@@ -26,7 +26,11 @@ namespace AbilitySystem
         /// </summary>
         public float remainingPeriod;
 
-        public GameplayPersistentEffect(GameplayPersistentEffectDefinition _definition, object _source,
+        public bool isInhibited;
+
+        public GameplayPersistentEffect(
+            GameplayPersistentEffectDefinition _definition,
+            object _source,
             GameObject _instigator) :
             base(_definition, _source, _instigator)
         {
@@ -34,6 +38,7 @@ namespace AbilitySystem
                 remainingDuration = duration;
 
             remainingPeriod = definition.period;
+            isInhibited = true;
         }
     }
 }
