@@ -1,0 +1,20 @@
+{
+    "name": "com.sanyoni.abilitysystem.statsystem",
+    "version": "0.0.1",
+    "displayName": "AbilitySystem.StatSystem",
+    "description": "",
+    "unity": "2021.3",
+    "author": {
+        "name": "sanyoni",
+        "email": "sanyoni1997@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kangsangyeon/UnityAbilitySystem?path=Assets/@MyProject/StatSystem"
+    },
+    "gitDependencies": {
+        "com.sanyoni.abilitysystem.core": "https://github.com/kangsangyeon/UnityAbilitySystem?path=Assets/@MyProject/Core",
+        "com.sanyoni.abilitysystem.levelsystem": "https://github.com/kangsangyeon/UnityAbilitySystem?path=Assets/@MyProject/LevelSystem",
+        "com.sanyoni.abilitysystem.savesystem": "https://github.com/kangsangyeon/UnityAbilitySystem?path=Assets/@MyProject/SaveSystem"
+    }
+}
