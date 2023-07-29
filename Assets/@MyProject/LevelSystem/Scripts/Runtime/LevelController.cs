@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace LevelSystem
 {
-    public class LevelController : MonoBehaviour, ILevelable, ISavable
+    public partial class LevelController : MonoBehaviour, ILevelable, ISavable
     {
         [SerializeField] private int m_Level = 1;
         [SerializeField] private int m_CurrentExperience;
