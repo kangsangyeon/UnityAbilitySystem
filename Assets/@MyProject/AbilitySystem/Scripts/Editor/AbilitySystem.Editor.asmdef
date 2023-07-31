@@ -1,10 +1,10 @@
 {
-    "name": "LevelSystem.Editor",
+    "name": "AbilitySystem.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:559718aabe5ee4d4a926145a6da97d89",
         "GUID:caa70017c7d37ac4d870d64a0c9d556b",
-        "GUID:39e146bcf02b9ef4a8f24c73e3efbe1f"
+        "GUID:39e146bcf02b9ef4a8f24c73e3efbe1f",
+        "GUID:7de20ffbbba90034882fdfd909cbec6f"
     ],
     "includePlatforms": [
         "Editor"
