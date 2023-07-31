@@ -26,6 +26,8 @@ namespace Core
             return _outNodes;
         }
 
+#if UNITY_EDITOR
+
         public void AddNode(CodeFunctionNode _node)
         {
             nodes.Add(_node);
@@ -69,5 +71,7 @@ namespace Core
                 EditorUtility.SetDirty(_resultNode);
             }
         }
+
+#endif
     }
 }
