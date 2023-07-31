@@ -35,7 +35,7 @@ namespace AbilitySystem.UI
             {
                 AbilityElement _abilityElement = new AbilityElement()
                 {
-                    name = _ability.definition.name
+                    name = _ability.definition.name 
                 };
                 Label _level = _abilityElement.Q<Label>("ability__level");
                 Label _title = _abilityElement.Q<Label>("ability__title");

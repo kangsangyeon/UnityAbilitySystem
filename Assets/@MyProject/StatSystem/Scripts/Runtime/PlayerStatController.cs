@@ -50,7 +50,11 @@ namespace StatSystem
 
         private void OnLevelableInitialized()
         {
-            Initialize();
+            if (IsInitialized() == false)
+            {
+                Initialize();
+            }
+
             RegisterEvents();
         }
 
