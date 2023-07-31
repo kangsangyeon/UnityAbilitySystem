@@ -1,0 +1,257 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8859917937885247119
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: CriticalHitMultiplier
+  m_EditorClassIdentifier: 
+  m_BaseValue: 200
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-5843763488759407513
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: MagicalAttack
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-5614390722523481027
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Health
+  m_EditorClassIdentifier: 
+  m_BaseValue: 100
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-4045421305796294241
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Mana
+  m_EditorClassIdentifier: 
+  m_BaseValue: 100
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-1265518651094346683
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: MovementSpeed
+  m_EditorClassIdentifier: 
+  m_BaseValue: 100
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-653352435877989533
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Charisma
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-418272207957738891
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: CriticalHitChance
+  m_EditorClassIdentifier: 
+  m_BaseValue: 50
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &-154043760404749887
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Dexterity
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d46e02409834e9290b40d5eac042656, type: 3}
+  m_Name: StatDatabase
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 8575034082606651236}
+  - {fileID: -5843763488759407513}
+  - {fileID: 5661512623093212436}
+  - {fileID: 4834994702703086150}
+  - {fileID: -1265518651094346683}
+  - {fileID: 8262419207272005694}
+  - {fileID: -418272207957738891}
+  - {fileID: -8859917937885247119}
+  attributes:
+  - {fileID: -5614390722523481027}
+  - {fileID: -4045421305796294241}
+  primaryStats:
+  - {fileID: 3188662024008224747}
+  - {fileID: -653352435877989533}
+  - {fileID: 5784444374768814353}
+  - {fileID: 168497959936794153}
+  - {fileID: -154043760404749887}
+--- !u!114 &168497959936794153
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Intelligence
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &3188662024008224747
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Strength
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &4834994702703086150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: MagicalDefense
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &5661512623093212436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: PhysicalDefense
+  m_EditorClassIdentifier: 
+  m_BaseValue: 5
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &5784444374768814353
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: Wisdom
+  m_EditorClassIdentifier: 
+  m_BaseValue: 0
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &8262419207272005694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: AttackSpeed
+  m_EditorClassIdentifier: 
+  m_BaseValue: 100
+  m_Cap: -1
+  m_Formula: {fileID: 0}
+--- !u!114 &8575034082606651236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3ca0f4fb6457cbd9affed78039e81, type: 3}
+  m_Name: PhysicalAttack
+  m_EditorClassIdentifier: 
+  m_BaseValue: 10
+  m_Cap: -1
+  m_Formula: {fileID: 0}

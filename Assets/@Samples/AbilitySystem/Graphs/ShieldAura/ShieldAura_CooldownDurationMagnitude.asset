@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6075142056866983400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49aaea03a0445a88c679db7146d90d6, type: 3}
+  m_Name: Scalar
+  m_EditorClassIdentifier: 
+  position: {x: 255, y: 163}
+  guid: a39908e2f9a57c147921e2169868db0b
+  m_Value: 6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5760a7dd8c34a9ba90d40e8cfb4a352, type: 3}
+  m_Name: ShieldAura_CooldownDurationMagnitude
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 5510486604750633332}
+  nodes:
+  - {fileID: 5510486604750633332}
+  - {fileID: -6075142056866983400}
+--- !u!114 &5510486604750633332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e614c21f2445a58ac5c7fc18477179, type: 3}
+  m_Name: ResultNode
+  m_EditorClassIdentifier: 
+  position: {x: 497, y: 163}
+  guid: 81e31d7ca723d8542b697a10034741c0
+  child: {fileID: -6075142056866983400}
