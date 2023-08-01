@@ -34,6 +34,37 @@ namespace StatSystem.FishNet
             onStartClient_OnClient?.Invoke(_conn);
         }
 
+        [Server]
+        private void Server_OnAttributeCurrentValueChanged(Attribute _attribute)
+        {
+            ObserversRpc_OnAttributeCurrentValueChanged(_attribute.definition.name, _attribute.currentValue);
+        }
+
+        [ObserversRpc(ExcludeServer = true)]
+        private void ObserversRpc_OnAttributeCurrentValueChanged(string _attributeName, int _value)
+        {
+            var _attribute = m_StatController.stats[_attributeName] as Attribute;
+            _attribute.ApplyModifier(new StatModifier()
+            {
+                source = null,
+                magnitude = _value,
+                type = ModifierOperationType.Override
+            });
+        }
+
+        [Server]
+        private void Server_OnPrimaryStatValueChanged(PrimaryStat _primaryStat, int _value)
+        {
+            ObserversRpc_OnPrimaryStatValueChanged(_primaryStat.definition.name, _value);
+        }
+
+        [ObserversRpc(ExcludeServer = true)]
+        private void ObserversRpc_OnPrimaryStatValueChanged(string _primaryStatName, int _value)
+        {
+            var _primaryStat = m_StatController.stats[_primaryStatName] as PrimaryStat;
+            _primaryStat.Add(_value);
+        }
+
         /// <summary>
         /// 새로운 클라이언트가 연결되었을 때, 기존 서버의 내용을 전파하기 위해 호출됩니다.
         /// </summary>
@@ -67,6 +98,18 @@ namespace StatSystem.FishNet
                             new KeyValuePair<string, int>(_pair.Key, (_pair.Value as Attribute).currentValue))
                         .ToDictionary(pair => pair.Key, pair => pair.Value));
             };
+
+            foreach (var _stat in m_StatController.stats.Values)
+            {
+                if (_stat is Attribute _attribute)
+                {
+                    _attribute.currentValueChanged.AddListener(() => Server_OnAttributeCurrentValueChanged(_attribute));
+                }
+                else if (_stat is PrimaryStat _primaryStat)
+                {
+                    _primaryStat.valueAdded.AddListener((_value) => Server_OnPrimaryStatValueChanged(_primaryStat, _value));
+                }
+            }
         }
 
         public override void OnStartClient()
