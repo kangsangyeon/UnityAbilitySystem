@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using SaveSystem;
+using UnityEngine.Events;
 
 [assembly: InternalsVisibleTo("StatSystem.Tests")]
 
@@ -9,6 +10,7 @@ namespace StatSystem
     {
         private int m_BaseValue;
         public override int baseValue => m_BaseValue;
+        public UnityEvent<int> valueAdded = new UnityEvent<int>();
 
         public PrimaryStat(StatDefinition _definition, StatController _controller) : base(_definition, _controller)
         {
@@ -21,16 +23,11 @@ namespace StatSystem
             CalculateValue();
         }
 
-        internal void Add(int _amount)
+        public void Add(int _amount)
         {
             m_BaseValue += _amount;
             CalculateValue();
-        }
-
-        internal void Subtract(int _amount)
-        {
-            m_BaseValue -= _amount;
-            CalculateValue();
+            valueAdded?.Invoke(_amount);
         }
 
         #region Stat System
