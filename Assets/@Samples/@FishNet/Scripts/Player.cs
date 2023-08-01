@@ -4,28 +4,37 @@ namespace Samples.FishNet
 {
     public class Player : NetworkBehaviour
     {
-        [Server]
-        private void Server_AddPlayer()
+        public event System.Action<Player> onStartNetwork;
+        public event System.Action<Player> onStartOwnerClient_OnServer;
+
+        [ServerRpc]
+        private void ServerRpc_OnStartOwnerClient()
         {
-            GameDependencies.playerManager.AddPlayer(base.Owner, this);
+            onStartOwnerClient_OnServer?.Invoke(this);
         }
 
-        [Server]
-        private void Server_RemovePlayer()
+        public override void OnStartNetwork()
         {
+            base.OnStartNetwork();
+            gameObject.name = $"Player_{base.OwnerId}";
+            GameDependencies.playerManager.AddPlayer(base.Owner, this);
+
+            onStartNetwork?.Invoke(this);
+        }
+
+        public override void OnStopNetwork()
+        {
+            base.OnStopNetwork();
             GameDependencies.playerManager.RemovePlayer(base.Owner);
         }
 
-        public override void OnStartServer()
+        public override void OnStartClient()
         {
-            base.OnStartServer();
-            Server_AddPlayer();
-        }
-
-        public override void OnStopServer()
-        {
-            base.OnStopServer();
-            Server_RemovePlayer();
+            base.OnStartClient();
+            if (base.IsOwner)
+            {
+                ServerRpc_OnStartOwnerClient();
+            }
         }
     }
 }

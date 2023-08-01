@@ -12,6 +12,27 @@ namespace Samples.FishNet
         private Dictionary<StatController, UIPanel_PlayerStat> m_PlayerStatUIDict =
             new Dictionary<StatController, UIPanel_PlayerStat>();
 
+        private void InitializePlayerUI(Player _player)
+        {
+            _player.onStartNetwork -= InitializePlayerUI;
+
+            var _ui = GameObject.Instantiate(m_Prefab_UIPanelPlayerStat, m_LayoutParent);
+            var _statController = _player.GetComponent<StatController>();
+            _ui.Initialize();
+            _ui.BindPlayerStatController(_statController);
+
+            m_PlayerStatUIDict.Add(_statController, _ui);
+        }
+
+        private void UninitializePlayerUI(Player _player)
+        {
+            var _statController = _player.GetComponent<StatController>();
+            var _ui = m_PlayerStatUIDict[_statController];
+            m_PlayerStatUIDict.Remove(_statController);
+            _ui.UnbindPlayerStatController();
+            Destroy(_ui.gameObject);
+        }
+
         private void Awake()
         {
             for (int i = m_LayoutParent.childCount - 1; i >= 0; --i)
@@ -20,24 +41,9 @@ namespace Samples.FishNet
             }
 
             GameDependencies.playerManager.onPlayerAdded +=
-                (_conn, _player) =>
-                {
-                    var _ui = GameObject.Instantiate(m_Prefab_UIPanelPlayerStat, m_LayoutParent);
-                    var _statController = _player.GetComponent<StatController>();
-                    _ui.Initialize();
-                    _ui.BindPlayerStatController(_statController);
+                (_conn, _player) => { _player.onStartNetwork += InitializePlayerUI; };
 
-                    m_PlayerStatUIDict.Add(_statController, _ui);
-                };
-
-            GameDependencies.playerManager.onPlayerRemoved += (_conn, _player) =>
-            {
-                var _statController = _player.GetComponent<StatController>();
-                var _ui = m_PlayerStatUIDict[_statController];
-                m_PlayerStatUIDict.Remove(_statController);
-                _ui.UnbindPlayerStatController();
-                Destroy(_ui.gameObject);
-            };
+            GameDependencies.playerManager.onPlayerRemoved += (_conn, _player) => UninitializePlayerUI(_player);
         }
     }
 }

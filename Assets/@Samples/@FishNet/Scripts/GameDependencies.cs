@@ -4,10 +4,21 @@ namespace Samples.FishNet
 {
     public class GameDependencies : MonoBehaviour
     {
-        public static GameDependencies s_Instance;
+        private static GameDependencies s_Instance;
+
+        public static GameDependencies instance
+        {
+            get
+            {
+                if (s_Instance == null)
+                    s_Instance = FindObjectOfType<GameDependencies>();
+
+                return s_Instance;
+            }
+        }
 
         [SerializeField] private PlayerManager m_PlayerManager;
-        public static PlayerManager playerManager => s_Instance.m_PlayerManager;
+        public static PlayerManager playerManager => instance.m_PlayerManager;
 
         private void Awake()
         {

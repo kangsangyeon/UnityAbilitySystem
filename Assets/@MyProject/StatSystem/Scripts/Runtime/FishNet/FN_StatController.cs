@@ -10,28 +10,28 @@ namespace StatSystem.FishNet
     {
         [SerializeField] private StatController m_StatController;
 
-        public event System.Action<NetworkConnection> onStartClient_OnServer;
-        public event System.Action<NetworkConnection> onStartClient_OnClient;
+        public event System.Action<NetworkConnection> onStartOwnerClient_OnServer;
+        public event System.Action<NetworkConnection> onStartOwnerClient_OnClient;
 
         [Client]
         private void Client_OnStartClient(NetworkConnection _conn)
         {
-            onStartClient_OnClient?.Invoke(_conn);
+            onStartOwnerClient_OnClient?.Invoke(_conn);
             ServerRpc_OnStartClient(_conn);
         }
 
         [ServerRpc]
         private void ServerRpc_OnStartClient(NetworkConnection _conn)
         {
-            onStartClient_OnServer?.Invoke(_conn);
-            onStartClient_OnClient?.Invoke(_conn);
+            onStartOwnerClient_OnServer?.Invoke(_conn);
+            onStartOwnerClient_OnClient?.Invoke(_conn);
             ObserversRpc_OnStartClient(_conn);
         }
 
         [ObserversRpc(ExcludeServer = true, ExcludeOwner = true)]
         private void ObserversRpc_OnStartClient(NetworkConnection _conn)
         {
-            onStartClient_OnClient?.Invoke(_conn);
+            onStartOwnerClient_OnClient?.Invoke(_conn);
         }
 
         [Server]
@@ -88,7 +88,7 @@ namespace StatSystem.FishNet
         {
             base.OnStartServer();
 
-            onStartClient_OnServer += (_conn) =>
+            onStartOwnerClient_OnServer += (_conn) =>
             {
                 TargetRpc_PropagateStatValues(
                     _conn,
@@ -116,7 +116,10 @@ namespace StatSystem.FishNet
         {
             base.OnStartClient();
 
-            Client_OnStartClient(base.LocalConnection);
+            if (base.IsOwner)
+            {
+                Client_OnStartClient(base.LocalConnection);
+            }
         }
     }
 }

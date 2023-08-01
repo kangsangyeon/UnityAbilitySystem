@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using StatSystem;
+using TMPro;
 using UnityEngine;
 
 namespace Samples.FishNet
@@ -8,6 +9,7 @@ namespace Samples.FishNet
     {
         [SerializeField] private UIElem_Stat m_Prefab_UIElemStat;
         [SerializeField] private Transform m_LayoutParent;
+        [SerializeField] private TextMeshProUGUI m_UI_Txt_PlayerName;
 
         private StatController m_StatController;
 
@@ -29,6 +31,8 @@ namespace Samples.FishNet
 
             if (m_StatController != null)
                 UnbindPlayerStatController();
+
+            m_UI_Txt_PlayerName.text = _controller.gameObject.name;
 
             foreach (var _stat in _controller.stats.Values)
             {
