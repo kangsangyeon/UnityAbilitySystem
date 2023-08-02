@@ -6,14 +6,22 @@ namespace LevelSystem
 {
     public partial class LevelController
     {
-        /// <summary>
-        /// 레벨과 경험치를 강제로 설정합니다.
-        /// 이 변경으로는 이벤트가 호출되지 않습니다.
-        /// </summary>
-        public void ForceSetLevelAndCurrentExperience(int _level, int _currentExperience)
+        public void ForceSetCurrentExperience(int _currentExperience, bool _invokeEvent = true)
+        {
+            m_CurrentExperience = _currentExperience;
+            if (_invokeEvent)
+            {
+                currentExperienceChanged?.Invoke();
+            }
+        }
+
+        public void ForceSetLevel(int _level, bool _invokeEvent = true)
         {
             m_Level = _level;
-            m_CurrentExperience = _currentExperience;
+            if (_invokeEvent)
+            {
+                levelChanged?.Invoke();
+            }
         }
     }
 }
@@ -24,60 +32,55 @@ namespace LevelSystem.FishNet
     {
         [SerializeField] private LevelController m_LevelController;
 
-        public event System.Action<NetworkConnection> onStartClient_OnServer;
-        public event System.Action<NetworkConnection> onStartClient_OnClient;
-
-        [Client]
-        private void Client_OnStartClient(NetworkConnection _conn)
+        [Server]
+        private void Server_OnCurrentExperienceChanged()
         {
-            onStartClient_OnClient?.Invoke(_conn);
-            ServerRpc_OnStartClient(_conn);
+            ObserversRpc_OnCurrentExperienceChanged(m_LevelController.currentExperience);
         }
 
-        [ServerRpc]
-        private void ServerRpc_OnStartClient(NetworkConnection _conn)
+        [ObserversRpc(ExcludeServer = true)]
+        private void ObserversRpc_OnCurrentExperienceChanged(int _currentExperience)
         {
-            onStartClient_OnServer?.Invoke(_conn);
-            onStartClient_OnClient?.Invoke(_conn);
-            ObserversRpc_OnStartClient(_conn);
-        }
+            // m_LevelController.ForceSetLevel();
+            // m_LevelController.ForceSetCurrentExperience(_currentExperience);
 
-        [ObserversRpc(ExcludeServer = true, ExcludeOwner = true)]
-        private void ObserversRpc_OnStartClient(NetworkConnection _conn)
-        {
-            onStartClient_OnClient?.Invoke(_conn);
+            m_LevelController.currentExperience = _currentExperience;
         }
 
         /// <summary>
         /// 새로운 클라이언트가 연결되었을 때, 기존 서버의 내용을 전파하기 위해 호출됩니다.
         /// </summary>
-        [TargetRpc]
-        private void TargetRpc_PropagateLevelValue(
+        [TargetRpc(ExcludeServer = true)]
+        private void TargetRpc_PropagateLevel(
             NetworkConnection _conn,
             int _level,
             int _currentExperience)
         {
-            m_LevelController.ForceSetLevelAndCurrentExperience(_level, _currentExperience);
+            m_LevelController.ForceSetLevel(_level);
+            m_LevelController.ForceSetCurrentExperience(_currentExperience);
         }
 
         public override void OnStartServer()
         {
             base.OnStartServer();
 
-            onStartClient_OnServer += (_conn) =>
-            {
-                TargetRpc_PropagateLevelValue(
-                    _conn,
-                    m_LevelController.level,
-                    m_LevelController.currentExperience);
-            };
+            m_LevelController.currentExperienceChanged += Server_OnCurrentExperienceChanged;
         }
 
-        public override void OnStartClient()
+        public override void OnStopServer()
         {
-            base.OnStartClient();
+            base.OnStopServer();
 
-            Client_OnStartClient(base.LocalConnection);
+            m_LevelController.currentExperienceChanged -= Server_OnCurrentExperienceChanged;
+        }
+
+        public override void OnSpawnServer(NetworkConnection _conn)
+        {
+            base.OnSpawnServer(_conn);
+            TargetRpc_PropagateLevel(
+                _conn,
+                m_LevelController.level,
+                m_LevelController.currentExperience);
         }
     }
 }

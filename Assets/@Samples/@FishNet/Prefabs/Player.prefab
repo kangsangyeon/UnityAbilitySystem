@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1119937079923954691}
   - component: {fileID: 1119937079923954688}
   - component: {fileID: 1119937079923954719}
+  - component: {fileID: 1836734553942358173}
+  - component: {fileID: 8731013076347874968}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -140,3 +142,34 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 1119937079923954688}
   _networkObjectCache: {fileID: 1119937079923954688}
+--- !u!114 &1836734553942358173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119937079923954689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08e8370d72747ba9651d9d33ab67ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Level: 1
+  m_CurrentExperience: 0
+  m_RequiredExperienceFormula: {fileID: 11400000, guid: a71b1aabe959675459827c79357fa6e6, type: 2}
+--- !u!114 &8731013076347874968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119937079923954689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 871593fa8ae61044994f4bb2d3e1f512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1119937079923954688}
+  _networkObjectCache: {fileID: 0}
+  m_LevelController: {fileID: 1836734553942358173}

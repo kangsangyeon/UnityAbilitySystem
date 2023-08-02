@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/@Samples/@FishNet/Scenes/LevelSystemFNSample.unity
+    guid: 64ae7c61a8cda1b448cb8fbd6cb3efca
+  - enabled: 1
+    path: Assets/@Samples/@FishNet/Scenes/StatSystemFNSample.unity
+    guid: b952b215bf8280445bdf69aeed5135b2
   m_configObjects: {}
