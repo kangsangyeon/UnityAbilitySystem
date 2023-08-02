@@ -35,7 +35,7 @@ namespace LevelSystem
             }
         }
 
-        public int requiredExperience => Mathf.RoundToInt(m_RequiredExperienceFormula.rootNode.value);
+        public int requiredExperience => Mathf.RoundToInt(m_RequiredExperienceFormula.CalculateValue(gameObject));
         public bool isInitialized => m_IsInitialized;
         public event Action levelChanged;
         public event Action currentExperienceChanged;
@@ -48,8 +48,8 @@ namespace LevelSystem
             while (m_CurrentExperience >= requiredExperience)
             {
                 m_CurrentExperience -= requiredExperience;
-                currentExperienceChanged?.Invoke();
                 ++m_Level;
+                currentExperienceChanged?.Invoke();
                 levelChanged?.Invoke();
             }
         }

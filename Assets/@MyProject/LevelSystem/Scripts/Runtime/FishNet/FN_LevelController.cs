@@ -6,21 +6,17 @@ namespace LevelSystem
 {
     public partial class LevelController
     {
-        public void ForceSetCurrentExperience(int _currentExperience, bool _invokeEvent = true)
+        public void ForceSetLevel(int _level, int _currentExperience, bool _invokeEvent = true)
         {
+            int _levelOrigin = m_Level;
+            m_Level = _level;
             m_CurrentExperience = _currentExperience;
+
             if (_invokeEvent)
             {
                 currentExperienceChanged?.Invoke();
-            }
-        }
-
-        public void ForceSetLevel(int _level, bool _invokeEvent = true)
-        {
-            m_Level = _level;
-            if (_invokeEvent)
-            {
-                levelChanged?.Invoke();
+                for (int i = 0; i < _level - _levelOrigin; ++i)
+                    levelChanged?.Invoke();
             }
         }
     }
@@ -35,16 +31,13 @@ namespace LevelSystem.FishNet
         [Server]
         private void Server_OnCurrentExperienceChanged()
         {
-            ObserversRpc_OnCurrentExperienceChanged(m_LevelController.currentExperience);
+            ObserversRpc_OnLevelAndCurrentExperienceChanged(m_LevelController.level, m_LevelController.currentExperience);
         }
 
         [ObserversRpc(ExcludeServer = true)]
-        private void ObserversRpc_OnCurrentExperienceChanged(int _currentExperience)
+        private void ObserversRpc_OnLevelAndCurrentExperienceChanged(int _level, int _currentExperience)
         {
-            // m_LevelController.ForceSetLevel();
-            // m_LevelController.ForceSetCurrentExperience(_currentExperience);
-
-            m_LevelController.currentExperience = _currentExperience;
+            m_LevelController.ForceSetLevel(_level, _currentExperience);
         }
 
         /// <summary>
@@ -56,8 +49,7 @@ namespace LevelSystem.FishNet
             int _level,
             int _currentExperience)
         {
-            m_LevelController.ForceSetLevel(_level);
-            m_LevelController.ForceSetCurrentExperience(_currentExperience);
+            m_LevelController.ForceSetLevel(_level, _currentExperience);
         }
 
         public override void OnStartServer()
