@@ -1,38 +1,49 @@
 using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using FishNet.Connection;
 using FishNet.Object;
 using UnityEngine;
+
+namespace StatSystem
+{
+    public partial class StatController
+    {
+        private static FieldInfo s_AttributeCurrentValueField =
+            typeof(Attribute).GetField("m_CurrentValue",
+                BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+        private static FieldInfo s_PrimaryStatBaseValueField =
+            typeof(PrimaryStat).GetField("m_BaseValue",
+                BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+        public void ForceSetAttribute(Attribute _attribute, int _value, bool _invokeEvent = true)
+        {
+            s_AttributeCurrentValueField.SetValue(_attribute, _value);
+
+            if (_invokeEvent)
+            {
+                _attribute.currentValueChanged.Invoke();
+            }
+        }
+
+        public void ForceSetPrimaryStatBaseValue(PrimaryStat _primaryStat, int _baseValue, bool _invokeEvent = true)
+        {
+            s_PrimaryStatBaseValueField.SetValue(_primaryStat, _baseValue);
+            _primaryStat.CalculateValue();
+
+            if (_invokeEvent)
+            {
+                _primaryStat.valueChanged.Invoke();
+            }
+        }
+    }
+}
 
 namespace StatSystem.FishNet
 {
     public class FN_StatController : NetworkBehaviour
     {
         [SerializeField] private StatController m_StatController;
-
-        public event System.Action<NetworkConnection> onStartOwnerClient_OnServer;
-        public event System.Action<NetworkConnection> onStartOwnerClient_OnClient;
-
-        [Client]
-        private void Client_OnStartClient(NetworkConnection _conn)
-        {
-            onStartOwnerClient_OnClient?.Invoke(_conn);
-            ServerRpc_OnStartClient(_conn);
-        }
-
-        [ServerRpc]
-        private void ServerRpc_OnStartClient(NetworkConnection _conn)
-        {
-            onStartOwnerClient_OnServer?.Invoke(_conn);
-            onStartOwnerClient_OnClient?.Invoke(_conn);
-            ObserversRpc_OnStartClient(_conn);
-        }
-
-        [ObserversRpc(ExcludeServer = true, ExcludeOwner = true)]
-        private void ObserversRpc_OnStartClient(NetworkConnection _conn)
-        {
-            onStartOwnerClient_OnClient?.Invoke(_conn);
-        }
 
         [Server]
         private void Server_OnAttributeCurrentValueChanged(Attribute _attribute)
@@ -44,12 +55,7 @@ namespace StatSystem.FishNet
         private void ObserversRpc_OnAttributeCurrentValueChanged(string _attributeName, int _value)
         {
             var _attribute = m_StatController.stats[_attributeName] as Attribute;
-            _attribute.ApplyModifier(new StatModifier()
-            {
-                source = null,
-                magnitude = _value,
-                type = ModifierOperationType.Override
-            });
+            m_StatController.ForceSetAttribute(_attribute, _value);
         }
 
         [Server]
@@ -68,36 +74,27 @@ namespace StatSystem.FishNet
         /// <summary>
         /// 새로운 클라이언트가 연결되었을 때, 기존 서버의 내용을 전파하기 위해 호출됩니다.
         /// </summary>
-        [TargetRpc]
+        [TargetRpc(ExcludeServer = true)]
         private void TargetRpc_PropagateStatValues(
             NetworkConnection _conn,
-            Dictionary<string, int> _attributeValues)
+            Dictionary<string, int> _pairs)
         {
-            foreach (var _attribute in _attributeValues)
+            foreach (var _pair in _pairs)
             {
-                (m_StatController.stats[_attribute.Key] as Attribute).AddModifier(new StatModifier()
+                if (m_StatController.stats[_pair.Key] is Attribute _attribute)
                 {
-                    source = this,
-                    magnitude = _attribute.Value,
-                    type = ModifierOperationType.Override
-                });
+                    m_StatController.ForceSetAttribute(_attribute, _pair.Value);
+                }
+                else if (m_StatController.stats[_pair.Key] is PrimaryStat _primaryStat)
+                {
+                    m_StatController.ForceSetPrimaryStatBaseValue(_primaryStat, _pair.Value);
+                }
             }
         }
 
         public override void OnStartServer()
         {
             base.OnStartServer();
-
-            onStartOwnerClient_OnServer += (_conn) =>
-            {
-                TargetRpc_PropagateStatValues(
-                    _conn,
-                    m_StatController.stats
-                        .Where(_pair => _pair.Value is Attribute)
-                        .Select(_pair =>
-                            new KeyValuePair<string, int>(_pair.Key, (_pair.Value as Attribute).currentValue))
-                        .ToDictionary(pair => pair.Key, pair => pair.Value));
-            };
 
             foreach (var _stat in m_StatController.stats.Values)
             {
@@ -107,19 +104,26 @@ namespace StatSystem.FishNet
                 }
                 else if (_stat is PrimaryStat _primaryStat)
                 {
-                    _primaryStat.valueAdded.AddListener((_value) => Server_OnPrimaryStatValueChanged(_primaryStat, _value));
+                    _primaryStat.valueAdded.AddListener((_value) =>
+                        Server_OnPrimaryStatValueChanged(_primaryStat, _value));
                 }
             }
         }
 
-        public override void OnStartClient()
+        public override void OnSpawnServer(NetworkConnection _conn)
         {
-            base.OnStartClient();
+            base.OnSpawnServer(_conn);
 
-            if (base.IsOwner)
+            Dictionary<string, int> _param = new Dictionary<string, int>();
+            foreach (var _stat in m_StatController.stats.Values)
             {
-                Client_OnStartClient(base.LocalConnection);
+                if (_stat is Attribute _attribute)
+                    _param.Add(_stat.definition.name, _attribute.currentValue);
+                else if (_stat is PrimaryStat _primaryStat)
+                    _param.Add(_stat.definition.name, _primaryStat.baseValue);
             }
+
+            TargetRpc_PropagateStatValues(_conn, _param);
         }
     }
 }

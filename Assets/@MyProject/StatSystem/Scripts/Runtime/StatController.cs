@@ -9,7 +9,7 @@ using UnityEngine.Events;
 namespace StatSystem
 {
     [RequireComponent(typeof(TagController))]
-    public class StatController : MonoBehaviour, ISavable
+    public partial class StatController : MonoBehaviour, ISavable
     {
         [SerializeField] private StatDatabase m_StatDatabase;
         protected Dictionary<string, Stat> m_Stats = new Dictionary<string, Stat>(StringComparer.OrdinalIgnoreCase);
