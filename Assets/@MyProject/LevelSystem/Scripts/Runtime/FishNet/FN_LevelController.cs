@@ -2,6 +2,8 @@ using FishNet.Connection;
 using FishNet.Object;
 using UnityEngine;
 
+#if FISHNET
+
 namespace LevelSystem
 {
     public partial class LevelController
@@ -22,16 +24,23 @@ namespace LevelSystem
     }
 }
 
+#endif
+
 namespace LevelSystem.FishNet
 {
-    public class FN_LevelController : NetworkBehaviour
+    public class FN_LevelController :
+#if !FISHNET
+        MonoBehaviour {}
+#else
+        NetworkBehaviour
     {
         [SerializeField] private LevelController m_LevelController;
 
         [Server]
         private void Server_OnCurrentExperienceChanged()
         {
-            ObserversRpc_OnLevelAndCurrentExperienceChanged(m_LevelController.level, m_LevelController.currentExperience);
+            ObserversRpc_OnLevelAndCurrentExperienceChanged(m_LevelController.level,
+                m_LevelController.currentExperience);
         }
 
         [ObserversRpc(ExcludeServer = true)]
@@ -75,4 +84,5 @@ namespace LevelSystem.FishNet
                 m_LevelController.currentExperience);
         }
     }
+#endif
 }

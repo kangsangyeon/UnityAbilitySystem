@@ -4,6 +4,8 @@ using FishNet.Connection;
 using FishNet.Object;
 using UnityEngine;
 
+#if FISHNET
+
 namespace StatSystem
 {
     public partial class StatController
@@ -39,9 +41,15 @@ namespace StatSystem
     }
 }
 
+#endif
+
 namespace StatSystem.FishNet
 {
-    public class FN_StatController : NetworkBehaviour
+    public class FN_StatController :
+#if !FISHNET
+        MonoBehaviour {}
+#else
+        NetworkBehaviour
     {
         [SerializeField] private StatController m_StatController;
 
@@ -126,4 +134,6 @@ namespace StatSystem.FishNet
             TargetRpc_PropagateStatValues(_conn, _param);
         }
     }
+
+#endif
 }
