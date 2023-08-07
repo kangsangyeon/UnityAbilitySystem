@@ -1067,10 +1067,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960a2a2ac46c4b6ca89974db5306e9e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SaveData: {fileID: 11400000, guid: f222a8828e9c123459034308d8a80d68, type: 2}
-  m_SaveDataChannel: {fileID: 11400000, guid: 72b8daefadbda12488033abb6242c5a8, type: 2}
-  m_LoadDataChannel: {fileID: 11400000, guid: 9f62d9a593ca96c4394fee7bb4988686, type: 2}
-  m_Id: 822dd3e7-25b7-4441-8d8b-6c1e0dd0c27e
+  m_TargetSaveData: {fileID: 11400000, guid: f222a8828e9c123459034308d8a80d68, type: 2}
+  m_Key: 
 --- !u!114 &958596325
 MonoBehaviour:
   m_ObjectHideFlags: 0
