@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1119937079923954716}
   - component: {fileID: 1119937079923954717}
-  - component: {fileID: 2827446755713975190}
-  - component: {fileID: 1119937079923954691}
+  - component: {fileID: 2268700048187167733}
+  - component: {fileID: 4712520115259039348}
   - component: {fileID: 1119937079923954688}
   - component: {fileID: 1119937079923954719}
   - component: {fileID: 1836734553942358173}
@@ -56,7 +56,7 @@ MonoBehaviour:
   tagRemoved:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2827446755713975190
+--- !u!114 &2268700048187167733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119937079923954689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 161beb0baf81a504d960e3f8b7087593, type: 3}
+  m_Script: {fileID: 11500000, guid: 5523d35ebc6d45dfa87625e677e0dc4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_StatDatabase: {fileID: 11400000, guid: 695e0e5479e8db84db8e552ad2b76fa0, type: 2}
@@ -75,7 +75,7 @@ MonoBehaviour:
   willUninitialize:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1119937079923954691
+--- !u!114 &4712520115259039348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,13 +84,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119937079923954689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 632d3772475a99d4e8afa29c9ca8f24b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b9edbe5b2f33f74793cbb2073c4f5fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
+  _componentIndexCache: 255
   _addedNetworkObject: {fileID: 1119937079923954688}
-  _networkObjectCache: {fileID: 1119937079923954688}
-  m_StatController: {fileID: 2827446755713975190}
+  _networkObjectCache: {fileID: 0}
+  m_StatController: {fileID: 2268700048187167733}
 --- !u!114 &1119937079923954688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,8 +107,9 @@ MonoBehaviour:
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
-  - {fileID: 1119937079923954691}
+  - {fileID: 0}
   - {fileID: 1119937079923954719}
+  - {fileID: 8731013076347874968}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871593fa8ae61044994f4bb2d3e1f512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 1119937079923954688}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1119937079923954688}
   m_LevelController: {fileID: 1836734553942358173}

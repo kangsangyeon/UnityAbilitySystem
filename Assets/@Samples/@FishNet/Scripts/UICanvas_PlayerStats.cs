@@ -17,7 +17,7 @@ namespace Samples.FishNet
             _player.onStartNetwork -= InitializePlayerUI;
 
             var _ui = GameObject.Instantiate(m_Prefab_UIPanelPlayerStat, m_LayoutParent);
-            var _statController = _player.GetComponent<StatController>();
+            var _statController = _player.GetComponent<PlayerStatController>();
             _ui.Initialize();
             _ui.BindPlayerStatController(_statController);
 
@@ -26,7 +26,7 @@ namespace Samples.FishNet
 
         private void UninitializePlayerUI(Player _player)
         {
-            var _statController = _player.GetComponent<StatController>();
+            var _statController = _player.GetComponent<PlayerStatController>();
             var _ui = m_PlayerStatUIDict[_statController];
             m_PlayerStatUIDict.Remove(_statController);
             _ui.UnbindPlayerStatController();

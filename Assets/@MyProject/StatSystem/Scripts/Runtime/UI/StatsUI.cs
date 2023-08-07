@@ -1,4 +1,3 @@
-using System;
 using LevelSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -50,10 +49,11 @@ namespace StatSystem.UI
                 incrementButton.SetEnabled(m_Controller.statPoints > 0 && stat.baseValue != stat.definition.cap);
                 incrementButton.clicked += () =>
                 {
-                    (stat as PrimaryStat).Add(1);
-                    label.text = stat.value.ToString();
-                    incrementButton.SetEnabled(stat.baseValue != stat.definition.cap);
-                    m_Controller.statPoints--;
+                    if (m_Controller.TryInvest(stat as PrimaryStat, 1))
+                    {
+                        label.text = stat.value.ToString();
+                        incrementButton.SetEnabled(stat.baseValue != stat.definition.cap);
+                    }
                 };
             }
 

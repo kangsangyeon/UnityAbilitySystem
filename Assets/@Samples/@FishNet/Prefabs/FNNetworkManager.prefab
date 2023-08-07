@@ -244,7 +244,7 @@ MonoBehaviour:
   _port: 7770
   _maximumClients: 4095
   _clientAddress: localhost
-  _timeout: 15
+  _timeout: 0
 --- !u!114 &4985368996260721022
 MonoBehaviour:
   m_ObjectHideFlags: 0

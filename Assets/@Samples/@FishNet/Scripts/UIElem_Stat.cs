@@ -1,4 +1,6 @@
+using FishNet;
 using StatSystem;
+using StatSystem.FishNet;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,36 +14,69 @@ namespace Samples.FishNet
         [SerializeField] private Button[] m_UI_Buttons;
 
         private Stat m_Stat;
+        private FN_PlayerStatController m_StatController;
 
-        public void OnClickAdd(int _value)
+        public void Initialize(PlayerStatController _statController, Stat _stat)
         {
-            if (m_Stat is Attribute _attribute)
+            m_StatController = _statController.GetComponent<FN_PlayerStatController>();
+
+            BindStat(_stat);
+
+            if (_stat is Attribute)
             {
-                _attribute.ApplyModifier(new StatModifier()
-                {
-                    source = this,
-                    magnitude = _value,
-                    type = ModifierOperationType.Additive
-                });
+                // attribute는 서버에서만 조작 가능합니다.
+                ShowButtons(InstanceFinder.IsServer);
             }
-            else if (m_Stat is PrimaryStat _primaryStat)
+            else if (_stat is PrimaryStat)
             {
-                _primaryStat.Add(_value);
-            }
-            else
-            {
-                Debug.LogWarning("attribute와 primary stat만 조작할 수 있습니다.");
+                // primary stat은 소유자 클라이언트만 조작 가능합니다.
+                ShowButtons(m_StatController.Owner.IsLocalClient);
             }
         }
 
-        public void BindStat(Stat _stat)
+        public void Uninitialize()
+        {
+            UnbindStat();
+        }
+
+        public void OnClickAdd(int _value)
+        {
+            if (InstanceFinder.IsServer)
+            {
+                // attribute는 서버에서만 조작 가능합니다. 서버에서 변경된 값을 클라이언트에게 전파합니다.
+                if (m_Stat is Attribute _attribute)
+                {
+                    _attribute.ApplyModifier(new StatModifier()
+                    {
+                        source = this,
+                        magnitude = _value,
+                        type = ModifierOperationType.Additive
+                    });
+                }
+            }
+
+            if (m_StatController.IsOwner)
+            {
+                // primary stat에 stat point를 투자하는 것은 이 player의 소유자만이 할 수 있습니다.
+                if (m_Stat is PrimaryStat _primaryStat)
+                {
+                    var _success = m_StatController.statController.TryInvest(_primaryStat, _value);
+                    if (_success == false)
+                    {
+                        Debug.LogWarning("stat points 투자에 실패했습니다.");
+                    }
+                }
+            }
+        }
+
+        private void BindStat(Stat _stat)
         {
             if (m_Stat == _stat)
                 return;
 
             if (m_Stat != null)
             {
-                UnbindStat(m_Stat);
+                UnbindStat();
             }
 
             if (_stat != null)
@@ -67,14 +102,9 @@ namespace Samples.FishNet
             m_Stat = _stat;
         }
 
-        public void UnbindStat()
+        private void UnbindStat()
         {
-            UnbindStat(m_Stat);
-        }
-
-        private void UnbindStat(Stat _stat)
-        {
-            _stat.valueChanged.RemoveListener(OnStatValueChanged);
+            m_Stat.valueChanged.RemoveListener(OnStatValueChanged);
         }
 
         private void OnStatValueChanged()
@@ -87,6 +117,12 @@ namespace Samples.FishNet
             {
                 m_UI_Txt_CurrentValue.text = m_Stat.value.ToString();
             }
+        }
+
+        private void ShowButtons(bool _show)
+        {
+            foreach (var _button in m_UI_Buttons)
+                _button.gameObject.SetActive(_show);
         }
     }
 }

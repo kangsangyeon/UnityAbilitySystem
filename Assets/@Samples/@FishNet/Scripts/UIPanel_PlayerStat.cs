@@ -10,8 +10,9 @@ namespace Samples.FishNet
         [SerializeField] private UIElem_Stat m_Prefab_UIElemStat;
         [SerializeField] private Transform m_LayoutParent;
         [SerializeField] private TextMeshProUGUI m_UI_Txt_PlayerName;
+        [SerializeField] private TextMeshProUGUI m_UI_Txt_StatPoints;
 
-        private StatController m_StatController;
+        private PlayerStatController m_StatController;
 
         private Dictionary<string, UIElem_Stat> m_UIElemStatDict =
             new Dictionary<string, UIElem_Stat>();
@@ -24,7 +25,7 @@ namespace Samples.FishNet
             }
         }
 
-        public void BindPlayerStatController(StatController _controller)
+        public void BindPlayerStatController(PlayerStatController _controller)
         {
             if (m_StatController == _controller)
                 return;
@@ -34,10 +35,13 @@ namespace Samples.FishNet
 
             m_UI_Txt_PlayerName.text = _controller.gameObject.name;
 
+            m_UI_Txt_StatPoints.text = _controller.statPoints.ToString();
+            _controller.statPointsChanged += () => { m_UI_Txt_StatPoints.text = _controller.statPoints.ToString(); };
+
             foreach (var _stat in _controller.stats.Values)
             {
                 var _elem = GameObject.Instantiate(m_Prefab_UIElemStat, m_LayoutParent);
-                _elem.BindStat(_stat);
+                _elem.Initialize(_controller, _stat);
 
                 m_UIElemStatDict.Add(_stat.definition.name, _elem);
             }
@@ -50,7 +54,7 @@ namespace Samples.FishNet
             foreach (var _stat in m_StatController.stats.Values)
             {
                 var _elem = m_UIElemStatDict[_stat.definition.name];
-                _elem.UnbindStat();
+                _elem.Uninitialize();
                 Destroy(_elem.gameObject);
             }
 

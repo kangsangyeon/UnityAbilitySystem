@@ -20,6 +20,9 @@ namespace StatSystem
 
         public void ForceSetAttribute(Attribute _attribute, int _value, bool _invokeEvent = true)
         {
+            if (_attribute.currentValue == _value)
+                return;
+
             s_AttributeCurrentValueField.SetValue(_attribute, _value);
 
             if (_invokeEvent)
@@ -30,6 +33,9 @@ namespace StatSystem
 
         public void ForceSetPrimaryStatBaseValue(PrimaryStat _primaryStat, int _baseValue, bool _invokeEvent = true)
         {
+            if (_primaryStat.baseValue == _baseValue)
+                return;
+
             s_PrimaryStatBaseValueField.SetValue(_primaryStat, _baseValue);
             _primaryStat.CalculateValue();
 
@@ -51,7 +57,8 @@ namespace StatSystem.FishNet
 #else
         NetworkBehaviour
     {
-        [SerializeField] private StatController m_StatController;
+        [SerializeField] protected StatController m_StatController;
+        public StatController statController => m_StatController;
 
         [Server]
         private void Server_OnAttributeCurrentValueChanged(Attribute _attribute)
@@ -67,16 +74,16 @@ namespace StatSystem.FishNet
         }
 
         [Server]
-        private void Server_OnPrimaryStatValueChanged(PrimaryStat _primaryStat, int _value)
+        private void Server_OnPrimaryStatBaseValueAdded(PrimaryStat _primaryStat, int _add)
         {
-            ObserversRpc_OnPrimaryStatValueChanged(_primaryStat.definition.name, _value);
+            ObserversRpc_OnPrimaryStatBaseValueAdded(_primaryStat.definition.name, _add);
         }
 
         [ObserversRpc(ExcludeServer = true)]
-        private void ObserversRpc_OnPrimaryStatValueChanged(string _primaryStatName, int _value)
+        private void ObserversRpc_OnPrimaryStatBaseValueAdded(string _primaryStatName, int _add)
         {
             var _primaryStat = m_StatController.stats[_primaryStatName] as PrimaryStat;
-            _primaryStat.Add(_value);
+            m_StatController.ForceSetPrimaryStatBaseValue(_primaryStat, _primaryStat.baseValue + _add);
         }
 
         /// <summary>
@@ -112,8 +119,8 @@ namespace StatSystem.FishNet
                 }
                 else if (_stat is PrimaryStat _primaryStat)
                 {
-                    _primaryStat.valueAdded.AddListener((_value) =>
-                        Server_OnPrimaryStatValueChanged(_primaryStat, _value));
+                    _primaryStat.onBaseValueAdded_OnServer.AddListener((_value) =>
+                        Server_OnPrimaryStatBaseValueAdded(_primaryStat, _value));
                 }
             }
         }
