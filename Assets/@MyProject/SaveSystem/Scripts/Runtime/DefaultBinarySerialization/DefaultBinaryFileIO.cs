@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SaveSystem
 {
-    public class FileManager
+    public class DefaultBinaryFileIO
     {
         public static void SaveToBinaryFile(string _path, Dictionary<string, object> _data)
         {
