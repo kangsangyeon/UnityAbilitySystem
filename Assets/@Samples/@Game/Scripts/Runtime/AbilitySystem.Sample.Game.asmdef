@@ -1,0 +1,20 @@
+{
+    "name": "AbilitySystem.Sample.Game",
+    "rootNamespace": "",
+    "references": [
+        "GUID:caa70017c7d37ac4d870d64a0c9d556b",
+        "GUID:9f6d3ac1c4cf0a14b88a1978749adecf",
+        "GUID:559718aabe5ee4d4a926145a6da97d89",
+        "GUID:7a0e9ffa04f0c4243aa7d5f34a690739",
+        "GUID:7de20ffbbba90034882fdfd909cbec6f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

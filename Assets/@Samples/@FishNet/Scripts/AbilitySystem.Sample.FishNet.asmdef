@@ -1,0 +1,19 @@
+{
+    "name": "AbilitySystem.Sample.FishNet",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9f6d3ac1c4cf0a14b88a1978749adecf",
+        "GUID:559718aabe5ee4d4a926145a6da97d89",
+        "GUID:7c88a4a7926ee5145ad2dfa06f454c67",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
