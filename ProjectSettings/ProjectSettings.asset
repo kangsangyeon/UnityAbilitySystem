@@ -704,7 +704,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Standalone: FISHNET;FISHNET_V3;FISHNET_PRO
+    Standalone: FISHNET;FISHNET_V3;FISHNET_PRO;ABILITY_SYSTEM_ENABLE_BAYAT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
