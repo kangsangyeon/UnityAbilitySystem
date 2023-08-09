@@ -7,7 +7,7 @@ namespace SaveSystem
     [DefaultExecutionOrder(1)]
     public class SaveManager : MonoBehaviour
     {
-        [SerializeField] private SaveData m_SaveData;
+        [SerializeField] private SaveDataBase m_SaveData;
 
         private void Awake()
         {

@@ -130,6 +130,10 @@ namespace StatSystem
         {
             public int statPoints;
 
+            public PlayerStatControllerData()
+            {
+            }
+
             public PlayerStatControllerData(StatControllerData _statControllerData)
             {
                 stats = _statControllerData.stats;

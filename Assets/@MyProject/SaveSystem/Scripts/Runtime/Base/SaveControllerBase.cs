@@ -4,25 +4,18 @@ using UnityEngine;
 
 namespace SaveSystem
 {
-    public class SaveController : MonoBehaviour
+    public abstract class SaveControllerBase : MonoBehaviour
     {
-        [SerializeField] private SaveData m_SaveData;
-        [SerializeField] private SaveDataChannel m_SaveDataChannel;
-        [SerializeField] private LoadDataChannel m_LoadDataChannel;
-        [HideInInspector, SerializeField] private string m_Id;
-
-        private void Reset()
-        {
-            m_Id = Guid.NewGuid().ToString();
-        }
+        public abstract string key { get; }
+        [SerializeField] private SaveDataBase m_TargetSaveData;
 
         private void OnEnable()
         {
-            m_SaveDataChannel.save += OnSaveData;
-            m_LoadDataChannel.load += OnLoadData;
+            m_TargetSaveData.onSave += OnSaveData;
+            m_TargetSaveData.onLoad += OnLoadData;
         }
 
-        private void OnSaveData()
+        private void OnSaveData(SaveDataBase _saveData)
         {
             Dictionary<string, object> _data = new Dictionary<string, object>();
             foreach (ISavable _savable in GetComponents<ISavable>())
@@ -30,12 +23,12 @@ namespace SaveSystem
                 _data[_savable.GetType().ToString()] = _savable.data;
             }
 
-            m_SaveData.Save(m_Id, _data);
+            _saveData.SaveValue(key, _data);
         }
 
-        private void OnLoadData()
+        private void OnLoadData(SaveDataBase _saveData)
         {
-            m_SaveData.Load(m_Id, out object _data);
+            _saveData.LoadValue(key, out object _data);
             Dictionary<string, object> _dictionary = _data as Dictionary<string, object>;
             foreach (ISavable _savable in GetComponents<ISavable>())
             {

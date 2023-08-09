@@ -1,3 +1,16 @@
 {
-	"name": "SaveSystem"
+    "name": "SaveSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:59dc22b37e732704a83f1f0eb09c1028"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
