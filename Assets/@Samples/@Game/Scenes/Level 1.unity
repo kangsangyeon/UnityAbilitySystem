@@ -1055,20 +1055,6 @@ MonoBehaviour:
   abilityPointsChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &958596322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958596309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960a2a2ac46c4b6ca89974db5306e9e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TargetSaveData: {fileID: 11400000, guid: 042f706821019104d830154d04ede6c5, type: 2}
-  m_Key: cfe00e58-0685-4bf5-8054-fd60e981da22
 --- !u!114 &958596325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,6 +1082,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &958596329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958596309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223ce5cf20ad31b42b51d34d6b2898cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetSaveData: {fileID: 11400000, guid: 042f706821019104d830154d04ede6c5, type: 2}
+  m_Key: 132f3dc6-a106-4c43-843f-c66dfbac640e
 --- !u!1001 &1190254548
 PrefabInstance:
   m_ObjectHideFlags: 0

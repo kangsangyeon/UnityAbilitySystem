@@ -4,15 +4,10 @@ using UnityEngine;
 
 namespace SaveSystem
 {
-    public class SaveController : MonoBehaviour
+    public abstract class SaveControllerBase : MonoBehaviour
     {
+        public abstract string key { get; }
         [SerializeField] private SaveDataBase m_TargetSaveData;
-        [HideInInspector, SerializeField] private string m_Key;
-
-        private void Reset()
-        {
-            m_Key = Guid.NewGuid().ToString();
-        }
 
         private void OnEnable()
         {
@@ -28,12 +23,12 @@ namespace SaveSystem
                 _data[_savable.GetType().ToString()] = _savable.data;
             }
 
-            _saveData.SaveValue(m_Key, _data);
+            _saveData.SaveValue(key, _data);
         }
 
         private void OnLoadData(SaveDataBase _saveData)
         {
-            _saveData.LoadValue(m_Key, out object _data);
+            _saveData.LoadValue(key, out object _data);
             Dictionary<string, object> _dictionary = _data as Dictionary<string, object>;
             foreach (ISavable _savable in GetComponents<ISavable>())
             {
