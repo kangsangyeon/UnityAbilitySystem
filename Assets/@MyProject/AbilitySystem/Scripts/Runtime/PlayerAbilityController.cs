@@ -77,6 +77,10 @@ namespace AbilitySystem
         {
             public int abilityPoints;
 
+            public PlayerAbilityControllerData()
+            {
+            }
+
             public PlayerAbilityControllerData(AbilityControllerData _data)
             {
                 this.abilities = _data.abilities;
