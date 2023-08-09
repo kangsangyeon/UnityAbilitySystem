@@ -105,15 +105,15 @@ namespace SaveSystem.Bayat.BinarySerialization
 
         #endregion
 
-        private MemoryStream Serialize(object _data)
+        private MemoryStream Serialize(in object _data)
         {
             IFormatter _formatter = new BinaryFormatter();
             MemoryStream _stream = new MemoryStream();
-            _formatter.Serialize(_stream, m_Data);
+            _formatter.Serialize(_stream, _data);
             return _stream;
         }
 
-        private T Deserialize<T>(byte[] _bytes)
+        private T Deserialize<T>(in byte[] _bytes)
             where T : class
         {
             IFormatter _formatter = new BinaryFormatter();
