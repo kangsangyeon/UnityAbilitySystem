@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03fd0e0a5c9a4894e9678777b9434155, type: 3}
-  m_Name: BayatSaveData
+  m_Script: {fileID: 11500000, guid: 2357e6e1ee3b66245914face2c4ef184, type: 3}
+  m_Name: BayatBinarySaveData
   m_EditorClassIdentifier: 
   m_Preset: {fileID: 11400000, guid: c14f73c11c9e6a44ba35d19d1d3af965, type: 2}
   m_Identifier: MyGameSave_Bayat
