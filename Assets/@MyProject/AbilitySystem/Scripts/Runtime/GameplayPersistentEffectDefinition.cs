@@ -78,16 +78,40 @@ namespace AbilitySystem
 
         public ReadOnlyCollection<string> grantedApplicationImmunityTags => m_GrantedApplicationImmunityTags.AsReadOnly();
 
+        /// <summary>
+        /// 대상 entity에게 추가된 상태에서 적용되기 위해 대상이 소유하고 있어야 할 필요가 있는 tag 목록입니다.
+        /// 이 조건을 만족하지 않더라도 대상 entity에게 추가될 수 있으며, 단지 entity에게 적용되지 않습니다.
+        /// 만약 대상 entity의 tag controller가 변해 불만족하다 만족하는 상황으로 변한다면 적용됩니다.
+        /// 반대로 만족하다 불만족하게 되었다면 적용 해제됩니다.
+        /// </summary>
         [SerializeField] private List<string> m_UninhibitedMustBePresentTags;
+
         public ReadOnlyCollection<string> uninhibitedMustBePresentTags => m_UninhibitedMustBePresentTags.AsReadOnly();
 
+        /// <summary>
+        /// 대상 entity에게 추가된 상태에서 적용되기 위해 대상이 소유하고 있지 말아야 할 필요가 있는 tag 목록입니다.
+        /// 이 조건을 만족하지 않더라도 대상 entity에게 추가될 수 있으며, 단지 entity에게 적용되지 않습니다.
+        /// 만약 대상 entity의 tag controller가 변해 불만족하다 만족하는 상황으로 변한다면 적용됩니다.
+        /// 반대로 만족하다 불만족하게 되었다면 적용 해제됩니다.
+        /// </summary>
         [SerializeField] private List<string> m_UninhibitedMustBeAbsentTags;
+
         public ReadOnlyCollection<string> uninhibitedMustBeAbsentTags => m_UninhibitedMustBeAbsentTags.AsReadOnly();
 
+        /// <summary>
+        /// 대상 entity에게 계속 지속적으로 적용되기 위해 소유하고 있어야 할 필요가 있는 tag 목록입니다.
+        /// 이 조건을 불만족하는 즉시 effect는 effect 목록에서 삭제됩니다.
+        /// </summary>
         [SerializeField] private List<string> m_PersistMustBePresentTags;
+
         public ReadOnlyCollection<string> persistMustBePresentTags => m_PersistMustBePresentTags.AsReadOnly();
 
+        /// <summary>
+        /// 대상 entity에게 계속 지속적으로 적용되기 위해 소유하고 있지 말아야 할 필요가 있는 tag 목록입니다.
+        /// 이 조건을 불만족하는 즉시 effect는 effect 목록에서 삭제됩니다.
+        /// </summary>
         [SerializeField] private List<string> m_PersisMustBeAbsentTags;
+
         public ReadOnlyCollection<string> persistMustBeAbsentTags => m_PersisMustBeAbsentTags.AsReadOnly();
 
         /// <summary>
@@ -97,7 +121,11 @@ namespace AbilitySystem
 
         public SpecialEffectDefinition specialPersistentEffectDefinition => m_SpecialPersistentEffectDefinition;
 
+        /// <summary>
+        /// inhibition 조건을 불만족하다가 다시 만족하게 되어 effect의 적용을 다시 받게 되었을 때 period에 대해 어떤 처리를 할 것인지에 대한 설정입니다.
+        /// </summary>
         [SerializeField] private GameplayEffectPeriodInhibitionRemovedPolicy m_PeriodicInhibitionPolicy;
+
         public GameplayEffectPeriodInhibitionRemovedPolicy periodicInhibitionPolicy => m_PeriodicInhibitionPolicy;
     }
 }

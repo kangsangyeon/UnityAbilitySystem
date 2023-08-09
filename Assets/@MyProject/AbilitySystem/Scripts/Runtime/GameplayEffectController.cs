@@ -19,7 +19,9 @@ namespace AbilitySystem
     public partial class GameplayEffectController : MonoBehaviour
     {
         /// <summary>
-        /// controller를 소유한 entity에게 적용중인 persistent effect 목록입니다.
+        /// controller를 소유한 entity에게 추가된 persistent effect 목록입니다.
+        /// *이 목록 내 모든 effect들이 entity에게 적용중인 것은 아닙니다.
+        /// inhibit 조건이 만족되는 effect들만 적용하며, inhibit 조건을 만족하지 못하다가 만족할 때 적용되고, 반대로 만족하다가 만족하지 못할 때 적용 해제됩니다.
         /// </summary>
         protected List<GameplayPersistentEffect> m_ActiveEffects = new List<GameplayPersistentEffect>();
 
@@ -454,22 +456,34 @@ namespace AbilitySystem
             m_ActiveEffects.ForEach(CheckOngoingTagRequirements);
         }
 
+        /// <summary>
+        /// 이 persistent effect가 현재 적용될 수 있는 조건을 만족하는지에 대한 여부를 판별하고,
+        /// 판별 결과에 따라 effect를 적용하거나 또는 적용 취소합니다.
+        /// 조건을 만족하지 않아도 effect는 effect 목록에서 삭제되지 않습니다.
+        /// </summary>
         private void CheckOngoingTagRequirements(GameplayPersistentEffect _effect)
         {
+            // 이 persistent effect가 현재 적용되어야 하는지에 대한 여부를 판별합니다.
             bool _shouldBeInhibited = !m_TagController.SatisfiesRequirements(
                 _effect.definition.uninhibitedMustBePresentTags,
                 _effect.definition.uninhibitedMustBeAbsentTags);
 
             if (_effect.isInhibited != _shouldBeInhibited)
             {
+                // 원래 적용 상태에서 변화될 때 실행됩니다.
+
                 _effect.isInhibited = _shouldBeInhibited;
 
                 if (_effect.isInhibited)
                 {
+                    // 적용되지 말아야 할 때 실행됩니다.
                     RemoveUninhibitedEffects(_effect);
                 }
                 else
                 {
+                    // 적용되어야 할 때 실행됩니다.
+                    AddUninhibitedEffects(_effect);
+
                     if (_effect.definition.isPeriodic)
                     {
                         if (_effect.definition.periodicInhibitionPolicy == GameplayEffectPeriodInhibitionRemovedPolicy.ResetPeriod)
@@ -482,12 +496,14 @@ namespace AbilitySystem
                             _effect.remainingPeriod = _effect.definition.period;
                         }
                     }
-
-                    AddUninhibitedEffects(_effect);
                 }
             }
         }
 
+        /// <summary>
+        /// effect 목록 내 모든 effect를 확인해 effect 목록에서 제거되어야 하는지에 대한 여부를 판별하고,
+        /// 판별 결과에 따라 처리합니다.
+        /// </summary>
         private void CheckRemovalTagRequirements(string _tag)
         {
             m_ActiveEffects
