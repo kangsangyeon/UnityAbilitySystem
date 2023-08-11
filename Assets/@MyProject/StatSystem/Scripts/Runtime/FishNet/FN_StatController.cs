@@ -8,6 +8,22 @@ using UnityEngine;
 
 namespace StatSystem
 {
+    public partial class Attribute
+    {
+        internal void ForceInvokeCurrentValueChangedEvent()
+        {
+            currentValueChanged?.Invoke();
+        }
+    }
+
+    public partial class Stat
+    {
+        internal void ForceInvokeValueChangedEvent()
+        {
+            valueChanged?.Invoke();
+        }
+    }
+
     public partial class StatController
     {
         private static FieldInfo s_AttributeCurrentValueField =
@@ -27,7 +43,7 @@ namespace StatSystem
 
             if (_invokeEvent)
             {
-                _attribute.currentValueChanged.Invoke();
+                _attribute.ForceInvokeCurrentValueChangedEvent();
             }
         }
 
@@ -41,7 +57,7 @@ namespace StatSystem
 
             if (_invokeEvent)
             {
-                _primaryStat.valueChanged.Invoke();
+                _primaryStat.ForceInvokeValueChangedEvent();
             }
         }
     }
@@ -115,12 +131,12 @@ namespace StatSystem.FishNet
             {
                 if (_stat is Attribute _attribute)
                 {
-                    _attribute.currentValueChanged.AddListener(() => Server_OnAttributeCurrentValueChanged(_attribute));
+                    _attribute.currentValueChanged += () => Server_OnAttributeCurrentValueChanged(_attribute);
                 }
                 else if (_stat is PrimaryStat _primaryStat)
                 {
-                    _primaryStat.onBaseValueAdded_OnServer.AddListener((_value) =>
-                        Server_OnPrimaryStatBaseValueAdded(_primaryStat, _value));
+                    _primaryStat.onBaseValueAdded_OnServer += (_value) =>
+                        Server_OnPrimaryStatBaseValueAdded(_primaryStat, _value);
                 }
             }
         }

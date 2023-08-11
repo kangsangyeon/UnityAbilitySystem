@@ -65,7 +65,7 @@ namespace AbilitySystem.UI
             m_AbilityPoints = _root.Q<Label>("abilities__ability-points-value");
             m_AbilityPoints.text = m_Controller.abilityPoints.ToString();
 
-            m_Controller.abilityPointsChanged.AddListener(OnAbilityPointsChanged);
+            m_Controller.abilityPointsChanged += OnAbilityPointsChanged;
         }
 
         private void OnAbilityPointsChanged()

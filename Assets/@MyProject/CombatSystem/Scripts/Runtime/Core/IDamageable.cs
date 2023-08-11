@@ -1,5 +1,4 @@
 ﻿using Core;
-using UnityEngine.Events;
 
 namespace CombatSystem.Core
 {
@@ -7,14 +6,14 @@ namespace CombatSystem.Core
     {
         int health { get; }
         int maxHealth { get; }
-        UnityEvent healthChanged { get; set; }
-        UnityEvent maxHealthChanged { get; set; }
+        event System.Action healthChanged;
+        event System.Action maxHealthChanged;
         bool isInitialized { get; }
-        UnityEvent initialized { get; set; }
-        UnityEvent willUninitialize { get; set; }
-        UnityEvent defeated { get; set; }
-        UnityEvent<int> healed { get; set; }
-        UnityEvent<int, bool> damaged { get; set; }
+        event System.Action initialized;
+        event System.Action willUninitialize;
+        event System.Action defeated;
+        event System.Action<int> healed;
+        event System.Action<int, bool> damaged;
         void TakeDamage(IDamage _rawDamage);
     }
 }

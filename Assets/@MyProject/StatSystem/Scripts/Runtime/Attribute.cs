@@ -1,17 +1,15 @@
-﻿using System;
-using SaveSystem;
+﻿using SaveSystem;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StatSystem
 {
-    public class Attribute : Stat, ISavable
+    public partial class Attribute : Stat, ISavable
     {
         protected int m_CurrentValue;
 
         public int currentValue => m_CurrentValue;
-        public UnityEvent currentValueChanged = new UnityEvent();
-        public UnityEvent<StatModifier> appliedModifier = new UnityEvent<StatModifier>();
+        public event System.Action currentValueChanged;
+        public event System.Action<StatModifier> appliedModifier;
 
         public Attribute(StatDefinition _definition, StatController statController) : base(_definition, statController)
         {
@@ -48,10 +46,10 @@ namespace StatSystem
             if (_newValue != m_CurrentValue)
             {
                 m_CurrentValue = _newValue;
-                currentValueChanged.Invoke();
+                currentValueChanged?.Invoke();
             }
 
-            appliedModifier.Invoke(_modifier);
+            appliedModifier?.Invoke(_modifier);
         }
 
         #region Save System

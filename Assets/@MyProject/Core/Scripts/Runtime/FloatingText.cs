@@ -1,13 +1,11 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Core
 {
     public class FloatingText : MonoBehaviour
     {
-        public UnityEvent<FloatingText> finished;
+        public event System.Action<FloatingText> finished;
         public float time = 1.5f;
         private Transform m_MainCamera;
         private TextMesh m_TextMesh;
@@ -25,7 +23,7 @@ namespace Core
 
         public void Animate()
         {
-            transform.DOMove(transform.position + Vector3.up, time).OnKill(() => finished.Invoke(this));
+            transform.DOMove(transform.position + Vector3.up, time).OnKill(() => finished?.Invoke(this));
         }
 
         public void Set(string value, Color color)

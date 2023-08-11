@@ -5,7 +5,6 @@ using System.Linq;
 using Core;
 using StatSystem;
 using UnityEngine;
-using UnityEngine.Events;
 using Attribute = StatSystem.Attribute;
 
 namespace AbilitySystem
@@ -40,7 +39,7 @@ namespace AbilitySystem
         /// <summary>
         /// 이 controller가 초기화되었을 때 호출되는 이벤트입니다.
         /// </summary>
-        public UnityEvent initialized;
+        public event System.Action initialized;
 
         protected StatController m_StatController;
         protected TagController m_TagController;
@@ -89,7 +88,8 @@ namespace AbilitySystem
                 m_ActiveEffects
                     .Any(e =>
                         e.isInhibited == false
-                        && e.definition.grantedApplicationImmunityTags.Any(t => _effectToApply.definition.tags.Contains(t)));
+                        && e.definition.grantedApplicationImmunityTags.Any(t =>
+                            _effectToApply.definition.tags.Contains(t)));
 
             if (_hasImmunity)
             {
@@ -129,7 +129,8 @@ namespace AbilitySystem
 
             // 이 effect가 적용됨으로써 적용되어야 하는 상태 이상 effect의 목록을 읽고 적용합니다.
 
-            foreach (GameplayEffectDefinition _conditionalEffectDefinition in _effectToApply.definition.conditionalEffects)
+            foreach (GameplayEffectDefinition _conditionalEffectDefinition in _effectToApply.definition
+                         .conditionalEffects)
             {
                 EffectTypeAttribute _attribute =
                     _conditionalEffectDefinition.GetType()
@@ -472,11 +473,13 @@ namespace AbilitySystem
                 {
                     if (_effect.definition.isPeriodic)
                     {
-                        if (_effect.definition.periodicInhibitionPolicy == GameplayEffectPeriodInhibitionRemovedPolicy.ResetPeriod)
+                        if (_effect.definition.periodicInhibitionPolicy ==
+                            GameplayEffectPeriodInhibitionRemovedPolicy.ResetPeriod)
                         {
                             _effect.remainingPeriod = _effect.definition.period;
                         }
-                        else if (_effect.definition.periodicInhibitionPolicy == GameplayEffectPeriodInhibitionRemovedPolicy.ExecuteAndResetPeriod)
+                        else if (_effect.definition.periodicInhibitionPolicy ==
+                                 GameplayEffectPeriodInhibitionRemovedPolicy.ExecuteAndResetPeriod)
                         {
                             ExecuteGameplayEffect(_effect);
                             _effect.remainingPeriod = _effect.definition.period;
@@ -491,7 +494,8 @@ namespace AbilitySystem
         private void CheckRemovalTagRequirements(string _tag)
         {
             m_ActiveEffects
-                .Where(e => m_TagController.SatisfiesRequirements(e.definition.persistMustBePresentTags, e.definition.persistMustBeAbsentTags) == false)
+                .Where(e => m_TagController.SatisfiesRequirements(e.definition.persistMustBePresentTags,
+                    e.definition.persistMustBeAbsentTags) == false)
                 .ToList()
                 .ForEach(e => RemoveActiveGameplayEffect(e, true));
         }
@@ -504,24 +508,24 @@ namespace AbilitySystem
 
         private void OnEnable()
         {
-            m_StatController.initialized.AddListener(OnStatControllerInitialized);
+            m_StatController.initialized += OnStatControllerInitialized;
             if (m_StatController.IsInitialized())
                 OnStatControllerInitialized();
 
-            m_TagController.tagAdded.AddListener(CheckOngoingTagRequirements);
-            m_TagController.tagRemoved.AddListener(CheckOngoingTagRequirements);
-            m_TagController.tagAdded.AddListener(CheckRemovalTagRequirements);
-            m_TagController.tagRemoved.AddListener(CheckRemovalTagRequirements);
+            m_TagController.tagAdded += CheckOngoingTagRequirements;
+            m_TagController.tagRemoved += CheckOngoingTagRequirements;
+            m_TagController.tagAdded += CheckRemovalTagRequirements;
+            m_TagController.tagRemoved += CheckRemovalTagRequirements;
         }
 
         private void OnDisable()
         {
-            m_StatController.initialized.RemoveListener(OnStatControllerInitialized);
+            m_StatController.initialized -= OnStatControllerInitialized;
 
-            m_TagController.tagAdded.RemoveListener(CheckOngoingTagRequirements);
-            m_TagController.tagRemoved.RemoveListener(CheckOngoingTagRequirements);
-            m_TagController.tagAdded.RemoveListener(CheckRemovalTagRequirements);
-            m_TagController.tagRemoved.RemoveListener(CheckRemovalTagRequirements);
+            m_TagController.tagAdded -= CheckOngoingTagRequirements;
+            m_TagController.tagRemoved -= CheckOngoingTagRequirements;
+            m_TagController.tagAdded -= CheckRemovalTagRequirements;
+            m_TagController.tagRemoved -= CheckRemovalTagRequirements;
         }
 
         private void Update()

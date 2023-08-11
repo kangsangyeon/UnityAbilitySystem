@@ -35,7 +35,7 @@ namespace AbilitySystem
         {
             Projectile _projectile = GameObject.Instantiate(definition.projectilePrefab);
             _projectile.gameObject.SetActive(false);
-            _projectile.hit.AddListener(OnHit);
+            _projectile.hit += OnHit;
             return _projectile;
         }
 

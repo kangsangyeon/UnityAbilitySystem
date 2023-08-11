@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using SaveSystem;
-using UnityEngine.Events;
 
 [assembly: InternalsVisibleTo("StatSystem.Tests")]
 
@@ -11,8 +10,7 @@ namespace StatSystem
         private int m_BaseValue;
         public override int baseValue => m_BaseValue;
 
-        public UnityEvent<int> onBaseValueAdded_OnServer =
-            new UnityEvent<int>(); // network 지원 전용 이벤트입니다. 이 이벤트는 서버에서만 구독합니다. param: <add_amount>
+        public event System.Action<int> onBaseValueAdded_OnServer; // network 지원 전용 이벤트입니다. 이 이벤트는 서버에서만 구독합니다. param: <add_amount>
 
         public PrimaryStat(StatDefinition _definition, StatController _controller) : base(_definition, _controller)
         {

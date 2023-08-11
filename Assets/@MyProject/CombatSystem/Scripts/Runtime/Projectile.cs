@@ -1,8 +1,6 @@
-﻿using System;
-using CombatSystem.Core;
+﻿using CombatSystem.Core;
 using Core;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace CombatSystem
 {
@@ -17,7 +15,7 @@ namespace CombatSystem
 
         protected Collider m_Collider;
 
-        public UnityEvent<CollisionData> hit;
+        public event System.Action<CollisionData> hit;
 
         protected void Awake()
         {
@@ -36,7 +34,7 @@ namespace CombatSystem
             {
                 VisualEffect _effect =
                     Instantiate(m_CollisionVisualEffectPrefab, transform.position, transform.rotation);
-                _effect.finished.AddListener(_effect => Destroy(_effect.gameObject));
+                _effect.finished += _effect => Destroy(_effect.gameObject);
                 _effect.Play();
             }
 

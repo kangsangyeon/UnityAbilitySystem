@@ -35,24 +35,24 @@ namespace CombatSystem
             if (m_Collider.enabled == false)
                 m_Collider.enabled = true;
 
-            m_Damageable.initialized.AddListener(OnDamageableInitialized);
-            m_Damageable.willUninitialize.AddListener(OnDamageableWillUninitialized);
+            m_Damageable.initialized += OnDamageableInitialized;
+            m_Damageable.willUninitialize += OnDamageableWillUninitialized;
             if (m_Damageable.isInitialized)
                 OnDamageableInitialized();
         }
 
         private void OnDamageableInitialized()
         {
-            m_Damageable.damaged.AddListener(DisplayDamage);
-            m_Damageable.healed.AddListener(DisplayRestorationAmount);
-            m_Damageable.defeated.AddListener(OnDefeated);
+            m_Damageable.damaged += DisplayDamage;
+            m_Damageable.healed += DisplayRestorationAmount;
+            m_Damageable.defeated += OnDefeated;
         }
 
         private void OnDamageableWillUninitialized()
         {
-            m_Damageable.damaged.RemoveListener(DisplayDamage);
-            m_Damageable.healed.RemoveListener(DisplayRestorationAmount);
-            m_Damageable.defeated.RemoveListener(OnDefeated);
+            m_Damageable.damaged -= DisplayDamage;
+            m_Damageable.healed -= DisplayRestorationAmount;
+            m_Damageable.defeated -= OnDefeated;
         }
 
         private void DisplayDamage(int _magnitude, bool _isCriticalHit)
@@ -78,7 +78,7 @@ namespace CombatSystem
         private FloatingText OnCreate()
         {
             FloatingText _floatingText = Instantiate(m_FloatingTextPrefab);
-            _floatingText.finished.AddListener(m_Pool.Release);
+            _floatingText.finished += m_Pool.Release;
 
             _floatingText.transform.position = transform.position + Utils.GetCenterOfCollider(m_Collider);
             _floatingText.transform.localScale = Vector3.one * 0.01f;
