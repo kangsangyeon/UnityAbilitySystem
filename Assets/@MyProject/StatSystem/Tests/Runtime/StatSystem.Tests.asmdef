@@ -2,11 +2,12 @@
     "name": "StatSystem.Tests",
     "rootNamespace": "",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "StatSystem",
-        "LevelSystem",
-        "Core"
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:9f6d3ac1c4cf0a14b88a1978749adecf",
+        "GUID:559718aabe5ee4d4a926145a6da97d89",
+        "GUID:caa70017c7d37ac4d870d64a0c9d556b",
+        "GUID:7c88a4a7926ee5145ad2dfa06f454c67"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

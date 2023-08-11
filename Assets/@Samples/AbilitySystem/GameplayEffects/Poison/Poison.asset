@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7363692734562475289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424ac4cb6a73495a9440da7fa5ef86ff, type: 3}
+  m_Name: GameplayEffectDamageDefinition
+  m_EditorClassIdentifier: 
+  m_Formula: {fileID: 11400000, guid: e0988e94766b66f41941b4ffb4638ca8, type: 2}
+  m_CanCriticalHit: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a25ae9b7ab8458daea226675a928dba, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  m_Description: "\uB300\uC0C1\uC5D0\uAC8C \uB9E4 \uCD08\uB9C8\uB2E4 {GameplayStackableEffect.modifiers[0]}\uB9CC\uD07C\uC758
+    \uB370\uBBF8\uC9C0\uB97C {GameplayStackableEffect.duration}\uCD08 \uB3D9\uC548
+    \uC90D\uB2C8\uB2E4."
+  m_ModifierDefinitions:
+  - {fileID: -7363692734562475289}
+  m_SpecialEffectDefinition: {fileID: 0}
+  m_Tags:
+  - status
+  - poison
+  m_RemoveEffectsWithTags: []
+  m_IsInfinite: 0
+  m_DurationFormula: {fileID: 11400000, guid: 42e21eaf4996b3045b492823d108f917, type: 2}
+  m_IsPeriodic: 1
+  m_Period: 1
+  m_ExecutePeriodicEffectOnApplication: 0
+  m_GrantedTags: []
+  m_SpecialPersistentEffectDefinition: {fileID: 11400000, guid: 855333ae2acf6ba44b7422fc28bdf1aa, type: 2}
+  m_OverflowEffects: []
+  m_DenyOverflowApplication: 0
+  m_ClearStackOnOverflow: 0
+  m_StackLimitCount: 1
+  m_StackDurationRefreshPolicy: 1
+  m_StackPeriodResetPolicy: 0
+  m_StackExpirationPolicy: 0
