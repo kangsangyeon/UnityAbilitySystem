@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Core.Nodes
 {
@@ -36,6 +35,23 @@ namespace Core.Nodes
                 if (exponent != null) _nodes.Add(exponent);
                 return _nodes.AsReadOnly();
             }
+        }
+
+        public override object Clone()
+        {
+            var _node = ScriptableObject.CreateInstance<PowerNode>();
+            _node.guid = this.guid;
+            _node.position = this.position;
+            _node.@base = this.@base;
+            _node.exponent = this.exponent;
+            return _node;
+        }
+
+        public override void ReplaceChildNodeReference(
+            Dictionary<CodeFunctionNode, CodeFunctionNode> _nodeDict)
+        {
+            @base = _nodeDict[@base];
+            exponent = _nodeDict[exponent];
         }
     }
 }
