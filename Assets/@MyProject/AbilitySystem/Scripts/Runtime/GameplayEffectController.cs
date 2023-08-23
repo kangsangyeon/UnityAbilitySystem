@@ -127,24 +127,24 @@ namespace AbilitySystem
 
             _effectsToRemove.ForEach(e => RemoveActiveGameplayEffect(e, true));
 
-            // 이 effect가 적용됨으로써 적용되어야 하는 상태 이상 effect의 목록을 읽고 적용합니다.
+            // 이 effect가 적용됨으로써 추가적으로 적용되어야 하는 effect의 목록을 읽고 적용합니다.
 
-            foreach (GameplayEffectDefinition _conditionalEffectDefinition in _effectToApply.definition
-                         .conditionalEffects)
+            foreach (GameplayEffectDefinition _additionalEffectDefinition
+                     in _effectToApply.definition.additionalEffects)
             {
                 EffectTypeAttribute _attribute =
-                    _conditionalEffectDefinition.GetType()
+                    _additionalEffectDefinition.GetType()
                         .GetCustomAttributes(true).OfType<EffectTypeAttribute>().FirstOrDefault();
 
-                GameplayEffect _conditionalEffect =
+                GameplayEffect _additionalEffect =
                     Activator.CreateInstance(
                         _attribute.type,
-                        _conditionalEffectDefinition, // definition
+                        _additionalEffectDefinition, // definition
                         _effectToApply, // source
                         _effectToApply.instigator // instigator
                     ) as GameplayEffect;
 
-                ApplyGameplayEffectToSelf(_conditionalEffect);
+                ApplyGameplayEffectToSelf(_additionalEffect);
             }
 
             bool _shouldAdd = true;

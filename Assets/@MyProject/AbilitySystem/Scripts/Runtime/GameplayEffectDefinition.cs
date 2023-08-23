@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AbilitySystem
 {
@@ -25,11 +26,11 @@ namespace AbilitySystem
             m_ModifierDefinitions.AsReadOnly();
 
         /// <summary>
-        /// 대상 entity에게 effect가 적용되면 적용할 상태 이상 effect 목록입니다.
+        /// 대상 entity에게 effect가 적용되면 추가로 적용할 effect 목록입니다.
         /// </summary>
-        [SerializeField] private List<GameplayEffectDefinition> m_ConditionalEffects;
+        [FormerlySerializedAs("m_ConditionalEffects")] [SerializeField] private List<GameplayEffectDefinition> m_AdditionalEffects;
 
-        public ReadOnlyCollection<GameplayEffectDefinition> conditionalEffects => m_ConditionalEffects.AsReadOnly();
+        public ReadOnlyCollection<GameplayEffectDefinition> additionalEffects => m_AdditionalEffects.AsReadOnly();
 
         /// <summary>
         /// effect가 적용될 때 생성될 특수 효과에 대한 정보를 기록한 scriptable object입니다.
