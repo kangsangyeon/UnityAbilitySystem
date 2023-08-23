@@ -51,7 +51,7 @@ namespace StatSystem
 
             if (m_Definition.formula != null && m_Definition.formula.rootNode != null)
             {
-                _finalValue += Mathf.RoundToInt(m_Definition.formula.rootNode.value);
+                _finalValue += Mathf.RoundToInt(m_Definition.formula.rootNode.CalculateValue(m_Controller.gameObject));
             }
 
             m_Modifiers.Sort((x, y) => x.type.CompareTo(y.type));
