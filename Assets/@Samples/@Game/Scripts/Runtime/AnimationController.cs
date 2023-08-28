@@ -34,33 +34,33 @@ namespace MyGame
 
         private void OnEnable()
         {
-            m_StatController.initialized.AddListener(OnStatControllerInitialized);
+            m_StatController.initialized += OnStatControllerInitialized;
             if (m_StatController.IsInitialized())
             {
                 OnStatControllerInitialized();
             }
 
-            m_AbilityController.activatedAbility.AddListener(OnActivateAbility);
+            m_AbilityController.activatedAbility += OnActivateAbility;
         }
 
         private void OnDisable()
         {
-            m_StatController.initialized.RemoveListener(OnStatControllerInitialized);
+            m_StatController.initialized -= OnStatControllerInitialized;
             if (m_StatController.IsInitialized())
             {
-                m_StatController.stats["MovementSpeed"].valueChanged.RemoveListener(OnMovementSpeedChanged);
-                m_StatController.stats["AttackSpeed"].valueChanged.RemoveListener(OnAttackSpeedChanged);
+                m_StatController.stats["MovementSpeed"].valueChanged -= OnMovementSpeedChanged;
+                m_StatController.stats["AttackSpeed"].valueChanged -= OnAttackSpeedChanged;
             }
 
-            m_AbilityController.activatedAbility.RemoveListener(OnActivateAbility);
+            m_AbilityController.activatedAbility -= OnActivateAbility;
         }
 
         private void OnStatControllerInitialized()
         {
             OnMovementSpeedChanged();
             OnAttackSpeedChanged();
-            m_StatController.stats["MovementSpeed"].valueChanged.AddListener(OnMovementSpeedChanged);
-            m_StatController.stats["AttackSpeed"].valueChanged.AddListener(OnAttackSpeedChanged);
+            m_StatController.stats["MovementSpeed"].valueChanged += OnMovementSpeedChanged;
+            m_StatController.stats["AttackSpeed"].valueChanged += OnAttackSpeedChanged;
         }
 
         private void OnMovementSpeedChanged()

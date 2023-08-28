@@ -15,12 +15,9 @@ namespace CombatSystem.UI
         {
             m_Slider = GetComponent<Slider>();
             m_Damageable = m_Owner.GetComponent<IDamageable>();
-        }
 
-        private void OnEnable()
-        {
-            m_Damageable.initialized.AddListener(OnDamageableInitialized);
-            m_Damageable.willUninitialize.AddListener(OnDamageableWillUninitialized);
+            m_Damageable.initialized += OnDamageableInitialized;
+            m_Damageable.willUninitialize += OnDamageableWillUninitialized;
             if (m_Damageable.isInitialized)
                 OnDamageableInitialized();
         }
@@ -39,14 +36,14 @@ namespace CombatSystem.UI
 
         private void RegisterEvents()
         {
-            m_Damageable.maxHealthChanged.AddListener(OnMaxHealthChanged);
-            m_Damageable.healthChanged.AddListener(OnHealthChanged);
+            m_Damageable.maxHealthChanged += OnMaxHealthChanged;
+            m_Damageable.healthChanged += OnHealthChanged;
         }
 
         private void UnregisterEvents()
         {
-            m_Damageable.maxHealthChanged.RemoveListener(OnMaxHealthChanged);
-            m_Damageable.healthChanged.RemoveListener(OnHealthChanged);
+            m_Damageable.maxHealthChanged -= OnMaxHealthChanged;
+            m_Damageable.healthChanged -= OnHealthChanged;
         }
 
         private void OnMaxHealthChanged()

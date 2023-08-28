@@ -14,5 +14,14 @@ namespace LevelSystem.Nodes
             ILevelable _levelable = _source.GetComponent<ILevelable>();
             return _levelable.level;
         }
+
+        public override object Clone()
+        {
+            var _node = ScriptableObject.CreateInstance<LevelNode>();
+            _node.guid = this.guid;
+            _node.position = this.position;
+            _node.levelable = levelable;
+            return _node;
+        }
     }
 }

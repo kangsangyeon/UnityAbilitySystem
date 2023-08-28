@@ -2,7 +2,6 @@
 using Core;
 using StatSystem;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Game.Scripts.Runtime
 {
@@ -13,14 +12,14 @@ namespace Game.Scripts.Runtime
 
         public int health => (m_StatController.stats[k_Health] as StatSystem.Attribute).currentValue;
         public int maxHealth => (m_StatController.stats[k_Health] as StatSystem.Attribute).value;
-        public UnityEvent healthChanged { get; set; } = new UnityEvent();
-        public UnityEvent maxHealthChanged { get; set; } = new UnityEvent();
+        public event System.Action healthChanged;
+        public event System.Action maxHealthChanged;
         public bool isInitialized => m_IsInitialized;
-        public UnityEvent initialized { get; set; } = new UnityEvent();
-        public UnityEvent willUninitialize { get; set; } = new UnityEvent();
-        public UnityEvent defeated { get; set; } = new UnityEvent();
-        public UnityEvent<int> healed { get; set; } = new UnityEvent<int>();
-        public UnityEvent<int, bool> damaged { get; set; } = new UnityEvent<int, bool>();
+        public event System.Action initialized;
+        public event System.Action willUninitialize;
+        public event System.Action defeated;
+        public event System.Action<int> healed;
+        public event System.Action<int, bool> damaged;
 
         protected StatController m_StatController;
 
@@ -31,14 +30,14 @@ namespace Game.Scripts.Runtime
 
         protected virtual void OnEnable()
         {
-            m_StatController.initialized.AddListener(OnStatControllerInitialized);
+            m_StatController.initialized += OnStatControllerInitialized;
             if (m_StatController.IsInitialized())
                 OnStatControllerInitialized();
         }
 
         private void OnDisable()
         {
-            m_StatController.initialized.RemoveListener(OnStatControllerInitialized);
+            m_StatController.initialized -= OnStatControllerInitialized;
             if (m_StatController.IsInitialized())
                 OnStatControllerWillUninitialize();
         }
@@ -46,9 +45,9 @@ namespace Game.Scripts.Runtime
         private void OnStatControllerInitialized()
         {
             var _statControllerStat = m_StatController.stats[k_Health] as StatSystem.Attribute;
-            _statControllerStat.valueChanged.AddListener(OnMaxHealthChanged);
-            _statControllerStat.currentValueChanged.AddListener(OnHealthChanged);
-            _statControllerStat.appliedModifier.AddListener(OnAppliedModifier);
+            _statControllerStat.valueChanged += OnMaxHealthChanged;
+            _statControllerStat.currentValueChanged += OnHealthChanged;
+            _statControllerStat.appliedModifier += OnAppliedModifier;
             m_IsInitialized = true;
             initialized?.Invoke();
         }
@@ -56,9 +55,9 @@ namespace Game.Scripts.Runtime
         private void OnStatControllerWillUninitialize()
         {
             var _statControllerStat = m_StatController.stats[k_Health] as StatSystem.Attribute;
-            _statControllerStat.valueChanged.RemoveListener(OnMaxHealthChanged);
-            _statControllerStat.currentValueChanged.RemoveListener(OnHealthChanged);
-            _statControllerStat.appliedModifier.RemoveListener(OnAppliedModifier);
+            _statControllerStat.valueChanged -= OnMaxHealthChanged;
+            _statControllerStat.currentValueChanged -= OnHealthChanged;
+            _statControllerStat.appliedModifier -= OnAppliedModifier;
             m_IsInitialized = false;
             willUninitialize?.Invoke();
         }
@@ -85,7 +84,7 @@ namespace Game.Scripts.Runtime
             else
             {
                 // critical hit은 HealthModifier를 사용할 때만 줄 수 있습니다.
-                
+
                 bool _isCriticalHit = false;
                 if (_modifier is HealthModifier _healthModifier)
                 {

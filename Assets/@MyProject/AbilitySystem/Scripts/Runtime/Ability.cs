@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using SaveSystem;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace AbilitySystem
 {
@@ -34,7 +33,7 @@ namespace AbilitySystem
             }
         }
 
-        public UnityEvent levelChanged = new UnityEvent();
+        public event System.Action levelChanged;
 
         protected AbilityController m_Controller;
 

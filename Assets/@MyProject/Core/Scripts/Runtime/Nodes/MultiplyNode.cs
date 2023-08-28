@@ -36,5 +36,22 @@ namespace Core.Nodes
                 return _nodes.AsReadOnly();
             }
         }
+
+        public override object Clone()
+        {
+            var _node = ScriptableObject.CreateInstance<MultiplyNode>();
+            _node.guid = this.guid;
+            _node.position = this.position;
+            _node.factorA = this.factorA;
+            _node.factorB = this.factorB;
+            return _node;
+        }
+
+        public override void ReplaceChildNodeReference(
+            Dictionary<CodeFunctionNode, CodeFunctionNode> _nodeDict)
+        {
+            factorA = _nodeDict[factorA];
+            factorB = _nodeDict[factorB];
+        }
     }
 }

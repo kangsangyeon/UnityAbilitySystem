@@ -26,7 +26,7 @@ namespace AbilitySystem
         {
             VisualEffect _visualEffect =
                 Instantiate(_effect.definition.specialPersistentEffectDefinition.prefab, transform);
-            _visualEffect.finished.AddListener(_effect => Destroy(_effect.gameObject));
+            _visualEffect.finished += _effect => Destroy(_effect.gameObject);
 
             if (_effect.definition.specialPersistentEffectDefinition.location == PlayLocation.Center)
             {
@@ -68,7 +68,7 @@ namespace AbilitySystem
         {
             VisualEffect _visualEffect = Instantiate(_effect.definition.specialEffectDefinition.prefab);
             _visualEffect.transform.rotation = transform.rotation;
-            _visualEffect.finished.AddListener(_effect => Destroy(_effect.gameObject));
+            _visualEffect.finished += _effect => Destroy(_effect.gameObject);
 
             if (_effect.definition.specialEffectDefinition.location == PlayLocation.Center)
             {

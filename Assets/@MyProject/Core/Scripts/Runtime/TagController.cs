@@ -2,15 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Core
 {
     public class TagController : MonoBehaviour, ITaggable
     {
         private Dictionary<string, int> m_TagCountMap = new Dictionary<string, int>();
-        public UnityEvent<string> tagAdded;
-        public UnityEvent<string> tagRemoved;
+        public event System.Action<string> tagAdded;
+        public event System.Action<string> tagRemoved;
 
         public ReadOnlyCollection<string> tags => m_TagCountMap.Keys.ToList().AsReadOnly();
 

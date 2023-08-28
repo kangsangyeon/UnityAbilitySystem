@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StatSystem
 {
-    public class Stat
+    public partial class Stat
     {
         protected StatDefinition m_Definition;
         protected StatController m_Controller;
@@ -14,7 +13,7 @@ namespace StatSystem
         public StatDefinition definition => m_Definition;
         public int value => m_Value;
         public virtual int baseValue => m_Definition.baseValue;
-        public UnityEvent valueChanged = new UnityEvent();
+        public event System.Action valueChanged;
 
         public Stat(StatDefinition _definition, StatController statController)
         {
@@ -52,7 +51,7 @@ namespace StatSystem
 
             if (m_Definition.formula != null && m_Definition.formula.rootNode != null)
             {
-                _finalValue += Mathf.RoundToInt(m_Definition.formula.rootNode.value);
+                _finalValue += Mathf.RoundToInt(m_Definition.formula.rootNode.CalculateValue(m_Controller.gameObject));
             }
 
             m_Modifiers.Sort((x, y) => x.type.CompareTo(y.type));
@@ -77,7 +76,7 @@ namespace StatSystem
             if (m_Value != _finalValue)
             {
                 m_Value = _finalValue;
-                valueChanged.Invoke();
+                valueChanged?.Invoke();
             }
         }
     }

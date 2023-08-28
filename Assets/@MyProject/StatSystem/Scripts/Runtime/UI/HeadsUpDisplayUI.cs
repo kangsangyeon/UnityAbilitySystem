@@ -40,10 +40,10 @@ namespace StatSystem.UI
 
             Attribute _mana = m_Controller.stats["Mana"] as Attribute;
             Attribute _health = m_Controller.stats["Health"] as Attribute;
-            _mana.valueChanged.AddListener(OnMaxManaChanged);
-            _mana.currentValueChanged.AddListener(OnManaChanged);
-            _health.valueChanged.AddListener(OnMaxHealthChanged);
-            _health.currentValueChanged.AddListener(OnHealthChanged);
+            _mana.valueChanged += OnMaxManaChanged;
+            _mana.currentValueChanged += OnManaChanged;
+            _health.valueChanged += OnMaxHealthChanged;
+            _health.currentValueChanged += OnHealthChanged;
             m_Levelable.currentExperienceChanged += OnCurrentExperienceChanged;
             m_Levelable.levelChanged += OnLevelChanged;
         }
@@ -52,10 +52,10 @@ namespace StatSystem.UI
         {
             Attribute _mana = m_Controller.stats["Mana"] as Attribute;
             Attribute _health = m_Controller.stats["Health"] as Attribute;
-            _mana.valueChanged.RemoveListener(OnMaxManaChanged);
-            _mana.currentValueChanged.RemoveListener(OnManaChanged);
-            _health.valueChanged.RemoveListener(OnMaxHealthChanged);
-            _health.currentValueChanged.RemoveListener(OnHealthChanged);
+            _mana.valueChanged -= OnMaxManaChanged;
+            _mana.currentValueChanged -= OnManaChanged;
+            _health.valueChanged -= OnMaxHealthChanged;
+            _health.currentValueChanged -= OnHealthChanged;
             m_Levelable.currentExperienceChanged -= OnCurrentExperienceChanged;
             m_Levelable.levelChanged -= OnLevelChanged;
         }

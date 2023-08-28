@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Core
 {
@@ -9,7 +8,7 @@ namespace Core
         private ParticleSystem m_ParticleSystem;
         private Coroutine m_Coroutine;
 
-        public UnityEvent<VisualEffect> finished;
+        public event System.Action<VisualEffect> finished;
         public bool isLooping => m_ParticleSystem.main.loop;
 
         private void Awake()

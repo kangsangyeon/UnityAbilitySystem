@@ -4,7 +4,6 @@ using Core;
 using SaveSystem;
 using StatSystem.Nodes;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StatSystem
 {
@@ -17,8 +16,8 @@ namespace StatSystem
 
         public Dictionary<string, Stat> stats => m_Stats;
         public bool IsInitialized() => m_IsInitialized;
-        public UnityEvent initialized = new UnityEvent();
-        public UnityEvent willUninitialize = new UnityEvent();
+        public event System.Action initialized;
+        public event System.Action willUninitialize;
 
         private TagController m_TagController;
 
@@ -34,7 +33,7 @@ namespace StatSystem
 
         private void OnDestroy()
         {
-            willUninitialize.Invoke();
+            willUninitialize?.Invoke();
         }
 
         protected void Initialize()
@@ -68,7 +67,7 @@ namespace StatSystem
                 _stat.Initialize();
             }
 
-            initialized.Invoke();
+            initialized?.Invoke();
 
             m_IsInitialized = true;
         }
@@ -85,7 +84,7 @@ namespace StatSystem
                         if (m_Stats.TryGetValue(n.statName.Trim(), out Stat _stat))
                         {
                             n.stat = _stat;
-                            _stat.valueChanged.AddListener(_currentStat.CalculateValue);
+                            _stat.valueChanged += _currentStat.CalculateValue;
                         }
                         else
                         {

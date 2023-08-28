@@ -295,7 +295,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1314595880}
   - component: {fileID: 1314595881}
-  - component: {fileID: 1314595882}
+  - component: {fileID: 1314595884}
+  - component: {fileID: 1314595883}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -331,13 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StatDatabase: {fileID: 11400000, guid: 695e0e5479e8db84db8e552ad2b76fa0, type: 2}
-  initialized:
-    m_PersistentCalls:
-      m_Calls: []
-  willUninitialize:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1314595882
+--- !u!114 &1314595883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,13 +341,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1314595879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960a2a2ac46c4b6ca89974db5306e9e6, type: 3}
+  m_Script: {fileID: 11500000, guid: a66e1f262b734dfa85fafdd756ac0b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SaveData: {fileID: 11400000, guid: f222a8828e9c123459034308d8a80d68, type: 2}
-  m_SaveDataChannel: {fileID: 11400000, guid: 72b8daefadbda12488033abb6242c5a8, type: 2}
-  m_LoadDataChannel: {fileID: 11400000, guid: 9f62d9a593ca96c4394fee7bb4988686, type: 2}
-  m_Id: 1c9ccf5b-5a93-4094-808a-7971c923b492
+--- !u!114 &1314595884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314595879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223ce5cf20ad31b42b51d34d6b2898cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetSaveData: {fileID: 0}
+  m_Key: 7d001754-76de-4b1d-89e2-b3b78d08c50c
 --- !u!1 &1317409130
 GameObject:
   m_ObjectHideFlags: 0

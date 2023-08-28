@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Core.Nodes;
 using UnityEditor;
 using UnityEngine;
@@ -6,7 +8,7 @@ using UnityEngine;
 namespace Core
 {
     [CreateAssetMenu(fileName = "NodeGraph", menuName = "Core/NodeGraph", order = 0)]
-    public class NodeGraph : ScriptableObject
+    public class NodeGraph : ScriptableObject, ICloneable
     {
         public CodeFunctionNode rootNode;
         public List<CodeFunctionNode> nodes = new List<CodeFunctionNode>();
@@ -24,6 +26,35 @@ namespace Core
             });
 
             return _outNodes;
+        }
+
+        public object Clone()
+        {
+            Dictionary<CodeFunctionNode, CodeFunctionNode> _cloneNodeMap =
+                new Dictionary<CodeFunctionNode, CodeFunctionNode>();
+
+            nodes.ForEach(n =>
+            {
+                // 원본 그래프의 노드를 복제합니다.
+                var _clone = n.Clone() as CodeFunctionNode;
+                _cloneNodeMap.Add(n, _clone);
+            });
+
+            foreach (var n in _cloneNodeMap.Values)
+            {
+                // 복제된 노드들이 가지는 노드에 대한 레퍼런스를
+                // 복제된 노드에 대한 레퍼런스로 수정합니다.
+                if (n is IntermediateNode _intermediateNode)
+                {
+                    _intermediateNode.ReplaceChildNodeReference(_cloneNodeMap);
+                }
+            }
+
+            // 그래프를 복제합니다.
+            var _cloneNodeGraph = ScriptableObject.CreateInstance<NodeGraph>();
+            _cloneNodeGraph.rootNode = _cloneNodeMap[rootNode];
+            _cloneNodeGraph.nodes = _cloneNodeMap.Values.ToList();
+            return _cloneNodeGraph;
         }
 
 #if UNITY_EDITOR

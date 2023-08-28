@@ -4,7 +4,6 @@ using System.Linq;
 using Core;
 using SaveSystem;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace AbilitySystem
 {
@@ -50,7 +49,7 @@ namespace AbilitySystem
         /// <summary>
         /// ability를 발동했을 때 호출되는 이벤트입니다.
         /// </summary>
-        public UnityEvent<ActiveAbility> activatedAbility = new UnityEvent<ActiveAbility>();
+        public event System.Action<ActiveAbility> activatedAbility;
 
         private GameplayEffectController m_EffectController;
         private TagController m_TagController;
@@ -66,14 +65,14 @@ namespace AbilitySystem
         /// </summary>
         protected virtual void OnEnable()
         {
-            m_EffectController.initialized.AddListener(OnEffectControllerInitialized);
+            m_EffectController.initialized += OnEffectControllerInitialized;
             if (m_EffectController.isInitialized)
                 OnEffectControllerInitialized();
         }
 
         protected virtual void OnDisable()
         {
-            m_EffectController.initialized.RemoveListener(OnEffectControllerInitialized);
+            m_EffectController.initialized -= OnEffectControllerInitialized;
         }
 
         private void OnEffectControllerInitialized()

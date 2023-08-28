@@ -69,12 +69,12 @@ namespace AbilitySystem.Editor
 
             ListView _listView = new ListView()
             {
-                bindingPath = "m_ConditionalEffects",
+                bindingPath = "m_AdditionalEffects",
                 virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
                 reorderable = true,
                 showFoldoutHeader = true,
                 showAddRemoveFooter = true,
-                headerTitle = "Conditional Effects"
+                headerTitle = "Additional Effects"
             };
             _listView.Bind(serializedObject);
             _root.Add(_listView);

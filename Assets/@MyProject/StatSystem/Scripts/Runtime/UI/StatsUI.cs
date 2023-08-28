@@ -25,7 +25,10 @@ namespace StatSystem.UI
             VisualElement experience = root.Q("experience");
             Label experienceValue = experience.Q<Label>("value");
             experienceValue.text = $"{m_Levelable.currentExperience} / {m_Levelable.requiredExperience}";
-            m_Levelable.currentExperienceChanged += () => { experienceValue.text = $"{m_Levelable.currentExperience} / {m_Levelable.requiredExperience}"; };
+            m_Levelable.currentExperienceChanged += () =>
+            {
+                experienceValue.text = $"{m_Levelable.currentExperience} / {m_Levelable.requiredExperience}";
+            };
 
             VisualElement level = root.Q("level");
             Label levelValue = level.Q<Label>("value");
@@ -43,7 +46,7 @@ namespace StatSystem.UI
                 Label label = primaryStats[i].Q<Label>("value");
 
                 label.text = stat.value.ToString();
-                stat.valueChanged.AddListener(() => { label.text = stat.value.ToString(); });
+                stat.valueChanged += () => { label.text = stat.value.ToString(); };
 
                 Button incrementButton = primaryStats[i].Q<Button>("increment-button");
                 incrementButton.SetEnabled(m_Controller.statPoints > 0 && stat.baseValue != stat.definition.cap);
@@ -64,7 +67,7 @@ namespace StatSystem.UI
                 Label label = stats[i].Q<Label>("value");
 
                 label.text = stat.value.ToString();
-                stat.valueChanged.AddListener(() => { label.text = stat.value.ToString(); });
+                stat.valueChanged += () => { label.text = stat.value.ToString(); };
             }
 
             VisualElement statPoints = root.Q("stat-points");

@@ -86,12 +86,12 @@ namespace Samples.FishNet
                 if (_stat is Attribute _attribute)
                 {
                     m_UI_Txt_CurrentValue.text = _attribute.currentValue.ToString();
-                    _attribute.currentValueChanged.AddListener(OnStatValueChanged);
+                    _attribute.currentValueChanged += OnStatValueChanged;
                 }
                 else
                 {
                     m_UI_Txt_CurrentValue.text = _stat.value.ToString();
-                    _stat.valueChanged.AddListener(OnStatValueChanged);
+                    _stat.valueChanged += OnStatValueChanged;
                 }
 
                 bool _enableButtons = _stat is Attribute || _stat is PrimaryStat;
@@ -104,7 +104,7 @@ namespace Samples.FishNet
 
         private void UnbindStat()
         {
-            m_Stat.valueChanged.RemoveListener(OnStatValueChanged);
+            m_Stat.valueChanged -= OnStatValueChanged;
         }
 
         private void OnStatValueChanged()

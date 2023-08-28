@@ -1,6 +1,5 @@
 ﻿using LevelSystem;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace AbilitySystem
 {
@@ -10,7 +9,7 @@ namespace AbilitySystem
         protected ILevelable m_Levelable;
         protected int m_AbilityPoints;
 
-        public UnityEvent abilityPointsChanged;
+        public event System.Action abilityPointsChanged;
 
         public int abilityPoints
         {
