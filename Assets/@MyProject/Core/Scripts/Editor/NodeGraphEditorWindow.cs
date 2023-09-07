@@ -43,13 +43,11 @@ namespace Core.Editor
             VisualElement root = rootVisualElement;
 
             var visualTree =
-                AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                    "Assets/@MyProject/Core/Scripts/Editor/NodeGraphEditorWindow.uxml");
+                Resources.Load<VisualTreeAsset>("Editor/NodeGraphEditorWindowUxml");
             visualTree.CloneTree(root);
 
             var styleSheet =
-                AssetDatabase.LoadAssetAtPath<StyleSheet>(
-                    "Assets/@MyProject/Core/Scripts/Editor/NodeGraphEditorWindow.uss");
+                Resources.Load<StyleSheet>("Editor/NodeGraphEditorWindowUss");
             root.styleSheets.Add(styleSheet);
 
             m_LeftPanel = root.Q<VisualElement>("left-panel");

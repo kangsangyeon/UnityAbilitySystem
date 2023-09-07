@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace AbilitySystem.Editor
@@ -11,8 +12,8 @@ namespace AbilitySystem.Editor
         {
             VisualElement _root = new VisualElement();
 
-            StyleSheet _styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(
-                "Assets/@MyProject/AbilitySystem/Scripts/Editor/GameplayEffectEditor.uss");
+            StyleSheet _styleSheet =
+                Resources.Load<StyleSheet>("Editor/GameplayEffectEditorUss");
             _root.styleSheets.Add(_styleSheet);
 
             _root.Add(CreateCoreFieldsGUI());
