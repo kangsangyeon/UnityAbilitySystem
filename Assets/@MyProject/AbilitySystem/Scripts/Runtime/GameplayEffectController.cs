@@ -147,9 +147,10 @@ namespace AbilitySystem
                 ApplyGameplayEffectToSelf(_additionalEffect);
             }
 
-            bool _shouldAdd = true;
             if (_effectToApply is GameplayStackableEffect _stackableEffect)
             {
+                bool _shouldAdd = true;
+
                 GameplayStackableEffect _existingStackableEffect = m_ActiveEffects.Find(
                     _effect => _effect.definition == _effectToApply.definition) as GameplayStackableEffect;
 
@@ -203,7 +204,14 @@ namespace AbilitySystem
                     }
                 }
 
-                if (_shouldAdd == false)
+                if (_shouldAdd)
+                {
+                    // 이 stackable effect가 적용되어 있지 않은 상태에서 새로이 적용되거나
+                    // 또는 stack limit에 도달했으며 clear stack on overflow 속성이 true일 때 실행됩니다.
+                    // effect 목록에 추가하고 적용합니다.
+                    AddGameplayEffect(_stackableEffect);
+                }
+                else
                 {
                     // 이 stackable effect가 이미 적용되어 있는 effect이며
                     // clear stack on overflow 속성이 false라서 새로 추가되지 않을 때 실행됩니다.
@@ -230,16 +238,8 @@ namespace AbilitySystem
                         _existingStackableEffect.remainingPeriod = _existingStackableEffect.definition.period;
                     }
                 }
-                else
-                {
-                    // 이 stackable effect가 적용되어 있지 않은 상태에서 새로이 적용되거나
-                    // 또는 stack limit에 도달했으며 clear stack on overflow 속성이 true일 때 실행됩니다.
-                    // effect 목록에 추가하고 적용합니다.
-                    AddGameplayEffect(_stackableEffect);
-                }
             }
-            else if (_effectToApply is GameplayPersistentEffect _persistentEffect
-                     && _shouldAdd)
+            else if (_effectToApply is GameplayPersistentEffect _persistentEffect)
             {
                 // stackable effect이 아닌 persistent effect인 경우 이 쪽이 실행됩니다.
                 // 나중에 effect의 만료 시간을 초과하거나 삭제를 원할 때 삭제될 수 있어야 하므로 목록에 추가하고 적용합니다.
