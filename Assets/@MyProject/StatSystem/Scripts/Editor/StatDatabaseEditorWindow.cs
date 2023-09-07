@@ -41,13 +41,11 @@ namespace StatSystem.Editor
             VisualElement _root = rootVisualElement;
 
             var _visualTree =
-                AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                    "Assets/@MyProject/StatSystem/Scripts/Editor/StatDatabaseEditorWindow.uxml");
+                Resources.Load<VisualTreeAsset>("Editor/StatDatabaseEditorWindowUxml");
             _visualTree.CloneTree(_root);
 
             var _styleSheet =
-                AssetDatabase.LoadAssetAtPath<StyleSheet>(
-                    "Assets/@MyProject/StatSystem/Scripts/Editor/StatDatabaseEditorWindow.uss");
+                Resources.Load<StyleSheet>("Editor/StatDatabaseEditorWindowUss");
             _root.styleSheets.Add(_styleSheet);
 
             StatCollectionEditor _stats = _root.Q<StatCollectionEditor>("stats");
@@ -59,7 +57,7 @@ namespace StatSystem.Editor
                 _stats.style.display = DisplayStyle.Flex;
                 m_Current = _stats;
             };
-            
+
             StatCollectionEditor _primaryStats = _root.Q<StatCollectionEditor>("primary-stats");
             _primaryStats.Initialize(m_StatDatabase, m_StatDatabase.primaryStats);
             Button _primaryStatsTab = _root.Q<Button>("primary-stats-tab");
@@ -69,7 +67,7 @@ namespace StatSystem.Editor
                 _primaryStats.style.display = DisplayStyle.Flex;
                 m_Current = _primaryStats;
             };
-            
+
             StatCollectionEditor _attributes = _root.Q<StatCollectionEditor>("attributes");
             _attributes.Initialize(m_StatDatabase, m_StatDatabase.attributes);
             Button _attributesTab = _root.Q<Button>("attributes-tab");
@@ -79,7 +77,7 @@ namespace StatSystem.Editor
                 _attributes.style.display = DisplayStyle.Flex;
                 m_Current = _attributes;
             };
-            
+
             m_Current = _stats;
         }
     }
