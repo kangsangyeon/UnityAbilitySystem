@@ -1,9 +1,9 @@
 using System.Collections;
-using FishNet.Connection;
-using FishNet.Object;
 using UnityEngine;
 
 #if FISHNET
+using FishNet.Connection;
+using FishNet.Object;
 
 namespace StatSystem
 {

@@ -34,8 +34,7 @@ namespace Core.Editor
             _gridBackground.StretchToParentSize();
 
             var _styleSheet =
-                AssetDatabase.LoadAssetAtPath<StyleSheet>(
-                    "Assets/@MyProject/Core/Scripts/Editor/NodeGraphEditorWindow.uss");
+                Resources.Load<StyleSheet>("Editor/NodeGraphEditorWindowUss");
             styleSheets.Add(_styleSheet);
         }
 

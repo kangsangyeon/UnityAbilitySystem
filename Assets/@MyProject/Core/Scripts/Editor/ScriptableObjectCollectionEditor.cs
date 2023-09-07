@@ -22,8 +22,8 @@ namespace Core.Editor
 
         public ScriptableObjectCollectionEditor()
         {
-            var _visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                "Assets/@MyProject/Core/Scripts/Editor/ScriptableObjectCollectionEditor.uxml");
+            var _visualTree = 
+                Resources.Load<VisualTreeAsset>("Editor/ScriptableObjectCollectionEditorUxml");
             _visualTree.CloneTree(this);
 
             m_Inspector = this.Q<Inspector>();
