@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core;
 using SaveSystem;
+using StatSystem.Attributes;
 using StatSystem.Nodes;
 using UnityEngine;
 
@@ -43,9 +45,36 @@ namespace StatSystem
                 m_Stats.Add(_definition.name, new Stat(_definition, this));
             }
 
+            Dictionary<string, Type> _attributeTypes
+                = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
+                    .Where(t => typeof(Attribute).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+                    .ToDictionary(t =>
+                    {
+                        string _attributeName = string.Empty;
+
+                        if (t.GetCustomAttributes(typeof(CustomAttribute), false) is CustomAttribute[] _arr
+                            && _arr.Length > 0)
+                        {
+                            _attributeName = _arr[0].attributeName;
+                        }
+
+                        return _attributeName;
+                    });
+
             foreach (var _definition in m_StatDatabase.attributes)
             {
-                if (_definition.name.Equals("Health", StringComparison.OrdinalIgnoreCase))
+                if (_attributeTypes.TryGetValue(_definition.name, out Type _attributeType))
+                {
+                    Attribute _attribute =
+                        Activator.CreateInstance(
+                            _attributeType,
+                            _definition, // definition
+                            this, // stat controller
+                            m_TagController // tag controller
+                        ) as Attribute;
+                    m_Stats.Add(_definition.name, _attribute);
+                }
+                else if (_definition.name.Equals("Health", StringComparison.OrdinalIgnoreCase))
                 {
                     m_Stats.Add(_definition.name, new Health(_definition, this, m_TagController));
                 }
