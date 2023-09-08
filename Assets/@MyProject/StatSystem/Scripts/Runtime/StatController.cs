@@ -45,32 +45,32 @@ namespace StatSystem
                 m_Stats.Add(_definition.name, new Stat(_definition, this));
             }
 
-            Dictionary<string, Type> _attributeTypes
-                = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
-                    .Where(t => typeof(Attribute).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
-                    .ToDictionary(t =>
-                    {
-                        string _attributeName = string.Empty;
-
-                        if (t.GetCustomAttributes(typeof(CustomAttribute), false) is CustomAttribute[] _arr
-                            && _arr.Length > 0)
-                        {
-                            _attributeName = _arr[0].attributeName;
-                        }
-
-                        return _attributeName;
-                    });
+            var _attributeTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
+                .Where(t => typeof(Attribute).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToArray();
+            List<KeyValuePair<string, Type>> _attributeTypePairs =
+                new List<KeyValuePair<string, Type>>(_attributeTypes.Length);
+            foreach (var t in _attributeTypes)
+            {
+                if (t.GetCustomAttributes(typeof(CustomAttributeAttribute), false)
+                        is CustomAttributeAttribute[] _arr
+                    && _arr.Length > 0)
+                {
+                    _attributeTypePairs.Add(new KeyValuePair<string, Type>(_arr[0].attributeName, t));
+                }
+            }
 
             foreach (var _definition in m_StatDatabase.attributes)
             {
-                if (_attributeTypes.TryGetValue(_definition.name, out Type _attributeType))
+                if (_attributeTypePairs.FirstOrDefault(p =>
+                            p.Key != string.Empty
+                            && p.Key.Equals(_definition.name, StringComparison.OrdinalIgnoreCase))
+                        .Value is Type _attributeType)
                 {
                     Attribute _attribute =
                         Activator.CreateInstance(
                             _attributeType,
                             _definition, // definition
-                            this, // stat controller
-                            m_TagController // tag controller
+                            this // stat controller
                         ) as Attribute;
                     m_Stats.Add(_definition.name, _attribute);
                 }
