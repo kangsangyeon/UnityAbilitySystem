@@ -112,7 +112,10 @@ namespace AbilitySystem
         public bool CanActivateAbility(ActiveAbility _ability)
         {
             if (_ability.definition.cost != null)
-                return m_EffectController.CanApplyAttributeModifiers(_ability.definition.cost);
+            {
+                bool canCost = m_EffectController.CanApplyAttributeModifiers(_ability.definition.cost);
+                if (!canCost) return false;
+            }
 
             if (_ability.definition.cooldown != null)
             {
