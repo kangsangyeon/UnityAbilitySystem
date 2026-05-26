@@ -26,6 +26,11 @@ namespace AbilitySystem
         /// </summary>
         public float remainingPeriod;
 
+        /// <summary>
+        /// 이 effect의 적용을 억제중인지에 대한 여부입니다.
+        /// 이 effect를 가진 effect controller가 보유하고 있는 tag controller가 이 effect definition의 태그 만족을 하지 못하면 억제 상태가 활성화됩니다.
+        /// 이 effect가 억제되면 effect controller가 이 effect를 보유하더라도 실제 효과를 적용하지 않습니다.
+        /// </summary>
         public bool isInhibited;
 
         public GameplayPersistentEffect(
